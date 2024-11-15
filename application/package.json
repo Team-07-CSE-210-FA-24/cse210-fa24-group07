@@ -1,0 +1,25 @@
+{
+  "name": "task-prioritization-eisenhower-matrix",
+  "version": "0.0.1",
+  "description": "Initial version to setup the repositories",
+  "main": "main.js",
+  "scripts": {
+    "start" : "electron ."
+  },
+  "author": "Sohan",
+  "license": "ISC",
+  "devDependencies": {
+    "@electron-forge/cli": "^7.5.0",
+    "@electron-forge/maker-deb": "^7.5.0",
+    "@electron-forge/maker-rpm": "^7.5.0",
+    "@electron-forge/maker-squirrel": "^7.5.0",
+    "@electron-forge/maker-zip": "^7.5.0",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.5.0",
+    "@electron-forge/plugin-fuses": "^7.5.0",
+    "@electron/fuses": "^1.8.0",
+    "electron": "^33.2.0"
+  },
+  "dependencies": {
+    "electron-squirrel-startup": "^1.0.1"
+  }
+}
