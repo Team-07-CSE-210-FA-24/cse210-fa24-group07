@@ -1,53 +1,51 @@
-# .github/workflows/ci.yml
-name: CI
+name: Build/release
 
-on:
-  push:
-    branches:
-      - CI_CD_Pipeline
-  pull_request:
-    branches:
-      - CI_CD_Pipeline
+on: push
 
 jobs:
-  build-and-test:
-    runs-on: ubuntu-latest
+  release:
+    runs-on: ${{ matrix.os }}
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+strategy:
+  matrix:
+    os: [macos-latest, ubuntu-latest, windows-latest]
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: "18" # Make sure the version of Node.js is compatible with our project
+steps:
+  - name: Check out Git repository
+    uses: actions/checkout@v1
 
-      - name: Install dependencies
-        run: npm install
+  - name: Install Node.js, NPM and Yarn
+    uses: actions/setup-node@v1
+    with:
+      node-version: 18
 
-      - name: Run formatting and linting
-        run: npm run check
+  - name: Build/release Electron app
+    uses: samuelmeuli/action-electron-builder@v1
+    with:
+      # GitHub token, automatically provided to the action
+      # (No need to define this secret in the repo settings)
+      github_token: ${{ secrets.github_token }}
 
-      - name: Run Jest tests
-        run: npm test
+      # If the commit is tagged with a version (e.g. "v1.0.0"),
+      # release the app after building
+      release: ${{ startsWith(github.ref, 'refs/tags/v') }}
+  - name: Checkout code
+    uses: actions/checkout@v2
 
-name: SonarQube Scan
+  - name: Install dependencies
+    run: npm install
 
-on:
-  push:
-    branches:
-      - dev
+  - name: Run formatting and linting
+    run: npm run check
 
-jobs:
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-      
-    - name: SonarQube Scan
-      uses: sonarsource/sonarqube-scan-action@v1
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        SONAR_HOST_URL: "http://localhost:9000"
+  - name: Run Jest tests
+    run: npm test
+
+  - name: Checkout code
+    uses: actions/checkout@v2
+    
+  - name: SonarQube Scan
+    uses: sonarsource/sonarqube-scan-action@v1
+    env:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      SONAR_HOST_URL: "http://localhost:9000"
