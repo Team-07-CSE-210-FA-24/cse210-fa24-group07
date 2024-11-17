@@ -1,51 +1,47 @@
-name: Build/release
-
 on: push
 
 jobs:
   release:
     runs-on: ${{ matrix.os }}
 
-strategy:
-  matrix:
-    os: [macos-latest, ubuntu-latest, windows-latest]
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
 
-steps:
-  - name: Check out Git repository
-    uses: actions/checkout@v1
+    steps:
+      # Step 1: Check out Git repository
+      - name: Check out Git repository
+        uses: actions/checkout@v2  
 
-  - name: Install Node.js, NPM and Yarn
-    uses: actions/setup-node@v1
-    with:
-      node-version: 18
+      # Step 2: Install Node.js, NPM, and Yarn
+      - name: Install Node.js, NPM, and Yarn
+        uses: actions/setup-node@v3  
+        with:
+          node-version: 18
 
-  - name: Build/release Electron app
-    uses: samuelmeuli/action-electron-builder@v1
-    with:
-      # GitHub token, automatically provided to the action
-      # (No need to define this secret in the repo settings)
-      github_token: ${{ secrets.github_token }}
+      # Step 3: Build/release Electron app
+      - name: Build and release Electron app
+        uses: samuelmeuli/action-electron-builder@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          release: ${{ startsWith(github.ref, 'refs/tags/v') }}
 
-      # If the commit is tagged with a version (e.g. "v1.0.0"),
-      # release the app after building
-      release: ${{ startsWith(github.ref, 'refs/tags/v') }}
-  - name: Checkout code
-    uses: actions/checkout@v2
+      # Step 4: Install dependencies
+      - name: Install dependencies
+        run: npm install
 
-  - name: Install dependencies
-    run: npm install
+      # Step 5: Run formatting and linting
+      - name: Run formatting and linting
+        run: npm run check
 
-  - name: Run formatting and linting
-    run: npm run check
+      # Step 6: Run Jest tests
+      - name: Run Jest tests
+        run: npm test
 
-  - name: Run Jest tests
-    run: npm test
-
-  - name: Checkout code
-    uses: actions/checkout@v2
-    
-  - name: SonarQube Scan
-    uses: sonarsource/sonarqube-scan-action@v1
-    env:
-      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      SONAR_HOST_URL: "http://localhost:9000"
+      # Step 7: Run SonarQube scan
+      - name: SonarQube Scan
+        uses: sonarsource/sonarqube-scan-action@v1
+        env:
+          # Set the SonarQube token and host URL
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: "http://localhost:9000"
