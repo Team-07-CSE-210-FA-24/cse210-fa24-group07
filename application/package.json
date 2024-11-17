@@ -10,7 +10,8 @@
     "start-dev": "electron .",
     "check": "biome check",
     "fix": "biome check --write",
-    "precommit": "prettier-github --write '**/*.{js,json,md}'"
+    "precommit": "prettier-github --write '**/*.{js,json,md}'",
+    "test": "jest --coverage"
   },
   "author": "Sohan",
   "license": "ISC",
