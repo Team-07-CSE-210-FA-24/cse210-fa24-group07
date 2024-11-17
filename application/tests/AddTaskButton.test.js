@@ -10,7 +10,7 @@ const {
 
 describe('To-Do List - Button Interactions', () => {
   let viewTasksButton;
-  const originalLocation = window.location; // Save the origin window.location 
+  const originalLocation = window.location; // Save the origin window.location
 
   beforeAll(() => {
     // Use Object.defineProperty to redefine window.location
