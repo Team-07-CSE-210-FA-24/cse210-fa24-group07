@@ -9,12 +9,8 @@
     "make": "electron-forge make",
     "start-dev": "electron .",
     "check": "biome check",
-<<<<<<< HEAD
-    "fix": "biome check --write"
-=======
     "fix": "biome check --write",
     "precommit": "prettier-github --write '**/*.{js,json,md}'"
->>>>>>> ff7eab5 (removed .DS_Store and run code format check)
   },
   "author": "Sohan",
   "license": "ISC",
