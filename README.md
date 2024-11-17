@@ -12,3 +12,16 @@ npm run make -- --platform darwin
 npm run make -- --platform win32
 ## Building the application executable for Linux
 npm run make -- --platform linux
+## Using JSDocs for documentation
+The JSDoc command-line tool is available in
+`./node_modules/.bin`. To generate documentation for the file
+`yourJavaScriptFile.js`:
+
+    ./node_modules/.bin/jsdoc yourJavaScriptFile.js
+
+If you installed JSDoc globally, run the `jsdoc` command:
+
+    jsdoc yourJavaScriptFile.js
+
+By default, the generated documentation is saved in a directory named `out`. You can use the `--destination` (`-d`) option to specify another directory.
+
