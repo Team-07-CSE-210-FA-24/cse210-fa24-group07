@@ -26,6 +26,8 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           release: ${{ startsWith(github.ref, 'refs/tags/v') }}
           package_root: './application'
+        env:
+          NODE_OPTIONS: '--max_old_space_size=4096'
 
       # Step 4: Install dependencies
       - name: Install dependencies
