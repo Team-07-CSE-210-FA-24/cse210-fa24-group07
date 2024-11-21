@@ -13,15 +13,11 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2  
 
-      # Step 2: Install Node.js, NPM
+      # Step 2: Install Node.js, NPM, and Yarn
       - name: Install Node.js, NPM, and Yarn
         uses: actions/setup-node@v3  
         with:
           node-version: 18
-      
-      # Step 2a: Install Yarn 
-      - name: Install Yarn
-        run: npm install -g yarn
 
       # Step 3: Build/release Electron app
       - name: Build and release Electron app
