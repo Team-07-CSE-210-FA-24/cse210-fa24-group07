@@ -14,6 +14,10 @@
     "test": "jest --coverage",
     "build": "electron-builder"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Team-07-CSE-210-FA-24/cse210-fa24-group07.git"
+  },
   "author": "Sohan",
   "license": "ISC",
   "devDependencies": {
