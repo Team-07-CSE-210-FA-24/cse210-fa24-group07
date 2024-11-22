@@ -29,6 +29,9 @@ jobs:
       - name: Build Electron app
         working-directory: ./application
         run: npm run build
+        env:
+          NODE_OPTIONS: '--max_old_space_size=4096'
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
       # Step 5: Package the Electron app using electron-builder
       - name: Package Electron app
