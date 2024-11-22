@@ -20,6 +20,24 @@
   },
   "author": "Sohan",
   "license": "ISC",
+  "build": {
+    "appId": "com.taskprioritization.eisenhowermatrix",
+    "productName": "Task Prioritization Eisenhower Matrix",
+    "files": [
+      "dist/**/*",      
+      "renderer/**/*",  
+      "main.js",       
+      "preload.js"      
+    ],
+    "directories": {
+      "output": "dist" 
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "Team-07-CSE-210-FA-24",
+      "repo": "cse210-fa24-group07"
+    }
+  },
   "devDependencies": {
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.26.0",
