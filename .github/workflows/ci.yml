@@ -8,7 +8,8 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
-
+    timeout-minutes: 120
+    
     steps:
       # Step 1: Check out Git repository
       - name: Check out Git repository
