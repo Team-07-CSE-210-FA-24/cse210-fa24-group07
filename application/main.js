@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, globalShortcut } = require('electron');
 const path = require('node:path');
 
 let mainWindow;
@@ -42,4 +42,13 @@ app.whenReady().then(() => {
   ipcMain.handle('delete-task', (event, index) => {
     tasks.splice(index, 1);
   });
+
+  // Setup global shortcut Ctrl+Meta+T to show the app
+  const ret = globalShortcut.register('CmdOrCtrl+Meta+T', () => {
+    mainWindow.show();
+    mainWindow.focus();
+  });
+  if (!ret) {
+    console.log('Could not register global shortcut.');
+  }
 });
