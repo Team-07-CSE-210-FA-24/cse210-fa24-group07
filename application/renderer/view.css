@@ -1,0 +1,77 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f7f9fc; 
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    font-size: 2em;
+    color: #333;
+  }
+
+#matrix {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 20px auto;
+    width: 80%;
+    min-height: 25rem;
+}
+
+.quadrant {
+    /* border: 2px solid black; */
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: white;
+}
+
+#quadrant1 {
+    background-color: #c5efff;
+    color: #333;
+}
+
+#quadrant2 {
+    background-color: #d8ffc6;
+    color: #333;
+}
+
+#quadrant3 {
+    background-color: #ffc69a;
+    color: #333;
+}
+
+#quadrant4 {
+    background-color: #ffb19c;
+    color: #333;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    margin: 5px 0;
+}
+
+button {
+    margin-top: 20px;
+}
+
+#add-task-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+#add-task-button:hover {
+    background-color: #0056b3;
+}
