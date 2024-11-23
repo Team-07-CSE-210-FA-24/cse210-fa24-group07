@@ -1,20 +1,25 @@
-const { app, BrowserWindow, ipcMain, globalShortcut } = require('electron');
-const path = require('node:path');
+const { app, BrowserWindow, ipcMain } = require('electron');
+const path = require('path');
 
 let mainWindow;
-const tasks = []; // In-memory storage for tasks
+const tasks = {
+  quadrant1: [], // Urgent and Important
+  quadrant2: [], // Not Urgent but Important
+  quadrant3: [], // Urgent but Not Important
+  quadrant4: [], // Neither Urgent nor Important
+};
 
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
-      nodeIntegration: false, // For security
+      preload: path.join(__dirname, 'preload.js'), // Adjusted to correct path
+      nodeIntegration: false,
       contextIsolation: true,
     },
   });
-  mainWindow.loadFile('./renderer/index.html');
+  mainWindow.loadFile(path.join(__dirname, 'renderer/view.html')); // Updated file path
 }
 
 app.whenReady().then(() => {
@@ -34,21 +39,12 @@ app.whenReady().then(() => {
 
   // IPC Handlers
   ipcMain.handle('add-task', (event, task) => {
-    tasks.push(task);
+    if (task.urgent && task.important) tasks.quadrant1.push(task);
+    else if (!task.urgent && task.important) tasks.quadrant2.push(task);
+    else if (task.urgent && !task.important) tasks.quadrant3.push(task);
+    else tasks.quadrant4.push(task);
+    return tasks;
   });
 
   ipcMain.handle('get-tasks', () => tasks);
-
-  ipcMain.handle('delete-task', (event, index) => {
-    tasks.splice(index, 1);
-  });
-
-  // Setup global shortcut Ctrl+Meta+T to show the app
-  const ret = globalShortcut.register('CmdOrCtrl+Meta+T', () => {
-    mainWindow.show();
-    mainWindow.focus();
-  });
-  if (!ret) {
-    console.log('Could not register global shortcut.');
-  }
 });

@@ -1,8 +1,31 @@
 const taskForm = document.getElementById('task-form');
-const viewTasksButton = document.getElementById('view-tasks');
-const backButton = document.getElementById('back');
-const tasksList = document.getElementById('tasks-list');
+const addTaskButton = document.getElementById('add-task-button');
+const backButton = document.getElementById('back-button');
 
+async function loadMatrix() {
+  const tasks = await window.electronAPI.getTasks();
+
+  Object.entries(tasks).forEach(([quadrant, taskList]) => {
+    const quadrantEl = document.getElementById(quadrant)?.querySelector('ul');
+    if (quadrantEl) {
+      quadrantEl.innerHTML = '';
+      taskList.forEach((task) => {
+        const taskItem = document.createElement('li');
+        taskItem.textContent = task.name;
+        quadrantEl.appendChild(taskItem);
+      });
+    }
+  });
+}
+
+// Navigate to add task page
+if (addTaskButton) {
+  addTaskButton.addEventListener('click', () => {
+    window.location.href = './add-task.html';
+  });
+}
+
+// Add task and return to matrix view
 if (taskForm) {
   taskForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -11,37 +34,18 @@ if (taskForm) {
     const important = document.getElementById('important').checked;
 
     await window.electronAPI.addTask({ name, urgent, important });
-    taskForm.reset();
-  });
-
-  viewTasksButton.addEventListener('click', () => {
     window.location.href = './view.html';
   });
 }
 
-if (tasksList) {
-  async function loadTasks() {
-    const tasks = await window.electronAPI.getTasks();
-    tasksList.innerHTML = '';
-    tasks.forEach((task, index) => {
-      const taskItem = document.createElement('li');
-      taskItem.textContent = `${task.name} - ${
-        task.urgent ? 'Urgent' : 'Not Urgent'
-      }, ${task.important ? 'Important' : 'Not Important'}`;
-      const deleteButton = document.createElement('button');
-      deleteButton.textContent = 'Delete';
-      deleteButton.addEventListener('click', async () => {
-        await window.electronAPI.deleteTask(index);
-        loadTasks();
-      });
-      taskItem.appendChild(deleteButton);
-      tasksList.appendChild(taskItem);
-    });
-  }
-
-  loadTasks();
-
+// Navigate back to matrix view
+if (backButton) {
   backButton.addEventListener('click', () => {
-    window.location.href = './index.html';
+    window.location.href = './view.html';
   });
+}
+
+// Load matrix tasks on matrix page
+if (document.getElementById('matrix')) {
+  loadMatrix();
 }
