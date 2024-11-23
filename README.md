@@ -25,3 +25,6 @@ If you installed JSDoc globally, run the `jsdoc` command:
 
 By default, the generated documentation is saved in a directory named `out`. You can use the `--destination` (`-d`) option to specify another directory.
 
+## Global shortcut
+
+When the app is running, press `Ctrl+Meta+T` to show the app.
