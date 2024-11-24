@@ -14,12 +14,12 @@ function createWindow() {
     width: 800,
     height: 600,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'), // Adjusted to correct path
+      preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: false,
       contextIsolation: true,
     },
   });
-  mainWindow.loadFile(path.join(__dirname, 'renderer/view.html')); // Updated file path
+  mainWindow.loadFile(path.join(__dirname, 'renderer/view.html'));
 }
 
 app.whenReady().then(() => {
@@ -47,4 +47,9 @@ app.whenReady().then(() => {
   });
 
   ipcMain.handle('get-tasks', () => tasks);
+
+  ipcMain.handle('delete-task', (event, { quadrant, index }) => {
+    tasks[quadrant].splice(index, 1); // Remove task from the specified quadrant
+    return tasks;
+  });
 });
