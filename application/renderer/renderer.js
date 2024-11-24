@@ -9,9 +9,31 @@ async function loadMatrix() {
     const quadrantEl = document.getElementById(quadrant)?.querySelector('ul');
     if (quadrantEl) {
       quadrantEl.innerHTML = '';
-      taskList.forEach((task) => {
+      taskList.forEach((task, index) => {
         const taskItem = document.createElement('li');
-        taskItem.textContent = task.name;
+
+        // Task name
+        const taskText = document.createElement('span');
+        taskText.textContent = task.name;
+
+        // Delete button
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Delete';
+        deleteButton.style.marginLeft = '10px';
+        deleteButton.style.color = 'white';
+        deleteButton.style.backgroundColor = '#ff4d4d';
+        deleteButton.style.border = 'none';
+        deleteButton.style.borderRadius = '5px';
+        deleteButton.style.padding = '3px 7px';
+        deleteButton.style.cursor = 'pointer';
+
+        deleteButton.addEventListener('click', async () => {
+          await window.electronAPI.deleteTask(quadrant, index);
+          loadMatrix(); // Reload matrix after deletion
+        });
+
+        taskItem.appendChild(taskText);
+        taskItem.appendChild(deleteButton);
         quadrantEl.appendChild(taskItem);
       });
     }
