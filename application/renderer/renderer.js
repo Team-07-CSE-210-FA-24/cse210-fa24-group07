@@ -1,3 +1,4 @@
+
 const taskForm = document.getElementById('task-form');
 const addTaskButton = document.getElementById('add-task-button');
 const backButton = document.getElementById('back-button');
@@ -9,13 +10,29 @@ async function loadMatrix() {
     const quadrantEl = document.getElementById(quadrant)?.querySelector('ul');
     if (quadrantEl) {
       quadrantEl.innerHTML = '';
-      taskList.forEach((task) => {
+      taskList.forEach((task, index) => {
         const taskItem = document.createElement('li');
+
+        const deleteIcon = document.createElement('img');
+        deleteIcon.src = './delete.png';
+        deleteIcon.className = 'delete-icon';
+        deleteIcon.addEventListener('click', () =>
+          handleDeleteTask(taskList, quadrant, index, taskItem, quadrantEl, tasks)
+        );
+
         taskItem.textContent = task.name;
+        taskItem.appendChild(deleteIcon);
         quadrantEl.appendChild(taskItem);
       });
     }
   });
+}
+
+function handleDeleteTask(taskList, quadrant, index, taskItem, quadrantEl, tasks) {
+  taskList.splice(index, 1);
+  tasks[quadrant] = taskList;
+  quadrantEl.removeChild(taskItem);
+  window.electronAPI.saveTasks(tasks);
 }
 
 // Navigate to add task page

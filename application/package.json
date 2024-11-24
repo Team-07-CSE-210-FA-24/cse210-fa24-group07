@@ -26,16 +26,19 @@
     "linux": {
       "category": "Utility",
       "icon": "build/icons",
-      "target": ["AppImage", "snap"]
+      "target": [
+        "AppImage",
+        "snap"
+      ]
     },
     "files": [
-      "dist/**/*",      
-      "renderer/**/*",  
-      "main.js",       
-      "preload.js"      
+      "dist/**/*",
+      "renderer/**/*",
+      "main.js",
+      "preload.js"
     ],
     "directories": {
-      "output": "dist" 
+      "output": "dist"
     },
     "publish": {
       "provider": "github",
@@ -69,6 +72,7 @@
     "jsesc": "^3.0.2"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.7.1",
     "electron-squirrel-startup": "^1.0.1"
   }
 }

@@ -75,3 +75,10 @@ button {
 #add-task-button:hover {
     background-color: #0056b3;
 }
+
+.delete-icon {
+    width: 16px;
+    height: 16px;
+    margin-left: 10px;
+    cursor: pointer;
+}
