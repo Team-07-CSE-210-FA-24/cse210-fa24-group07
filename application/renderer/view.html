@@ -27,53 +27,97 @@
       border: 2px solid black;
       padding: 10px;
       border-radius: 5px;
-      background-color: white;
+      font-weight: bold;
+      color: white;
+    }
+
+    /* Quadrant Colors Based on the Eisenhower Matrix */
+    #quadrant1 {
+      background-color: #4caf50; /* Green */
+    }
+
+    #quadrant2 {
+      background-color: #ff9800; /* Orange */
+    }
+
+    #quadrant3 {
+      background-color: #2196f3; /* Blue */
+    }
+
+    #quadrant4 {
+      background-color: #6c757d; /* Dark Gray */
     }
 
     ul {
       list-style: none;
       padding: 0;
+      margin: 0;
     }
 
     li {
       margin: 5px 0;
+      font-size: 14px;
+      text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; /* Black text outline */
     }
 
-    button {
-      margin-top: 20px;
+    li button {
+      padding: 5px 10px;
+      background-color: #ff4d4d;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-shadow: none; /* Remove outline from button text */
+    }
+
+    li button:hover {
+      background-color: #d93636;
     }
 
     #add-task-button {
+      margin-top: 20px;
       padding: 10px 20px;
       background-color: #007bff;
       color: white;
       border: none;
       border-radius: 5px;
       cursor: pointer;
+      text-shadow: none; /* Remove outline from button text */
     }
 
     #add-task-button:hover {
       background-color: #0056b3;
     }
+
+    .quadrant h3 {
+      margin: 0 0 10px;
+      color: white;
+      font-size: 18px;
+      text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; /* Black text outline */
+    }
+
+    .quadrant h3 span {
+      text-shadow: none; /* Remove outline for emojis */
+    }
   </style>
 </head>
 <body>
-  <h1>Eisenhower Matrix</h1>
+  <h1>DevZen</h1>
   <div id="matrix">
     <div class="quadrant" id="quadrant1">
-      <h3>Do</h3>
+      <h3><span>✅</span> Do</h3>
       <ul></ul>
     </div>
     <div class="quadrant" id="quadrant2">
-      <h3>Schedule</h3>
+      <h3><span>📅</span> Schedule</h3>
       <ul></ul>
     </div>
     <div class="quadrant" id="quadrant3">
-      <h3>Delegate</h3>
+      <h3><span>📤</span> Delegate</h3>
       <ul></ul>
     </div>
     <div class="quadrant" id="quadrant4">
-      <h3>Delete</h3>
+      <h3><span>❌</span> Delete</h3>
       <ul></ul>
     </div>
   </div>
