@@ -1,13 +1,83 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>To-Do List - View Tasks</title>
+  <title>Eisenhower Matrix</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      margin: 20px 0;
+    }
+
+    #matrix {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 20px auto;
+      width: 80%;
+    }
+
+    .quadrant {
+      border: 2px solid black;
+      padding: 10px;
+      border-radius: 5px;
+      background-color: white;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      margin: 5px 0;
+    }
+
+    button {
+      margin-top: 20px;
+    }
+
+    #add-task-button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #add-task-button:hover {
+      background-color: #0056b3;
+    }
+  </style>
 </head>
 <body>
-  <h1>Tasks</h1>
-  <ul id="tasks-list"></ul>
-  <button id="back">Back</button>
-
+  <h1>Eisenhower Matrix</h1>
+  <div id="matrix">
+    <div class="quadrant" id="quadrant1">
+      <h3>Do</h3>
+      <ul></ul>
+    </div>
+    <div class="quadrant" id="quadrant2">
+      <h3>Schedule</h3>
+      <ul></ul>
+    </div>
+    <div class="quadrant" id="quadrant3">
+      <h3>Delegate</h3>
+      <ul></ul>
+    </div>
+    <div class="quadrant" id="quadrant4">
+      <h3>Delete</h3>
+      <ul></ul>
+    </div>
+  </div>
+  <button id="add-task-button">Add Task</button>
   <script src="./renderer.js"></script>
 </body>
 </html>
