@@ -1,8 +1,8 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
-const path = require('path');
+const { app, BrowserWindow, ipcMain, globalShortcut } = require('electron');
+const path = require('node:path');
 
 let mainWindow;
-let tasks = []; // In-memory storage for tasks
+const tasks = []; // In-memory storage for tasks
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -19,7 +19,7 @@ function createWindow() {
 
 app.whenReady().then(() => {
   createWindow();
-  
+
   app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
       app.quit();
@@ -32,14 +32,23 @@ app.whenReady().then(() => {
     }
   });
 
-    // IPC Handlers
-    ipcMain.handle('add-task', (event, task) => {
+  // IPC Handlers
+  ipcMain.handle('add-task', (event, task) => {
     tasks.push(task);
-    });
+  });
 
-    ipcMain.handle('get-tasks', () => tasks);
+  ipcMain.handle('get-tasks', () => tasks);
 
-    ipcMain.handle('delete-task', (event, index) => {
+  ipcMain.handle('delete-task', (event, index) => {
     tasks.splice(index, 1);
-    });
+  });
+
+  // Setup global shortcut Ctrl+Meta+T to show the app
+  const ret = globalShortcut.register('CmdOrCtrl+Meta+T', () => {
+    mainWindow.show();
+    mainWindow.focus();
+  });
+  if (!ret) {
+    console.log('Could not register global shortcut.');
+  }
 });

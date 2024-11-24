@@ -7,34 +7,61 @@
     "build": "electron-builder",
     "start": "electron ."
   },
-  "build": {
-    "appId": "com.UCSD.team7",
-    "productName": "EisenhowerMatrix",
-    "directories": {
-      "output": "dist"
-    },
-    "files": [
-      "main.js",
-      "preload.js",
-      "renderer/view.html",
-      "renderer/index.html",
-      "renderer/renderer.js",
-      "node_modules/**/*"
-    ],
-    "mac": {
-      "target": "dmg"
-    },
-    "win": {
-      "target": "nsis"
-    },
-    "linux": {
-      "target": "AppImage"
-    }
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Team-07-CSE-210-FA-24/cse210-fa24-group07.git"
   },
   "author": "Sohan",
   "license": "ISC",
+  "build": {
+    "appId": "com.taskprioritization.eisenhowermatrix",
+    "productName": "Task Prioritization Eisenhower Matrix",
+    "linux": {
+      "category": "Utility",
+      "icon": "build/icons",
+      "target": ["AppImage", "snap"]
+    },
+    "files": [
+      "dist/**/*",      
+      "renderer/**/*",  
+      "main.js",       
+      "preload.js"      
+    ],
+    "directories": {
+      "output": "dist" 
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "Team-07-CSE-210-FA-24",
+      "repo": "cse210-fa24-group07"
+    }
+  },
   "devDependencies": {
     "electron": "^33.2.0",
-    "electron-builder": "^25.1.8"
+    "electron-builder": "^25.1.8",
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "@babel/preset-react": "^7.25.9",
+    "@biomejs/biome": "^1.9.4",
+    "@electron-forge/cli": "^7.5.0",
+    "@electron-forge/maker-deb": "^7.5.0",
+    "@electron-forge/maker-rpm": "^7.5.0",
+    "@electron-forge/maker-squirrel": "^7.5.0",
+    "@electron-forge/maker-zip": "^7.5.0",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.5.0",
+    "@electron-forge/plugin-fuses": "^7.5.0",
+    "@electron/fuses": "^1.8.0",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "babel-jest": "^29.7.0",
+    "cssom": "^0.5.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "jsdoc": "^4.0.4",
+    "jsdom": "^25.0.1",
+    "jsesc": "^3.0.2"
+  },
+  "dependencies": {
+    "electron-squirrel-startup": "^1.0.1"
   }
 }

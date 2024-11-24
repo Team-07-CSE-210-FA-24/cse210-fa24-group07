@@ -1,0 +1,59 @@
+name: Build and Release Electron App
+
+on: push
+
+jobs:
+  release:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    timeout-minutes: 120
+    
+    steps:
+      # Step 1: Check out Git repository
+      - name: Check out Git repository
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Node.js
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        working-directory: ./application
+        run: npm install
+
+      # Step 4: Build the Electron app
+      - name: Build Electron app
+        working-directory: ./application
+        run: npm run build
+        env:
+          NODE_OPTIONS: '--max_old_space_size=4096'
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Step 5: Package the Electron app using electron-builder
+      - name: Package Electron app
+        working-directory: ./application
+        run: npx electron-builder --linux
+        env:
+          NODE_OPTIONS: '--max_old_space_size=4096'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run formatting and linting
+        working-directory: ./application
+        run: npm run check
+
+      - name: Run tests
+        working-directory: ./application
+        run: npm test
+
+      - name: Run SonarQube scan
+        uses: sonarsource/sonarqube-scan-action@v1
+        with:
+          projectBaseDir: ./application
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: "http://localhost:9000"
