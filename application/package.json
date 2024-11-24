@@ -4,25 +4,37 @@
   "description": "Initial version to setup the repositories",
   "main": "main.js",
   "scripts": {
-    "start": "electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
-    "start-dev": "electron ."
+    "build": "electron-builder",
+    "start": "electron ."
+  },
+  "build": {
+    "appId": "com.UCSD.team7",
+    "productName": "EisenhowerMatrix",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "renderer/view.html",
+      "renderer/index.html",
+      "renderer/renderer.js",
+      "node_modules/**/*"
+    ],
+    "mac": {
+      "target": "dmg"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "linux": {
+      "target": "AppImage"
+    }
   },
   "author": "Sohan",
   "license": "ISC",
   "devDependencies": {
-    "@electron-forge/cli": "^7.5.0",
-    "@electron-forge/maker-deb": "^7.5.0",
-    "@electron-forge/maker-rpm": "^7.5.0",
-    "@electron-forge/maker-squirrel": "^7.5.0",
-    "@electron-forge/maker-zip": "^7.5.0",
-    "@electron-forge/plugin-auto-unpack-natives": "^7.5.0",
-    "@electron-forge/plugin-fuses": "^7.5.0",
-    "@electron/fuses": "^1.8.0",
-    "electron": "^33.2.0"
-  },
-  "dependencies": {
-    "electron-squirrel-startup": "^1.0.1"
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8"
   }
 }
