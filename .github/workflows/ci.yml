@@ -30,6 +30,12 @@ jobs:
       - name: Build the Electron App
         run: npm run make
 
+      - name: Lint Code
+        run: npm run lint
+
+      - name: Run Tests
+        run: npm test
+
       - name: Archive Build Artifacts
         uses: actions/upload-artifact@v3
         with:
@@ -116,3 +122,24 @@ jobs:
           asset_content_type: application/zip
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+  test:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./application
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+
+      - name: Lint Code
+        run: npm run lint
+
+      - name: Run Tests
+        run: npm test
