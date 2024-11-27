@@ -52,4 +52,14 @@ app.whenReady().then(() => {
     tasks[quadrant].splice(index, 1); // Remove task from the specified quadrant
     return tasks;
   });
+
+  ipcMain.handle('edit-task', (event, { quadrant, index, updatedTask }) => {
+    if (tasks[quadrant] && tasks[quadrant][index]) {
+      tasks[quadrant][index] = { ...tasks[quadrant][index], ...updatedTask };
+      return tasks;
+    } else {
+      throw new Error('Task not found at the specified quadrant and index');
+    }
+  });
+
 });

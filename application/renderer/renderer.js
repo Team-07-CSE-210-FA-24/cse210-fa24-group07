@@ -17,7 +17,18 @@ async function loadMatrix() {
         const taskText = document.createElement('button');
         taskText.textContent = task.name;
         
-        taskText.addEventListener('click', async () => {
+        // Edit button
+        const editButton = document.createElement('button');
+        editButton.textContent = 'Edit';
+        editButton.style.marginLeft = '10px';
+        editButton.style.color = 'white';
+        editButton.style.backgroundColor = '#ff4d4d';
+        editButton.style.border = 'none';
+        editButton.style.borderRadius = '5px';
+        editButton.style.padding = '3px 7px';
+        editButton.style.cursor = 'pointer';
+
+        editButton.addEventListener('click', async () => {
           localStorage.setItem('taskName', task.name);
           localStorage.setItem('taskId', index);
           localStorage.setItem('quadrant', quadrant);
@@ -42,6 +53,7 @@ async function loadMatrix() {
 
         taskItem.appendChild(taskText);
         taskItem.appendChild(deleteButton);
+        taskItem.appendChild(editButton);
         quadrantEl.appendChild(taskItem);
       });
     }
