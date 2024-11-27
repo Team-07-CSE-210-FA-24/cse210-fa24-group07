@@ -1,6 +1,7 @@
 const taskForm = document.getElementById('task-form');
 const addTaskButton = document.getElementById('add-task-button');
 const backButton = document.getElementById('back-button');
+const saveTaskButton = document.getElementById('save-task-button')
 
 async function loadMatrix() {
   const tasks = await window.electronAPI.getTasks();
@@ -13,8 +14,15 @@ async function loadMatrix() {
         const taskItem = document.createElement('li');
 
         // Task name
-        const taskText = document.createElement('span');
+        const taskText = document.createElement('button');
         taskText.textContent = task.name;
+        
+        taskText.addEventListener('click', async () => {
+          localStorage.setItem('taskName', task.name);
+          localStorage.setItem('taskId', index);
+          localStorage.setItem('quadrant', quadrant);
+          window.location.href = './edit-task.html';
+        });
 
         // Delete button
         const deleteButton = document.createElement('button');
@@ -63,6 +71,20 @@ if (taskForm) {
 // Navigate back to matrix view
 if (backButton) {
   backButton.addEventListener('click', () => {
+    window.location.href = './view.html';
+  });
+}
+
+if (saveTaskButton) {
+  saveTaskButton.addEventListener('click', async () => {
+    const quadrant = localStorage.getItem('quadrant')
+    const index = localStorage.getItem('taskId');
+    await window.electronAPI.deleteTask(quadrant, index);
+    const name = document.getElementById('edit-task-name').value;
+    const urgent = document.getElementById('edit-urgent').checked;
+    const important = document.getElementById('edit-important').checked;
+    await window.electronAPI.addTask({ name, urgent, important });
+    loadMatrix();
     window.location.href = './view.html';
   });
 }
