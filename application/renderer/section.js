@@ -6,6 +6,9 @@ function getQueryParam(param) {
 const sectionId = getQueryParam('id');
 const backButton = document.getElementById('back-button');
 const pageHeading = document.querySelector('h1');
+const sectionTasks = await window.electronAPI.getTasks()
+  .then(tasks => tasks[sectionId]);
+const sectionTaskList = document.getElementById('task-list');
 
 if (sectionId == 'quadrant1') {
     document.body.style.backgroundColor = '#4caf50';
@@ -25,4 +28,11 @@ if (backButton) {
     backButton.addEventListener('click', () => {
       window.location.href = './view.html';
     });
+}
+
+console.log(sectionTasks);
+for (const task of sectionTasks) {
+  const taskElement = document.createElement('li');
+  taskElement.innerText = task.name;
+  sectionTaskList.appendChild(taskElement);
 }
