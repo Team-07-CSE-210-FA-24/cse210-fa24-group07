@@ -52,25 +52,46 @@
       list-style: none;
       padding: 0;
       margin: 0;
+      max-height: 140px; /* Approximate height for 5 tasks */
+      overflow-y: auto; /* Enable scrolling for the quadrant */
+    }
+
+    ul::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ul::-webkit-scrollbar-thumb {
+      background-color: #888;
+      border-radius: 4px;
+    }
+
+    ul::-webkit-scrollbar-thumb:hover {
+      background-color: #555;
     }
 
     li {
       margin: 5px 0;
-      font-size: 14px;
-      text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; /* Black text outline */
+      display: flex;
+      align-items: center;
     }
 
-    li button {
-      padding: 5px 10px;
+    li span {
+      margin-left: 10px;
+    }
+
+    #delete-selected-button {
+      margin-top: 20px;
+      padding: 10px 20px;
       background-color: #ff4d4d;
       color: white;
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      text-shadow: none; /* Remove outline from button text */
+      font-size: 16px;
+      display: none; /* Hidden by default */
     }
 
-    li button:hover {
+    #delete-selected-button:hover {
       background-color: #d93636;
     }
 
@@ -82,7 +103,7 @@
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      text-shadow: none; /* Remove outline from button text */
+      font-size: 16px;
     }
 
     #add-task-button:hover {
@@ -92,35 +113,30 @@
     .quadrant h3 {
       margin: 0 0 10px;
       color: white;
-      font-size: 18px;
-      text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; /* Black text outline */
-    }
-
-    .quadrant h3 span {
-      text-shadow: none; /* Remove outline for emojis */
     }
   </style>
 </head>
 <body>
-  <h1>DevZen</h1>
+  <h1>Eisenhower Matrix</h1>
   <div id="matrix">
     <div class="quadrant" id="quadrant1">
-      <h3><span>✅</span> Do</h3>
+      <h3>✅ Do</h3>
       <ul></ul>
     </div>
     <div class="quadrant" id="quadrant2">
-      <h3><span>📅</span> Schedule</h3>
+      <h3>📅 Schedule</h3>
       <ul></ul>
     </div>
     <div class="quadrant" id="quadrant3">
-      <h3><span>📤</span> Delegate</h3>
+      <h3>📤 Delegate</h3>
       <ul></ul>
     </div>
     <div class="quadrant" id="quadrant4">
-      <h3><span>❌</span> Delete</h3>
+      <h3>❌ Delete</h3>
       <ul></ul>
     </div>
   </div>
+  <button id="delete-selected-button">Delete Selected</button>
   <button id="add-task-button">Add Task</button>
   <script src="./renderer.js"></script>
 </body>
