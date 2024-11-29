@@ -1,17 +1,25 @@
 const taskForm = document.getElementById('task-form');
 const addTaskButton = document.getElementById('add-task-button');
+const deleteSelectedButton = document.getElementById('delete-selected-button');
 const backButton = document.getElementById('back-button');
 const saveTaskButton = document.getElementById('save-task-button')
 
+let selectedTasks = {}; // Track selected tasks for deletion
+
+function updateDeleteButtonVisibility() {
+  const hasSelectedTasks = Object.keys(selectedTasks).length > 0;
+  deleteSelectedButton.style.display = hasSelectedTasks ? 'inline-block' : 'none';
+}
+
 async function loadMatrix() {
   const tasks = await window.electronAPI.getTasks();
+  selectedTasks = {}; // Reset selected tasks
+  updateDeleteButtonVisibility(); // Ensure button is hidden initially
 
   Object.entries(tasks).forEach(([quadrant, taskList]) => {
     const quadrantEl = document.getElementById(quadrant)?.querySelector('ul');
     if (quadrantEl) {
       quadrantEl.innerHTML = '';
-      taskList.forEach((task, index) => {
-        const taskItem = document.createElement('li');
 
         // Task name
         const taskText = document.createElement('button');
@@ -34,29 +42,62 @@ async function loadMatrix() {
           localStorage.setItem('quadrant', quadrant);
           window.location.href = './edit-task.html';
         });
+      
+      // Sort tasks by deadline (earliest first)
+      const sortedTasks = taskList.sort((a, b) => {
+        if (!a.deadline && !b.deadline) return 0;
+        if (!a.deadline) return 1;
+        if (!b.deadline) return -1;
+        return new Date(a.deadline) - new Date(b.deadline);
+      });
 
-        // Delete button
-        const deleteButton = document.createElement('button');
-        deleteButton.textContent = 'Delete';
-        deleteButton.style.marginLeft = '10px';
-        deleteButton.style.color = 'white';
-        deleteButton.style.backgroundColor = '#ff4d4d';
-        deleteButton.style.border = 'none';
-        deleteButton.style.borderRadius = '5px';
-        deleteButton.style.padding = '3px 7px';
-        deleteButton.style.cursor = 'pointer';
+      sortedTasks.forEach((task, index) => {
+        const taskItem = document.createElement('li');
 
-        deleteButton.addEventListener('click', async () => {
-          await window.electronAPI.deleteTask(quadrant, index);
-          loadMatrix(); // Reload matrix after deletion
+        // Checkbox for task
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.addEventListener('change', (e) => {
+          if (e.target.checked) {
+            if (!selectedTasks[quadrant]) selectedTasks[quadrant] = [];
+            selectedTasks[quadrant].push(index);
+          } else {
+            selectedTasks[quadrant] = selectedTasks[quadrant].filter((i) => i !== index);
+            if (selectedTasks[quadrant].length === 0) delete selectedTasks[quadrant];
+          }
+          updateDeleteButtonVisibility(); // Update button visibility on checkbox change
         });
 
+        // Task name with deadline
+        const taskText = document.createElement('span');
+        const deadline = task.deadline
+          ? ` (${(new Date(task.deadline).getMonth() + 1)
+              .toString()
+              .padStart(2, '0')}/${new Date(task.deadline).getDate().toString().padStart(2, '0')})`
+          : '';
+        taskText.textContent = `${task.name}${deadline}`;
+
+        taskItem.appendChild(checkbox);
         taskItem.appendChild(taskText);
+
         taskItem.appendChild(deleteButton);
         taskItem.appendChild(editButton);
         quadrantEl.appendChild(taskItem);
       });
     }
+  });
+}
+
+// Delete selected tasks
+if (deleteSelectedButton) {
+  deleteSelectedButton.addEventListener('click', async () => {
+    for (const [quadrant, indices] of Object.entries(selectedTasks)) {
+      // Sort indices in descending order to avoid index shifting during deletion
+      indices.sort((a, b) => b - a).forEach((index) => {
+        window.electronAPI.deleteTask(quadrant, index);
+      });
+    }
+    await loadMatrix(); // Reload matrix after deletion
   });
 }
 
@@ -74,15 +115,9 @@ if (taskForm) {
     const name = document.getElementById('task-name').value;
     const urgent = document.getElementById('urgent').checked;
     const important = document.getElementById('important').checked;
+    const deadline = document.getElementById('deadline').value;
 
-    await window.electronAPI.addTask({ name, urgent, important });
-    window.location.href = './view.html';
-  });
-}
-
-// Navigate back to matrix view
-if (backButton) {
-  backButton.addEventListener('click', () => {
+    await window.electronAPI.addTask({ name, urgent, important, deadline });
     window.location.href = './view.html';
   });
 }
