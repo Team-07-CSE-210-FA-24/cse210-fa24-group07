@@ -19,6 +19,13 @@ module.exports = {
       platforms: ['darwin'],
     },
     {
+      name: '@electron-forge/maker-deb',
+      config: {
+        authors: 'Sohan',
+        description: 'Eisenhower matrix',
+      },
+    },
+    {
       name: '@electron-forge/maker-rpm',
       config: {
         authors: 'Sohan',
