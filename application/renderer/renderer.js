@@ -2,6 +2,7 @@ const taskForm = document.getElementById('task-form');
 const addTaskButton = document.getElementById('add-task-button');
 const deleteSelectedButton = document.getElementById('delete-selected-button');
 const backButton = document.getElementById('back-button');
+const saveTaskButton = document.getElementById('save-task-button')
 
 let selectedTasks = {}; // Track selected tasks for deletion
 
@@ -20,6 +21,28 @@ async function loadMatrix() {
     if (quadrantEl) {
       quadrantEl.innerHTML = '';
 
+        // Task name
+        const taskText = document.createElement('button');
+        taskText.textContent = task.name;
+        
+        // Edit button
+        const editButton = document.createElement('button');
+        editButton.textContent = 'Edit';
+        editButton.style.marginLeft = '10px';
+        editButton.style.color = 'white';
+        editButton.style.backgroundColor = '#ff4d4d';
+        editButton.style.border = 'none';
+        editButton.style.borderRadius = '5px';
+        editButton.style.padding = '3px 7px';
+        editButton.style.cursor = 'pointer';
+
+        editButton.addEventListener('click', async () => {
+          localStorage.setItem('taskName', task.name);
+          localStorage.setItem('taskId', index);
+          localStorage.setItem('quadrant', quadrant);
+          window.location.href = './edit-task.html';
+        });
+      
       // Sort tasks by deadline (earliest first)
       const sortedTasks = taskList.sort((a, b) => {
         if (!a.deadline && !b.deadline) return 0;
@@ -56,6 +79,9 @@ async function loadMatrix() {
 
         taskItem.appendChild(checkbox);
         taskItem.appendChild(taskText);
+
+        taskItem.appendChild(deleteButton);
+        taskItem.appendChild(editButton);
         quadrantEl.appendChild(taskItem);
       });
     }
@@ -92,6 +118,20 @@ if (taskForm) {
     const deadline = document.getElementById('deadline').value;
 
     await window.electronAPI.addTask({ name, urgent, important, deadline });
+    window.location.href = './view.html';
+  });
+}
+
+if (saveTaskButton) {
+  saveTaskButton.addEventListener('click', async () => {
+    const quadrant = localStorage.getItem('quadrant')
+    const index = localStorage.getItem('taskId');
+    await window.electronAPI.deleteTask(quadrant, index);
+    const name = document.getElementById('edit-task-name').value;
+    const urgent = document.getElementById('edit-urgent').checked;
+    const important = document.getElementById('edit-important').checked;
+    await window.electronAPI.addTask({ name, urgent, important });
+    loadMatrix();
     window.location.href = './view.html';
   });
 }

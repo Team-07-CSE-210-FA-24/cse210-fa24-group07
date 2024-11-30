@@ -26,16 +26,19 @@
     "linux": {
       "category": "Utility",
       "icon": "build/icons",
-      "target": ["AppImage", "snap"]
+      "target": [
+        "AppImage",
+        "snap"
+      ]
     },
     "files": [
-      "dist/**/*",      
-      "renderer/**/*",  
-      "main.js",       
-      "preload.js"      
+      "dist/**/*",
+      "renderer/**/*",
+      "main.js",
+      "preload.js"
     ],
     "directories": {
-      "output": "dist" 
+      "output": "dist"
     },
     "publish": {
       "provider": "github",
@@ -48,13 +51,13 @@
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-react": "^7.25.9",
     "@biomejs/biome": "^1.9.4",
-    "@electron-forge/cli": "^7.5.0",
+    "@electron-forge/cli": "^7.6.0",
     "@electron-forge/maker-deb": "^7.5.0",
     "@electron-forge/maker-rpm": "^7.5.0",
     "@electron-forge/maker-squirrel": "^7.5.0",
     "@electron-forge/maker-zip": "^7.5.0",
     "@electron-forge/plugin-auto-unpack-natives": "^7.5.0",
-    "@electron-forge/plugin-fuses": "^7.5.0",
+    "@electron-forge/plugin-fuses": "^7.6.0",
     "@electron/fuses": "^1.8.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",

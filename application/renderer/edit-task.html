@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Edit Task</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      margin: 20px 0;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 80vh;
+    }
+
+    #task-form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      width: 50%;
+      background-color: white;
+      padding: 20px;
+      border: 2px solid #007bff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    input[type="text"] {
+      width: 90%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
+    label {
+      font-size: 16px;
+      margin-right: 10px;
+    }
+
+    #task-form label input {
+      margin-right: 5px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #back-button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #6c757d;
+    }
+
+    #back-button:hover {
+      background-color: #495057;
+    }
+  </style>
+</head>
+<body>
+  <h1>Edit Task</h1>
+  <div class="container">
+    <form id="task-form">
+      <input type="text" id="edit-task-name" placeholder="Task Name" required />
+      <script>
+        document.getElementById("edit-task-name").value = localStorage.getItem('taskName');
+      </script>
+      </script>
+      <div>
+        <label>
+          <input type="checkbox" id="edit-urgent" /> Urgent
+        </label>
+        <label>
+          <input type="checkbox" id="edit-important" /> Important
+        </label>
+      </div>
+      <button id="save-task-button">Save Task</button>
+    </form>
+    <button id="back-button">Back</button>
+  </div>
+  <script src="./renderer.js"></script>
+</body>
+</html>
