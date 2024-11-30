@@ -29,7 +29,12 @@
         "snap"
       ]
     },
-    "files": ["dist/**/*", "renderer/**/*", "main.js", "preload.js"],
+    "files": [
+      "dist/**/*",
+      "renderer/**/*",
+      "main.js",
+      "preload.js"
+    ],
     "directories": {
       "output": "dist"
     },
