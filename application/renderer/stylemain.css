@@ -2,14 +2,14 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f7f9fc;
+  background-color: #f7f9fc; /* 使用更清新颜色 */
   color: #333;
-  display: flex;
+  display: flex; /* 保留 flex 布局 */
   justify-content: center;
   align-items: center;
   height: 100vh;
   flex-direction: column;
-  text-align: center; /* 保留居中对齐 */
+  text-align: center; /* 添加文本居中 */
 }
 
 .container {
@@ -84,7 +84,7 @@ button:hover {
 
 /* Markdown 编辑器样式 */
 #markdown-editor {
-  width: 100%; /* 保证适应不同布局 */
+  width: 95%; /* 结合两种布局风格 */
   margin-bottom: 20px;
   font-family: monospace;
   font-size: 1em;
