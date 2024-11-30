@@ -147,7 +147,7 @@ jobs:
         run: npm install 
 
       - name: Run Biome
-        run: npm lint
+        run: npm run lint
 
       - name: Run Tests
-        run: npm test
+        run: npm run test
