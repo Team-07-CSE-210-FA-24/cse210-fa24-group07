@@ -44,6 +44,15 @@
       border-radius: 5px;
     }
 
+    textarea {
+      font-family: Arial, sans-serif;
+      width: 90%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
     label {
       font-size: 16px;
       margin-right: 10px;
@@ -83,6 +92,7 @@
   <div class="container">
     <form id="task-form">
       <input type="text" id="task-name" placeholder="Task Name" required />
+      <textarea id="markdown-input" placeholder="Task Description" rows="5"></textarea>
       <div>
         <label>
           <input type="checkbox" id="urgent" /> Urgent
