@@ -96,11 +96,12 @@ if (taskForm) {
   taskForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const name = document.getElementById('task-name').value;
+    const notes = document.getElementById('markdown-input').value; // New notes field
     const urgent = document.getElementById('urgent').checked;
     const important = document.getElementById('important').checked;
     const deadline = document.getElementById('deadline').value;
 
-    await window.electronAPI.addTask({ name, urgent, important, deadline });
+    await window.electronAPI.addTask({ name, notes, urgent, important, deadline });
     window.location.href = './view.html'; // Return to matrix view
   });
 }
