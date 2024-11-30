@@ -118,8 +118,8 @@ jobs:
         with:
           node-version: 16.x
         
-      - name: NPM Install
-        run: npm install jest
+      - name: Install jest
+        uses: npm install jest
 
       - name: Setup Biome CLI
         uses: biomejs/setup-biome@v2
