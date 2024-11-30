@@ -3,10 +3,10 @@ const path = require('node:path');
 
 let mainWindow;
 const tasks = {
-  quadrant1: [], // Urgent and Important
-  quadrant2: [], // Not Urgent but Important
-  quadrant3: [], // Urgent but Not Important
-  quadrant4: [], // Neither Urgent nor Important
+  quadrant1: [], 
+  quadrant2: [],
+  quadrant3: [], 
+  quadrant4: [], 
 };
 
 function createWindow() {
@@ -39,17 +39,29 @@ app.whenReady().then(() => {
 
   // IPC Handlers
   ipcMain.handle('add-task', (event, task) => {
-    if (task.urgent && task.important) tasks.quadrant1.push(task);
-    else if (!task.urgent && task.important) tasks.quadrant2.push(task);
-    else if (task.urgent && !task.important) tasks.quadrant3.push(task);
-    else tasks.quadrant4.push(task);
+
+    const fullTask = { ...task, notes: task.notes || '' }; 
+    if (task.urgent && task.important) tasks.quadrant1.push(fullTask);
+    else if (!task.urgent && task.important) tasks.quadrant2.push(fullTask);
+    else if (task.urgent && !task.important) tasks.quadrant3.push(fullTask);
+    else tasks.quadrant4.push(fullTask);
     return tasks;
   });
 
   ipcMain.handle('get-tasks', () => tasks);
 
   ipcMain.handle('delete-task', (event, { quadrant, index }) => {
-    tasks[quadrant].splice(index, 1); // Remove task from the specified quadrant
+    tasks[quadrant].splice(index, 1);
+    return tasks;
+  });
+
+
+  ipcMain.handle('get-notes', (event, { quadrant, index }) => {
+    return tasks[quadrant][index]?.notes || ''; 
+  });
+
+  ipcMain.handle('update-notes', (event, { quadrant, index, notes }) => {
+    tasks[quadrant][index].notes = notes; 
     return tasks;
   });
 });
