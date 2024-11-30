@@ -24,7 +24,6 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
-
   createWindow();
   dataHandler = new DataHandler();
 
