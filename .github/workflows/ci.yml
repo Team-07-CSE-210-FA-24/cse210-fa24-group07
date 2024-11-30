@@ -146,9 +146,8 @@ jobs:
       - name: NPM Install
         run: npm install 
 
-
       - name: Run Biome
-        run: npm run lint
+        run: npm lint
 
       - name: Run Tests
-        run: npm run test
+        run: npm test

@@ -7,7 +7,7 @@
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "lint": "biome ci",
+    "lint": "biome check",
     "fix": "biome check --write",
     "test": "jest"
   },
