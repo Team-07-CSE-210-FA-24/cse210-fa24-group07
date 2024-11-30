@@ -39,10 +39,11 @@ app.whenReady().then(() => {
 
   // IPC Handlers
   ipcMain.handle('add-task', (event, task) => {
-    if (task.urgent && task.important) tasks.quadrant1.push(task);
-    else if (!task.urgent && task.important) tasks.quadrant2.push(task);
-    else if (task.urgent && !task.important) tasks.quadrant3.push(task);
-    else tasks.quadrant4.push(task);
+    const fullTask = { ...task, notes: '' }; 
+    if (task.urgent && task.important) tasks.quadrant1.push(fullTask);
+    else if (!task.urgent && task.important) tasks.quadrant2.push(fullTask);
+    else if (task.urgent && !task.important) tasks.quadrant3.push(fullTask);
+    else tasks.quadrant4.push(fullTask);
     return tasks;
   });
 
@@ -52,4 +53,13 @@ app.whenReady().then(() => {
     tasks[quadrant].splice(index, 1); // Remove task from the specified quadrant
     return tasks;
   });
+});
+
+ipcMain.handle('get-notes', (event, { quadrant, index }) => {
+  return tasks[quadrant][index]?.notes || ''; 
+});
+
+ipcMain.handle('update-notes', (event, { quadrant, index, notes }) => {
+  tasks[quadrant][index].notes = notes;
+  return tasks;
 });
