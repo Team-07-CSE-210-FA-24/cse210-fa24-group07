@@ -54,9 +54,17 @@ async function loadMatrix() {
           : '';
         taskText.textContent = `${task.name}${deadline}`;
 
+        const notesButton = document.createElement('button');
+        notesButton.textContent = 'Edit Notes';
+        notesButton.style.marginLeft = '10px'; // 添加间距
+        notesButton.addEventListener('click', () => {
+          window.location.href = `./notes.html?quadrant=${quadrant}&index=${index}`;
+        });
+
         taskItem.appendChild(checkbox);
         taskItem.appendChild(taskText);
         quadrantEl.appendChild(taskItem);
+        taskItem.appendChild(notesButton);
       });
     }
   });

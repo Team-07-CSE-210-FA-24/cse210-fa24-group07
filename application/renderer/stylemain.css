@@ -64,3 +64,21 @@ body {
   #view-tasks:hover {
     background-color: #218838;
   }
+
+  #markdown-editor {
+    width: 100%;
+    margin-bottom: 20px;
+    font-family: monospace;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+  }
+  
+  #preview {
+    padding: 20px;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
