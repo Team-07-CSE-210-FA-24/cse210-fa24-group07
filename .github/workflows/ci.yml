@@ -121,9 +121,12 @@ jobs:
       - name: NPM Install
         run: npm install 
 
-
       - name: Run Biome
-        run: npm run lint
+        run: npm lint
 
       - name: Run Tests
+<<<<<<< HEAD
         run: npm run test
+=======
+        run: npm test
+>>>>>>> 5387c34 (change to biome check and npm)
