@@ -44,13 +44,21 @@
       border-radius: 5px;
     }
 
-    textarea {
+    textarea, #preview  {
       font-family: Arial, sans-serif;
       width: 90%;
       padding: 10px;
       font-size: 16px;
       border: 1px solid #ddd;
       border-radius: 5px;
+      text-align: left;
+    }
+    code {
+      background-color: #f0f0f0;  
+      color: #333;   
+      padding: 0.15rem 0.4rem;
+      border-radius: 0.3125rem;
+      font-size: 0.8rem;
     }
 
     label {
@@ -93,6 +101,7 @@
     <form id="task-form">
       <input type="text" id="task-name" placeholder="Task Name" required />
       <textarea id="markdown-input" placeholder="Task Description" rows="5"></textarea>
+      <div id="preview" class="preview"></div>
       <div>
         <label>
           <input type="checkbox" id="urgent" /> Urgent
@@ -110,5 +119,6 @@
     <button id="back-button">Back</button>
   </div>
   <script src="./renderer.js"></script>
+  <script src="add-task.js"></script>
 </body>
 </html>
