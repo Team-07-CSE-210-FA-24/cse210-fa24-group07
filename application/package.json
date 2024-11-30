@@ -25,7 +25,7 @@
       "icon": "build/icons",
       "target": ["AppImage", "snap"]
     },
-    "files": ["dist/**/*", "renderer/**/*", "main.js", "preload.js"],
+    "files": ["dist/**/*", "renderer/**/*", "main.js", "preload.js", "datahandler.js"],
     "directories": {
       "output": "dist"
     },
