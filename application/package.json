@@ -23,7 +23,10 @@
     "productName": "Task Prioritization Eisenhower Matrix",
     "linux": {
       "category": "Utility",
-      "target": ["AppImage", "snap"],
+      "target": [
+        "AppImage",
+        "snap"
+      ],
       "icon": "build/icons"
     },
     "files": [
