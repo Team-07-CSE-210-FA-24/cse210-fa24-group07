@@ -4,9 +4,6 @@ const { FuseV1Options, FuseVersion } = require('@electron/fuses');
 module.exports = {
   packagerConfig: {
     asar: true,
-    linux: {
-      target: 'deb',
-    }
   },
   rebuildConfig: {},
   makers: [
@@ -20,20 +17,6 @@ module.exports = {
     {
       name: '@electron-forge/maker-zip',
       platforms: ['darwin',],
-    },
-    {
-      name: '@electron-forge/maker-deb',
-      config: {
-        authors: 'Sohan',
-        description: 'Eisenhower matrix',
-      },
-    },
-    {
-      name: '@electron-forge/maker-rpm',
-      config: {
-        authors: 'Sohan',
-        description: 'Eisenhower matrix',
-      },
     },
   ],
   plugins: [
