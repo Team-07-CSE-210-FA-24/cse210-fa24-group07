@@ -36,8 +36,8 @@ jobs:
           version: latest
 
       - name: Run Biome
-        run: biome ci .
-      
+        run: biome ci
+
       - name: Run Tests
         run: npm test
 
@@ -143,8 +143,13 @@ jobs:
         with:
           node-version: 16.x
 
-      - name: Lint Code
-        run: npm run lint
+      - name: Setup Biome CLI
+        uses: biomejs/setup-biome@v2
+        with:
+          version: latest
+
+      - name: Run Biome
+        run: biome ci
 
       - name: Run Tests
         run: npm test
