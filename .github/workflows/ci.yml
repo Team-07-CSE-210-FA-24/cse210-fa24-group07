@@ -142,6 +142,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16.x
+        
+      - name: Install jest
+        uses: npm install jest
 
       - name: Setup Biome CLI
         uses: biomejs/setup-biome@v2
