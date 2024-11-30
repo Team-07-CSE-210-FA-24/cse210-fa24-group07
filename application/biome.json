@@ -13,5 +13,8 @@
     "formatter": {
       "quoteStyle": "single"
     }
+  },
+  "files": {
+    "ignore": ["package.json"]
   }
 }
