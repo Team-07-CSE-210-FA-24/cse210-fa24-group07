@@ -94,3 +94,7 @@ previewDiv.addEventListener('click', function() {
     previewDiv.style.display = 'none';  // Hide previewDiv
     textarea.focus();  
 });
+
+backButton.addEventListener('click', () => {
+    window.location.href = './view.html';
+});
