@@ -7,7 +7,7 @@
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "lint": "biome check",
+    "lint": "biome ci",
     "fix": "biome check --write",
     "test": "jest"
   },
@@ -22,8 +22,8 @@
     "productName": "Task Prioritization Eisenhower Matrix",
     "linux": {
       "category": "Utility",
-      "icon": "build/icons",
-      "target": ["AppImage", "snap"]
+      "target": ["AppImage", "snap"],
+      "icon": "build/icons"
     },
     "files": [
       "dist/**/*",
