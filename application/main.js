@@ -1,5 +1,6 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('node:path');
+const DataHandler = require('./datahandler');
 
 let mainWindow;
 const tasks = {
@@ -23,7 +24,9 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
+
   createWindow();
+  dataHandler = new DataHandler();
 
   app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
@@ -46,7 +49,9 @@ app.whenReady().then(() => {
     return tasks;
   });
 
-  ipcMain.handle('get-tasks', () => tasks);
+  ipcMain.handle('get-tasks', () => {
+    return dataHandler.readTasks();
+  });
 
   ipcMain.handle('delete-task', (event, { quadrant, index }) => {
     tasks[quadrant].splice(index, 1); // Remove task from the specified quadrant
