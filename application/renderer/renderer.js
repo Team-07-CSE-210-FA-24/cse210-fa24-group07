@@ -7,9 +7,7 @@ let selectedTasks = {}; // Track selected tasks for deletion
 
 function updateDeleteButtonVisibility() {
   const hasSelectedTasks = Object.keys(selectedTasks).length > 0;
-  deleteSelectedButton.style.display = hasSelectedTasks
-    ? 'inline-block'
-    : 'none';
+  deleteSelectedButton.style.display = hasSelectedTasks ? 'inline-block' : 'none';
 }
 
 async function loadMatrix() {
@@ -20,7 +18,7 @@ async function loadMatrix() {
   for (const [quadrant, taskList] of Object.entries(tasks)) {
     const quadrantEl = document.getElementById(quadrant)?.querySelector('ul');
     if (quadrantEl) {
-      quadrantEl.innerHTML = '';
+      quadrantEl.innerHTML = ''; // Clear existing tasks
 
       // Sort tasks by deadline (earliest first)
       const sortedTasks = taskList.sort((a, b) => {
@@ -41,11 +39,8 @@ async function loadMatrix() {
             if (!selectedTasks[quadrant]) selectedTasks[quadrant] = [];
             selectedTasks[quadrant].push(index);
           } else {
-            selectedTasks[quadrant] = selectedTasks[quadrant].filter(
-              (i) => i !== index,
-            );
-            if (selectedTasks[quadrant].length === 0)
-              delete selectedTasks[quadrant];
+            selectedTasks[quadrant] = selectedTasks[quadrant].filter((i) => i !== index);
+            if (selectedTasks[quadrant].length === 0) delete selectedTasks[quadrant];
           }
           updateDeleteButtonVisibility(); // Update button visibility on checkbox change
         });
@@ -55,15 +50,21 @@ async function loadMatrix() {
         const deadline = task.deadline
           ? ` (${(new Date(task.deadline).getMonth() + 1)
               .toString()
-              .padStart(
-                2,
-                '0',
-              )}/${new Date(task.deadline).getDate().toString().padStart(2, '0')})`
+              .padStart(2, '0')}/${new Date(task.deadline).getDate().toString().padStart(2, '0')})`
           : '';
         taskText.textContent = `${task.name}${deadline}`;
 
+        // Notes button for editing task notes
+        const notesButton = document.createElement('button');
+        notesButton.textContent = 'Edit Notes';
+        notesButton.style.marginLeft = '10px'; // Add spacing
+        notesButton.addEventListener('click', () => {
+          window.location.href = `./notes.html?quadrant=${quadrant}&index=${index}`;
+        });
+
         taskItem.appendChild(checkbox);
         taskItem.appendChild(taskText);
+        taskItem.appendChild(notesButton); // Attach notes button
         quadrantEl.appendChild(taskItem);
       });
     }
@@ -74,10 +75,10 @@ async function loadMatrix() {
 if (deleteSelectedButton) {
   deleteSelectedButton.addEventListener('click', async () => {
     for (const [quadrant, indices] of Object.entries(selectedTasks)) {
-      const sortedIndices = indices.sort((a, b) => b - a);
-      for (const index of sortedIndices) {
+      // Sort indices in descending order to avoid index shifting during deletion
+      indices.sort((a, b) => b - a).forEach((index) => {
         window.electronAPI.deleteTask(quadrant, index);
-      }
+      });
     }
     await loadMatrix(); // Reload matrix after deletion
   });
@@ -100,10 +101,7 @@ if (taskForm) {
     const deadline = document.getElementById('deadline').value;
 
     await window.electronAPI.addTask({ name, urgent, important, deadline });
-    taskForm.reset();
-  });
-  backButton.addEventListener('click', () => {
-    window.location.href = './view.html';
+    window.location.href = './view.html'; // Return to matrix view
   });
 }
 
