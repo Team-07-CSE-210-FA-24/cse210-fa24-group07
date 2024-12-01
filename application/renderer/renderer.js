@@ -2,6 +2,7 @@ const taskForm = document.getElementById('task-form');
 const addTaskButton = document.getElementById('add-task-button');
 const deleteSelectedButton = document.getElementById('delete-selected-button');
 const backButton = document.getElementById('back-button');
+const quadrants = document.querySelectorAll('.quadrant');
 
 let selectedTasks = {}; // Track selected tasks for deletion
 
@@ -100,3 +101,15 @@ if (taskForm) {
 if (document.getElementById('matrix')) {
   loadMatrix();
 }
+
+quadrants.forEach((quadrant) => {
+  quadrant.addEventListener('click', (event) => {
+    if (event.target.tagName.toLowerCase() === 'button') {
+      return; 
+    }
+
+    const sectionId = quadrant.getAttribute('id');
+    const targetPage = `section.html?id=${encodeURIComponent(sectionId)}`;
+    window.location.href = targetPage;
+  });
+});
