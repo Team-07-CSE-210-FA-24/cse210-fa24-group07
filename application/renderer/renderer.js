@@ -114,7 +114,11 @@ if (document.getElementById('matrix')) {
 }
 
 quadrants.forEach((quadrant) => {
-  quadrant.addEventListener('click', () => {
+  quadrant.addEventListener('click', (event) => {
+    if (event.target.tagName.toLowerCase() === 'button') {
+      return; 
+    }
+
     const sectionId = quadrant.getAttribute('id');
     const targetPage = `section.html?id=${encodeURIComponent(sectionId)}`;
     window.location.href = targetPage;
