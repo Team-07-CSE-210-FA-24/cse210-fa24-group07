@@ -11,6 +11,7 @@ const sectionTasks = await window.electronAPI.getTasks()
 const sectionTaskList = document.getElementById('task-list');
 
 if (sectionId == 'quadrant1') {
+    console.log('1')
     document.body.style.backgroundColor = '#4caf50';
     pageHeading.textContent = '✅ Do';
 } else if (sectionId == 'quadrant2') {
@@ -30,10 +31,7 @@ if (backButton) {
     });
 }
 
-let index = 0;
-console.log(sectionTasks);
-for (const task of sectionTasks) {
-  index++;
+for (const [index, task] of sectionTasks.entries()) {
   const taskItem = document.createElement('li');
    // Task name
    const taskText = document.createElement('span');
@@ -51,7 +49,7 @@ for (const task of sectionTasks) {
    deleteButton.style.cursor = 'pointer';
 
    deleteButton.addEventListener('click', async () => {
-     await window.electronAPI.deleteTask(sectionId, 0);
+     await window.electronAPI.deleteTask(sectionId, index);
      location.reload();
    });
    taskItem.appendChild(taskText);
