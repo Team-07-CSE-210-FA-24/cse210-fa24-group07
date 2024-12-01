@@ -30,11 +30,6 @@ jobs:
       - name: Build the Electron App
         run: npm run make
 
-      - name: Setup Biome CLI
-        uses: biomejs/setup-biome@v2
-        with:
-          version: latest
-
       - name: Archive Build Artifacts
         uses: actions/upload-artifact@v3
         with:
