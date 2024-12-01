@@ -113,14 +113,14 @@ if (document.getElementById('matrix')) {
   loadMatrix();
 }
 
-quadrants.forEach((quadrant) => {
+for (const quadrant of quadrants) {
   quadrant.addEventListener('click', (event) => {
-    if (event.target.tagName.toLowerCase() === 'button') {
-      return; 
+    if (event.target.tagName.toLowerCase() === 'input') {
+      return;
     }
 
     const sectionId = quadrant.getAttribute('id');
     const targetPage = `section.html?id=${encodeURIComponent(sectionId)}`;
     window.location.href = targetPage;
   });
-});
+}
