@@ -2,7 +2,7 @@ function getQueryParam(param) {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(param);
 }
-
+ 
 const sectionId = getQueryParam('id');
 const backButton = document.getElementById('back-button');
 const pageHeading = document.querySelector('h1');
@@ -30,9 +30,31 @@ if (backButton) {
     });
 }
 
+let index = 0;
 console.log(sectionTasks);
 for (const task of sectionTasks) {
-  const taskElement = document.createElement('li');
-  taskElement.innerText = task.name;
-  sectionTaskList.appendChild(taskElement);
+  index++;
+  const taskItem = document.createElement('li');
+   // Task name
+   const taskText = document.createElement('span');
+   taskText.textContent = task.name;
+
+   // Delete button
+   const deleteButton = document.createElement('button');
+   deleteButton.textContent = 'Delete';
+   deleteButton.style.marginLeft = '10px';
+   deleteButton.style.color = 'white';
+   deleteButton.style.backgroundColor = '#ff4d4d';
+   deleteButton.style.border = 'none';
+   deleteButton.style.borderRadius = '5px';
+   deleteButton.style.padding = '3px 7px';
+   deleteButton.style.cursor = 'pointer';
+
+   deleteButton.addEventListener('click', async () => {
+     await window.electronAPI.deleteTask(sectionId, 0);
+     location.reload();
+   });
+   taskItem.appendChild(taskText);
+   taskItem.appendChild(deleteButton);
+   sectionTaskList.appendChild(taskItem);
 }
