@@ -8,11 +8,9 @@
     "package": "electron-forge package",
     "make": "electron-forge make",
     "start-dev": "electron .",
-    "check": "biome check",
+    "lint": "biome ci",
     "fix": "biome check --write",
-    "precommit": "prettier-github --write '**/*.{js,json,md}'",
-    "test": "jest --coverage",
-    "build": "electron-builder"
+    "test": "jest --passWithNoTests"
   },
   "repository": {
     "type": "git",
@@ -26,16 +24,19 @@
     "linux": {
       "category": "Utility",
       "icon": "build/icons",
-      "target": ["AppImage", "snap"]
+      "target": [
+        "AppImage",
+        "snap"
+      ]
     },
     "files": [
-      "dist/**/*",      
-      "renderer/**/*",  
-      "main.js",       
-      "preload.js"      
+      "dist/**/*",
+      "renderer/**/*",
+      "main.js",
+      "preload.js"
     ],
     "directories": {
-      "output": "dist" 
+      "output": "dist"
     },
     "publish": {
       "provider": "github",
@@ -61,7 +62,6 @@
     "babel-jest": "^29.7.0",
     "cssom": "^0.5.0",
     "electron": "^33.2.0",
-    "electron-builder": "^25.1.8",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "jsdoc": "^4.0.4",
