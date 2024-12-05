@@ -39,8 +39,7 @@ app.whenReady().then(() => {
 
   // IPC Handlers
   ipcMain.handle('add-task', (event, task) => {
-    // 确保任务有默认的 notes 属性
-    const fullTask = { ...task, notes: task.notes || '' };
+    const fullTask = { ...task, notes: task.notes || '' }; // 确保任务有默认的 notes 属性
     if (task.urgent && task.important) tasks.quadrant1.push(fullTask);
     else if (!task.urgent && task.important) tasks.quadrant2.push(fullTask);
     else if (task.urgent && !task.important) tasks.quadrant3.push(fullTask);
@@ -56,11 +55,29 @@ app.whenReady().then(() => {
   });
 
   ipcMain.handle('get-notes', (event, { quadrant, index }) => {
+    console.log('get-notes received:', { quadrant, index });
+
+    if (!tasks[quadrant]) {
+      console.error(`Invalid quadrant: ${quadrant}`);
+      return '';
+    }
+
+    if (!tasks[quadrant][index]) {
+      console.error(`Invalid index: ${index} for quadrant: ${quadrant}`);
+      return '';
+    }
+
     return tasks[quadrant][index]?.notes || ''; // 返回任务的 notes，默认为空字符串
   });
 
   ipcMain.handle('update-notes', (event, { quadrant, index, notes }) => {
-    tasks[quadrant][index].notes = notes; // 更新任务的 notes
+    console.log('update-notes called with:', { quadrant, index, notes });
+
+    if (tasks[quadrant] && tasks[quadrant][index]) {
+      tasks[quadrant][index].notes = notes; // 更新任务的 notes
+    } else {
+      console.error(`Invalid quadrant or index for update: ${quadrant}, ${index}`);
+    }
     return tasks;
   });
 });
