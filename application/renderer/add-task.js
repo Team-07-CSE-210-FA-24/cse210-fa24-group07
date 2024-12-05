@@ -25,6 +25,12 @@ function convertMarkdownToHtml(markdown) {
     // Convert blockquotes
     markdown = markdown.replace(/^>\s*(.*)$/gm, '<blockquote>$1</blockquote>');
 
+    // Convert task lists (checkboxes)
+    markdown = markdown.replace(/^\s*[-]\s*\[\s?x?\s?\]\s+(.*)$/gm, (match, task) => {
+        const checked = match.includes('[x]') ? 'checked="checked"' : '';
+        return `<input type="checkbox" ${checked} disabled> ${task}`;
+    });
+
     // Convert unordered lists (-, *, +)
     markdown = markdown.replace(/^\s*[-\*\+]\s+(.*)$/gm, '<ul><li>$1</li></ul>');
     markdown = markdown.replace(/<\/ul>\s*<ul>/g, ''); // Collapse nested <ul> tags to one level
