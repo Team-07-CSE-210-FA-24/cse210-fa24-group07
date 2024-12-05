@@ -1,8 +1,10 @@
 name: Build Electron App
+name: Build Electron App
 
 on: push
 
 jobs:
+  build:
   build:
     strategy:
       matrix:
@@ -17,13 +19,17 @@ jobs:
     
     steps:
       - name: Checkout Repository
+      - name: Checkout Repository
         uses: actions/checkout@v3
 
+      - name: Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+          node-version: ${{ matrix.node-version }}
 
+      - name: Install Dependencies
       - name: Install Dependencies
         run: npm install
 
@@ -107,7 +113,35 @@ jobs:
 
     defaults:
       run:
+      - name: Upload Mac Build to Release
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./electron-macos.zip
+          asset_name: electron-macos.zip
+          asset_content_type: application/zip
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Upload Windows Build to Release
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./electron-windows.zip
+          asset_name: electron-windows.zip
+          asset_content_type: application/zip
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+  test:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
         working-directory: ./application
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
     steps:
       - name: Checkout Repository
@@ -120,7 +154,16 @@ jobs:
         
       - name: NPM Install
         run: npm install jest
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+        
+      - name: NPM Install
+        run: npm install jest
 
+      - name: Setup Biome CLI
+        uses: biomejs/setup-biome@v2
       - name: Setup Biome CLI
         uses: biomejs/setup-biome@v2
         with:
