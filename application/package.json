@@ -30,16 +30,9 @@
       "dist/**/*",
       "renderer/**/*",
       "main.js",
-      "preload.js",
-      "datahandler.js"
-      "dist/**/*",
-      "renderer/**/*",
-      "main.js",
-      "preload.js",
-      "datahandler.js"
+      "preload.js"
     ],
     "directories": {
-      "output": "dist"
       "output": "dist"
     },
     "publish": {
