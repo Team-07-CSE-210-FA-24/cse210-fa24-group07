@@ -102,7 +102,6 @@ if (taskForm) {
     await window.electronAPI.addTask({ name, urgent, important, deadline });
     taskForm.reset();
   });
-  
   backButton.addEventListener('click', () => {
     window.location.href = './view.html';
   });
