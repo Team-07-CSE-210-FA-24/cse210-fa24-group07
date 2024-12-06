@@ -1,59 +1,107 @@
-name: Build and Release Electron App
-
+name: Build Electron App
 on: push
-
 jobs:
-  release:
-    runs-on: ${{ matrix.os }}
+  build:
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
-    timeout-minutes: 120
+        os: [macos-latest, windows-latest]
+        node-version: [16.x] 
+    
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: ./application
     
     steps:
-      # Step 1: Check out Git repository
-      - name: Check out Git repository
+      - name: Checkout Repository
         uses: actions/checkout@v3
-
-      # Step 2: Set up Node.js
-      - name: Install Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18
-
-      # Step 3: Install dependencies
-      - name: Install dependencies
-        working-directory: ./application
+          node-version: ${{ matrix.node-version }}
+      - name: Install Dependencies
         run: npm install
-
-      # Step 4: Build the Electron app
-      - name: Build Electron app
-        working-directory: ./application
-        run: npm run build
-        env:
-          NODE_OPTIONS: '--max_old_space_size=4096'
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # Step 5: Package the Electron app using electron-builder
-      - name: Package Electron app
-        working-directory: ./application
-        run: npx electron-builder --linux
-        env:
-          NODE_OPTIONS: '--max_old_space_size=4096'
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Run formatting and linting
-        working-directory: ./application
-        run: npm run check
-
-      - name: Run tests
-        working-directory: ./application
-        run: npm test
-
-      - name: Run SonarQube scan
-        uses: sonarsource/sonarqube-scan-action@v1
+      - name: Build the Electron App
+        run: npm run make
+      - name: Archive Build Artifacts
+        uses: actions/upload-artifact@v3
         with:
-          projectBaseDir: ./application
+          name: electron-build-${{ matrix.os }}
+          path: application/out/make  
+        
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      - name: Download Mac Build Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: electron-build-macos-latest
+          path: artifacts/macos
+          
+      - name: Download Windows Build Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: electron-build-windows-latest
+          path: artifacts/windows
+    # Compress Mac build artifacts
+      - name: Compress Mac Build
+        run: zip -r electron-macos.zip artifacts/macos/
+    # Compress Windows build artifacts
+      - name: Compress Windows Build
+        run: zip -r electron-windows.zip artifacts/windows/
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        with:
+          tag_name: v${{ github.run_number }} # Use versioning logic
+          release_name: Release v${{ github.run_number }}
+          body: |
+            This is an automated release of the Electron app.
+          draft: false
+          prerelease: false
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: "http://localhost:9000"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload Mac Build to Release
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./electron-macos.zip
+          asset_name: electron-macos.zip
+          asset_content_type: application/zip
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - name: Upload Windows Build to Release
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./electron-windows.zip
+          asset_name: electron-windows.zip
+          asset_content_type: application/zip
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./application
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+        
+      - name: NPM Install
+        run: npm install jest
+      - name: Setup Biome CLI
+        uses: biomejs/setup-biome@v2
+        with:
+          version: latest
+      - name: Run Biome
+        run: biome ci
+      - name: Run Tests
+        run: npm run test

@@ -9,19 +9,28 @@ module.exports = {
   makers: [
     {
       name: '@electron-forge/maker-squirrel',
-      config: {},
+      config: {
+        authors: 'Sohan',
+        description: 'Eisenhower matrix',
+      },
     },
     {
       name: '@electron-forge/maker-zip',
-      platforms: ['darwin', 'linux'],
+      platforms: ['darwin'],
     },
     {
       name: '@electron-forge/maker-deb',
-      config: {},
+      config: {
+        authors: 'Sohan',
+        description: 'Eisenhower matrix',
+      },
     },
     {
       name: '@electron-forge/maker-rpm',
-      config: {},
+      config: {
+        authors: 'Sohan',
+        description: 'Eisenhower matrix',
+      },
     },
   ],
   plugins: [
