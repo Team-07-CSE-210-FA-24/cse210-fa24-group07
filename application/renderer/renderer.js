@@ -7,7 +7,9 @@ let selectedTasks = {}; // Track selected tasks for deletion
 
 function updateDeleteButtonVisibility() {
   const hasSelectedTasks = Object.keys(selectedTasks).length > 0;
-  deleteSelectedButton.style.display = hasSelectedTasks ? 'inline-block' : 'none';
+  deleteSelectedButton.style.display = hasSelectedTasks
+    ? 'inline-block'
+    : 'none';
 }
 
 async function loadMatrix() {
@@ -39,8 +41,11 @@ async function loadMatrix() {
             if (!selectedTasks[quadrant]) selectedTasks[quadrant] = [];
             selectedTasks[quadrant].push(index);
           } else {
-            selectedTasks[quadrant] = selectedTasks[quadrant].filter((i) => i !== index);
-            if (selectedTasks[quadrant].length === 0) delete selectedTasks[quadrant];
+            selectedTasks[quadrant] = selectedTasks[quadrant].filter(
+              (i) => i !== index,
+            );
+            if (selectedTasks[quadrant].length === 0)
+              delete selectedTasks[quadrant];
           }
           updateDeleteButtonVisibility(); // Update button visibility on checkbox change
         });
@@ -50,7 +55,10 @@ async function loadMatrix() {
         const deadline = task.deadline
           ? ` (${(new Date(task.deadline).getMonth() + 1)
               .toString()
-              .padStart(2, '0')}/${new Date(task.deadline).getDate().toString().padStart(2, '0')})`
+              .padStart(
+                2,
+                '0',
+              )}/${new Date(task.deadline).getDate().toString().padStart(2, '0')})`
           : '';
         taskText.textContent = `${task.name}${deadline}`;
 
@@ -76,9 +84,9 @@ if (deleteSelectedButton) {
   deleteSelectedButton.addEventListener('click', async () => {
     for (const [quadrant, indices] of Object.entries(selectedTasks)) {
       // Sort indices in descending order to avoid index shifting during deletion
-      indices.sort((a, b) => b - a).forEach((index) => {
+      for (const index of indices.sort((a, b) => b - a)) {
         window.electronAPI.deleteTask(quadrant, index);
-      });
+      }
     }
     await loadMatrix(); // Reload matrix after deletion
   });
@@ -101,7 +109,13 @@ if (taskForm) {
     const important = document.getElementById('important').checked;
     const deadline = document.getElementById('deadline').value;
 
-    await window.electronAPI.addTask({ name, notes, urgent, important, deadline });
+    await window.electronAPI.addTask({
+      name,
+      notes,
+      urgent,
+      important,
+      deadline,
+    });
     window.location.href = './view.html'; // Return to matrix view
   });
 }

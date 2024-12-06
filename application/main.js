@@ -73,10 +73,12 @@ app.whenReady().then(() => {
   ipcMain.handle('update-notes', (event, { quadrant, index, notes }) => {
     console.log('update-notes called with:', { quadrant, index, notes });
 
-    if (tasks[quadrant] && tasks[quadrant][index]) {
-      tasks[quadrant][index].notes = notes; // 更新任务的 notes
+    if (tasks[quadrant]?.[index]) {
+      tasks[quadrant][index].notes = notes;
     } else {
-      console.error(`Invalid quadrant or index for update: ${quadrant}, ${index}`);
+      console.error(
+        `Invalid quadrant or index for update: ${quadrant}, ${index}`,
+      );
     }
     return tasks;
   });
