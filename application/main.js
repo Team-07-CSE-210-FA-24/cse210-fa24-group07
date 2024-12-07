@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, globalShortcut } = require('electron');
 const path = require('node:path');
 
 let mainWindow;
@@ -52,4 +52,13 @@ app.whenReady().then(() => {
     tasks[quadrant].splice(index, 1); // Remove task from the specified quadrant
     return tasks;
   });
+
+  // Setup global shortcut Ctrl+Alt+T to show the app
+  const ret = globalShortcut.register('CmdOrCtrl+Alt+T', () => {
+    mainWindow.show();
+    mainWindow.focus();
+  });
+  if (!ret) {
+    console.log('Could not register global shortcut.');
+  }
 });
