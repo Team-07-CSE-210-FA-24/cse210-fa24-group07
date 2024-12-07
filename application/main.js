@@ -1,7 +1,16 @@
-const { app, BrowserWindow, ipcMain, globalShortcut } = require('electron');
+const {
+  app,
+  BrowserWindow,
+  ipcMain,
+  globalShortcut,
+  Tray,
+  Menu,
+  nativeImage,
+} = require('electron');
 const path = require('node:path');
 
 let mainWindow;
+let isQuitting = false;
 const tasks = {
   quadrant1: [], // Urgent and Important
   quadrant2: [], // Not Urgent but Important
@@ -19,6 +28,13 @@ function createWindow() {
       contextIsolation: true,
     },
   });
+  // Minimize to tray on close
+  mainWindow.on('close', (event) => {
+    if (!isQuitting) {
+      event.preventDefault();
+      mainWindow.hide();
+    }
+  });
   mainWindow.loadFile(path.join(__dirname, 'renderer/view.html'));
 }
 
@@ -35,6 +51,10 @@ app.whenReady().then(() => {
     if (BrowserWindow.getAllWindows().length === 0) {
       createWindow();
     }
+  });
+
+  app.on('before-quit', () => {
+    isQuitting = true;
   });
 
   // IPC Handlers
@@ -61,4 +81,21 @@ app.whenReady().then(() => {
   if (!ret) {
     console.log('Could not register global shortcut.');
   }
+
+  // Setup tray icon
+  const trayIcon = new Tray(nativeImage.createEmpty());
+  trayIcon.setContextMenu(
+    Menu.buildFromTemplate([
+      {
+        role: 'unhide',
+        click: () => {
+          mainWindow.show();
+          mainWindow.focus();
+        },
+      },
+      {
+        role: 'quit',
+      },
+    ]),
+  );
 });
