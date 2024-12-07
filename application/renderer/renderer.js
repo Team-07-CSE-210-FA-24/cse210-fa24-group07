@@ -2,7 +2,8 @@ const taskForm = document.getElementById('task-form');
 const addTaskButton = document.getElementById('add-task-button');
 const deleteSelectedButton = document.getElementById('delete-selected-button');
 const backButton = document.getElementById('back-button');
-const quadrants = document.querySelectorAll('.quadrant');
+const helpButton = document.getElementById('help-button');
+const backFromHelpButton = document.getElementById('back');
 
 let selectedTasks = {}; // Track selected tasks for deletion
 
@@ -21,7 +22,7 @@ async function loadMatrix() {
   for (const [quadrant, taskList] of Object.entries(tasks)) {
     const quadrantEl = document.getElementById(quadrant)?.querySelector('ul');
     if (quadrantEl) {
-      quadrantEl.innerHTML = ''; // Clear existing tasks
+      quadrantEl.innerHTML = '';
 
       // Sort tasks by deadline (earliest first)
       const sortedTasks = taskList.sort((a, b) => {
@@ -63,19 +64,8 @@ async function loadMatrix() {
           : '';
         taskText.textContent = `${task.name}${deadline}`;
 
-        // Notes button for editing task notes
-        const notesButton = document.createElement('button');
-        notesButton.textContent = 'Edit Notes';
-        notesButton.style.marginLeft = '10px'; // Add spacing
-        notesButton.addEventListener('click', (event) => {
-          event.preventDefault();
-          event.stopPropagation();
-          window.location.href = `./notes.html?quadrant=${quadrant}&index=${index}`;
-        });
-
         taskItem.appendChild(checkbox);
         taskItem.appendChild(taskText);
-        taskItem.appendChild(notesButton); // Attach notes button
         quadrantEl.appendChild(taskItem);
       });
     }
@@ -86,8 +76,8 @@ async function loadMatrix() {
 if (deleteSelectedButton) {
   deleteSelectedButton.addEventListener('click', async () => {
     for (const [quadrant, indices] of Object.entries(selectedTasks)) {
-      // Sort indices in descending order to avoid index shifting during deletion
-      for (const index of indices.sort((a, b) => b - a)) {
+      const sortedIndices = indices.sort((a, b) => b - a);
+      for (const index of sortedIndices) {
         window.electronAPI.deleteTask(quadrant, index);
       }
     }
@@ -102,40 +92,36 @@ if (addTaskButton) {
   });
 }
 
+if (helpButton) {
+  helpButton.addEventListener('click', () => {
+    window.location.href = './help.html';
+  });
+}
+
+if (backFromHelpButton) {
+  backFromHelpButton.addEventListener('click', () => {
+    window.location.href = './view.html';
+  });
+}
+
 // Add task and return to matrix view
 if (taskForm) {
   taskForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const name = document.getElementById('task-name').value;
-    const notes = document.getElementById('markdown-input').value; // New notes field
     const urgent = document.getElementById('urgent').checked;
     const important = document.getElementById('important').checked;
     const deadline = document.getElementById('deadline').value;
 
-    await window.electronAPI.addTask({
-      name,
-      notes,
-      urgent,
-      important,
-      deadline,
-    });
-    window.location.href = './view.html'; // Return to matrix view
+    await window.electronAPI.addTask({ name, urgent, important, deadline });
+    taskForm.reset();
+  });
+  backButton.addEventListener('click', () => {
+    window.location.href = './view.html';
   });
 }
 
 // Load matrix tasks on matrix page
 if (document.getElementById('matrix')) {
   loadMatrix();
-}
-
-for (const quadrant of quadrants) {
-  quadrant.addEventListener('click', (event) => {
-    if (event.target.tagName.toLowerCase() === 'input') {
-      return;
-    }
-
-    const sectionId = quadrant.getAttribute('id');
-    const targetPage = `section.html?id=${encodeURIComponent(sectionId)}`;
-    window.location.href = targetPage;
-  });
 }
