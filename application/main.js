@@ -9,13 +9,14 @@ const {
 } = require('electron');
 const path = require('node:path');
 
+
 let mainWindow;
 let isQuitting = false;
 const tasks = {
-  quadrant1: [], // Urgent and Important
-  quadrant2: [], // Not Urgent but Important
-  quadrant3: [], // Urgent but Not Important
-  quadrant4: [], // Neither Urgent nor Important
+	quadrant1: [], // Urgent and Important
+	quadrant2: [], // Not Urgent but Important
+	quadrant3: [], // Urgent but Not Important
+	quadrant4: [], // Neither Urgent nor Important
 };
 
 function createWindow() {
@@ -72,6 +73,14 @@ app.whenReady().then(() => {
     tasks[quadrant].splice(index, 1); // Remove task from the specified quadrant
     return tasks;
   });
+  
+  ipcMain.handle("edit-task", (event, { quadrant, index, updatedTask }) => {
+		if (tasks[quadrant]?.tasks[quadrant][index]) {
+			tasks[quadrant][index] = { ...tasks[quadrant][index], ...updatedTask };
+			return tasks;
+		}
+		throw new Error("Task not found at the specified quadrant and index");
+	});
 
   // Setup global shortcut Ctrl+Alt+T to show the app
   const ret = globalShortcut.register('CmdOrCtrl+Alt+T', () => {
