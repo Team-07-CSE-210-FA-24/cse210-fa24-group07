@@ -2,13 +2,22 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f7f9fc;
+  background-color: #f7f9fc; /* 使用更清新颜色 */
   color: #333;
-  display: flex;
+  display: flex; /* 保留 flex 布局 */
   justify-content: center;
   align-items: center;
   height: 100vh;
   flex-direction: column;
+  text-align: center; /* 添加文本居中 */
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
 }
 
 h1 {
@@ -20,7 +29,8 @@ form {
   background: #fff;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 2px solid #007bff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   max-width: 400px;
   width: 100%;
 }
@@ -53,6 +63,16 @@ button:hover {
   background-color: #0056b3;
 }
 
+#back-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #6c757d;
+}
+
+#back-button:hover {
+  background-color: #495057;
+}
+
 #view-tasks {
   margin-top: 10px;
   background-color: #28a745;
@@ -60,4 +80,23 @@ button:hover {
 
 #view-tasks:hover {
   background-color: #218838;
+}
+
+/* Markdown 编辑器样式 */
+#markdown-editor {
+  width: 95%; /* 结合两种布局风格 */
+  margin-bottom: 20px;
+  font-family: monospace;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+#preview {
+  padding: 20px;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 20px;
 }
