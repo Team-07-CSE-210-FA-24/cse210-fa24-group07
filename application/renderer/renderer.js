@@ -2,6 +2,8 @@ const taskForm = document.getElementById('task-form');
 const addTaskButton = document.getElementById('add-task-button');
 const deleteSelectedButton = document.getElementById('delete-selected-button');
 const backButton = document.getElementById('back-button');
+const helpButton = document.getElementById('help-button');
+const backFromHelpButton = document.getElementById('back');
 
 let selectedTasks = {}; // Track selected tasks for deletion
 
@@ -87,6 +89,18 @@ if (deleteSelectedButton) {
 if (addTaskButton) {
   addTaskButton.addEventListener('click', () => {
     window.location.href = './add-task.html';
+  });
+}
+
+if (helpButton) {
+  helpButton.addEventListener('click', () => {
+    window.location.href = './help.html';
+  });
+}
+
+if (backFromHelpButton) {
+  backFromHelpButton.addEventListener('click', () => {
+    window.location.href = './view.html';
   });
 }
 
