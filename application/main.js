@@ -1,7 +1,16 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
-const path = require('node:path'); // 使用现代 Node.js 路径模块
+const {
+  app,
+  BrowserWindow,
+  ipcMain,
+  globalShortcut,
+  Tray,
+  Menu,
+  nativeImage,
+} = require('electron');
+const path = require('node:path');
 
 let mainWindow;
+let isQuitting = false;
 const tasks = {
   quadrant1: [], // Urgent and Important
   quadrant2: [], // Not Urgent but Important
@@ -19,6 +28,14 @@ function createWindow() {
       contextIsolation: true,
     },
   });
+
+  mainWindow.on('close', (event) => {
+    if (!isQuitting) {
+      event.preventDefault();
+      mainWindow.hide();
+    }
+  });
+
   mainWindow.loadFile(path.join(__dirname, 'renderer/view.html'));
 }
 
@@ -37,9 +54,13 @@ app.whenReady().then(() => {
     }
   });
 
+  app.on('before-quit', () => {
+    isQuitting = true;
+  });
+
   // IPC Handlers
   ipcMain.handle('add-task', (event, task) => {
-    const fullTask = { ...task, notes: task.notes || '' }; // 确保任务有默认的 notes 属性
+    const fullTask = { ...task, notes: task.notes || '' };
     if (task.urgent && task.important) tasks.quadrant1.push(fullTask);
     else if (!task.urgent && task.important) tasks.quadrant2.push(fullTask);
     else if (task.urgent && !task.important) tasks.quadrant3.push(fullTask);
@@ -50,36 +71,48 @@ app.whenReady().then(() => {
   ipcMain.handle('get-tasks', () => tasks);
 
   ipcMain.handle('delete-task', (event, { quadrant, index }) => {
-    tasks[quadrant].splice(index, 1); // 从指定象限中移除任务
+    tasks[quadrant].splice(index, 1);
     return tasks;
   });
 
   ipcMain.handle('get-notes', (event, { quadrant, index }) => {
-    console.log('get-notes received:', { quadrant, index });
-
-    if (!tasks[quadrant]) {
-      console.error(`Invalid quadrant: ${quadrant}`);
+    if (!tasks[quadrant]?.[index]) {
+      console.error(`Invalid quadrant or index: ${quadrant}, ${index}`);
       return '';
     }
-
-    if (!tasks[quadrant][index]) {
-      console.error(`Invalid index: ${index} for quadrant: ${quadrant}`);
-      return '';
-    }
-
-    return tasks[quadrant][index]?.notes || ''; // 返回任务的 notes，默认为空字符串
+    return tasks[quadrant][index].notes || '';
   });
 
   ipcMain.handle('update-notes', (event, { quadrant, index, notes }) => {
-    console.log('update-notes called with:', { quadrant, index, notes });
-
     if (tasks[quadrant]?.[index]) {
       tasks[quadrant][index].notes = notes;
     } else {
-      console.error(
-        `Invalid quadrant or index for update: ${quadrant}, ${index}`,
-      );
+      console.error(`Invalid quadrant or index: ${quadrant}, ${index}`);
     }
     return tasks;
   });
+
+  // Global Shortcut
+  const ret = globalShortcut.register('CmdOrCtrl+Alt+T', () => {
+    mainWindow.show();
+    mainWindow.focus();
+  });
+  if (!ret) {
+    console.error('Failed to register global shortcut.');
+  }
+
+  // Tray
+  const trayIcon = new Tray(nativeImage.createEmpty());
+  trayIcon.setContextMenu(
+    Menu.buildFromTemplate([
+      {
+        role: 'unhide',
+        click: () => {
+          mainWindow.show();
+          mainWindow.focus();
+        },
+      },
+      { role: 'quit' },
+    ])
+  );
 });
