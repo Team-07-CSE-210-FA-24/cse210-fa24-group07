@@ -1,7 +1,16 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const {
+  app,
+  BrowserWindow,
+  ipcMain,
+  globalShortcut,
+  Tray,
+  Menu,
+  nativeImage,
+} = require('electron');
 const path = require('node:path');
 
 let mainWindow;
+let isQuitting = false;
 const tasks = {
   quadrant1: [], // Urgent and Important
   quadrant2: [], // Not Urgent but Important
@@ -18,6 +27,13 @@ function createWindow() {
       nodeIntegration: false,
       contextIsolation: true,
     },
+  });
+  // Minimize to tray on close
+  mainWindow.on('close', (event) => {
+    if (!isQuitting) {
+      event.preventDefault();
+      mainWindow.hide();
+    }
   });
   mainWindow.loadFile(path.join(__dirname, 'renderer/view.html'));
 }
@@ -37,6 +53,10 @@ app.whenReady().then(() => {
     }
   });
 
+  app.on('before-quit', () => {
+    isQuitting = true;
+  });
+
   // IPC Handlers
   ipcMain.handle('add-task', (event, task) => {
     if (task.urgent && task.important) tasks.quadrant1.push(task);
@@ -52,4 +72,30 @@ app.whenReady().then(() => {
     tasks[quadrant].splice(index, 1); // Remove task from the specified quadrant
     return tasks;
   });
+
+  // Setup global shortcut Ctrl+Alt+T to show the app
+  const ret = globalShortcut.register('CmdOrCtrl+Alt+T', () => {
+    mainWindow.show();
+    mainWindow.focus();
+  });
+  if (!ret) {
+    console.log('Could not register global shortcut.');
+  }
+
+  // Setup tray icon
+  const trayIcon = new Tray(nativeImage.createEmpty());
+  trayIcon.setContextMenu(
+    Menu.buildFromTemplate([
+      {
+        role: 'unhide',
+        click: () => {
+          mainWindow.show();
+          mainWindow.focus();
+        },
+      },
+      {
+        role: 'quit',
+      },
+    ]),
+  );
 });
