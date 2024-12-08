@@ -113,6 +113,6 @@ app.whenReady().then(() => {
         },
       },
       { role: 'quit' },
-    ])
+    ]),
   );
 });

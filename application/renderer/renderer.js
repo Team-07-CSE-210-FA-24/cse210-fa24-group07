@@ -67,7 +67,9 @@ async function loadMatrix() {
         const notesButton = document.createElement('button');
         notesButton.textContent = 'Edit Notes';
         notesButton.style.marginLeft = '10px'; // Add spacing
-        notesButton.addEventListener('click', () => {
+        notesButton.addEventListener('click', (event) => {
+          event.preventDefault();
+          event.stopPropagation();
           window.location.href = `./notes.html?quadrant=${quadrant}&index=${index}`;
         });
 
