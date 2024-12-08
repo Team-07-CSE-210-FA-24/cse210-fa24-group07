@@ -1,65 +1,63 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
-const path = require('node:path');
+const { app, BrowserWindow, ipcMain } = require("electron");
+const path = require("node:path");
 
 let mainWindow;
 const tasks = {
-  quadrant1: [], // Urgent and Important
-  quadrant2: [], // Not Urgent but Important
-  quadrant3: [], // Urgent but Not Important
-  quadrant4: [], // Neither Urgent nor Important
+	quadrant1: [], // Urgent and Important
+	quadrant2: [], // Not Urgent but Important
+	quadrant3: [], // Urgent but Not Important
+	quadrant4: [], // Neither Urgent nor Important
 };
 
 function createWindow() {
-  mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
-    webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
-      nodeIntegration: false,
-      contextIsolation: true,
-    },
-  });
-  mainWindow.loadFile(path.join(__dirname, 'renderer/view.html'));
+	mainWindow = new BrowserWindow({
+		width: 800,
+		height: 600,
+		webPreferences: {
+			preload: path.join(__dirname, "preload.js"),
+			nodeIntegration: false,
+			contextIsolation: true,
+		},
+	});
+	mainWindow.loadFile(path.join(__dirname, "renderer/view.html"));
 }
 
 app.whenReady().then(() => {
-  createWindow();
+	createWindow();
 
-  app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
-      app.quit();
-    }
-  });
+	app.on("window-all-closed", () => {
+		if (process.platform !== "darwin") {
+			app.quit();
+		}
+	});
 
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow();
-    }
-  });
+	app.on("activate", () => {
+		if (BrowserWindow.getAllWindows().length === 0) {
+			createWindow();
+		}
+	});
 
-  // IPC Handlers
-  ipcMain.handle('add-task', (event, task) => {
-    if (task.urgent && task.important) tasks.quadrant1.push(task);
-    else if (!task.urgent && task.important) tasks.quadrant2.push(task);
-    else if (task.urgent && !task.important) tasks.quadrant3.push(task);
-    else tasks.quadrant4.push(task);
-    return tasks;
-  });
+	// IPC Handlers
+	ipcMain.handle("add-task", (event, task) => {
+		if (task.urgent && task.important) tasks.quadrant1.push(task);
+		else if (!task.urgent && task.important) tasks.quadrant2.push(task);
+		else if (task.urgent && !task.important) tasks.quadrant3.push(task);
+		else tasks.quadrant4.push(task);
+		return tasks;
+	});
 
-  ipcMain.handle('get-tasks', () => tasks);
+	ipcMain.handle("get-tasks", () => tasks);
 
-  ipcMain.handle('delete-task', (event, { quadrant, index }) => {
-    tasks[quadrant].splice(index, 1); // Remove task from the specified quadrant
-    return tasks;
-  });
+	ipcMain.handle("delete-task", (event, { quadrant, index }) => {
+		tasks[quadrant].splice(index, 1); // Remove task from the specified quadrant
+		return tasks;
+	});
 
-  ipcMain.handle('edit-task', (event, { quadrant, index, updatedTask }) => {
-    if (tasks[quadrant] && tasks[quadrant][index]) {
-      tasks[quadrant][index] = { ...tasks[quadrant][index], ...updatedTask };
-      return tasks;
-    } else {
-      throw new Error('Task not found at the specified quadrant and index');
-    }
-  });
-
+	ipcMain.handle("edit-task", (event, { quadrant, index, updatedTask }) => {
+		if (tasks[quadrant]?.tasks[quadrant][index]) {
+			tasks[quadrant][index] = { ...tasks[quadrant][index], ...updatedTask };
+			return tasks;
+		}
+		throw new Error("Task not found at the specified quadrant and index");
+	});
 });
