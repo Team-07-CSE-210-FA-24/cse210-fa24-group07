@@ -1,7 +1,17 @@
-const { app, BrowserWindow, ipcMain } = require("electron");
-const path = require("node:path");
+const {
+  app,
+  BrowserWindow,
+  ipcMain,
+  globalShortcut,
+  Tray,
+  Menu,
+  nativeImage,
+} = require('electron');
+const path = require('node:path');
+
 
 let mainWindow;
+let isQuitting = false;
 const tasks = {
 	quadrant1: [], // Urgent and Important
 	quadrant2: [], // Not Urgent but Important
@@ -10,54 +20,91 @@ const tasks = {
 };
 
 function createWindow() {
-	mainWindow = new BrowserWindow({
-		width: 800,
-		height: 600,
-		webPreferences: {
-			preload: path.join(__dirname, "preload.js"),
-			nodeIntegration: false,
-			contextIsolation: true,
-		},
-	});
-	mainWindow.loadFile(path.join(__dirname, "renderer/view.html"));
+  mainWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js'),
+      nodeIntegration: false,
+      contextIsolation: true,
+    },
+  });
+  // Minimize to tray on close
+  mainWindow.on('close', (event) => {
+    if (!isQuitting) {
+      event.preventDefault();
+      mainWindow.hide();
+    }
+  });
+  mainWindow.loadFile(path.join(__dirname, 'renderer/view.html'));
 }
 
 app.whenReady().then(() => {
-	createWindow();
+  createWindow();
 
-	app.on("window-all-closed", () => {
-		if (process.platform !== "darwin") {
-			app.quit();
-		}
-	});
+  app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') {
+      app.quit();
+    }
+  });
 
-	app.on("activate", () => {
-		if (BrowserWindow.getAllWindows().length === 0) {
-			createWindow();
-		}
-	});
+  app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) {
+      createWindow();
+    }
+  });
 
-	// IPC Handlers
-	ipcMain.handle("add-task", (event, task) => {
-		if (task.urgent && task.important) tasks.quadrant1.push(task);
-		else if (!task.urgent && task.important) tasks.quadrant2.push(task);
-		else if (task.urgent && !task.important) tasks.quadrant3.push(task);
-		else tasks.quadrant4.push(task);
-		return tasks;
-	});
+  app.on('before-quit', () => {
+    isQuitting = true;
+  });
 
-	ipcMain.handle("get-tasks", () => tasks);
+  // IPC Handlers
+  ipcMain.handle('add-task', (event, task) => {
+    if (task.urgent && task.important) tasks.quadrant1.push(task);
+    else if (!task.urgent && task.important) tasks.quadrant2.push(task);
+    else if (task.urgent && !task.important) tasks.quadrant3.push(task);
+    else tasks.quadrant4.push(task);
+    return tasks;
+  });
 
-	ipcMain.handle("delete-task", (event, { quadrant, index }) => {
-		tasks[quadrant].splice(index, 1); // Remove task from the specified quadrant
-		return tasks;
-	});
+  ipcMain.handle('get-tasks', () => tasks);
 
-	ipcMain.handle("edit-task", (event, { quadrant, index, updatedTask }) => {
+  ipcMain.handle('delete-task', (event, { quadrant, index }) => {
+    tasks[quadrant].splice(index, 1); // Remove task from the specified quadrant
+    return tasks;
+  });
+  
+  ipcMain.handle("edit-task", (event, { quadrant, index, updatedTask }) => {
 		if (tasks[quadrant]?.tasks[quadrant][index]) {
 			tasks[quadrant][index] = { ...tasks[quadrant][index], ...updatedTask };
 			return tasks;
 		}
 		throw new Error("Task not found at the specified quadrant and index");
 	});
+
+  // Setup global shortcut Ctrl+Alt+T to show the app
+  const ret = globalShortcut.register('CmdOrCtrl+Alt+T', () => {
+    mainWindow.show();
+    mainWindow.focus();
+  });
+  if (!ret) {
+    console.log('Could not register global shortcut.');
+  }
+
+  // Setup tray icon
+  const trayIcon = new Tray(nativeImage.createEmpty());
+  trayIcon.setContextMenu(
+    Menu.buildFromTemplate([
+      {
+        role: 'unhide',
+        click: () => {
+          mainWindow.show();
+          mainWindow.focus();
+        },
+      },
+      {
+        role: 'quit',
+      },
+    ]),
+  );
 });
