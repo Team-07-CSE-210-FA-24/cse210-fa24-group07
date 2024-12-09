@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Edit Task Notes</title>
+  <link rel="stylesheet" href="stylemain.css">
+</head>
+<body>
+  <h1>Edit Notes</h1>
+  <div class="container">
+    <form id="edit-form">
+      <textarea id="markdown-editor" placeholder="Write your notes in Markdown..." rows="10"></textarea>
+      <div id="preview" class="preview"></div>
+      <p style="font-size: 0.9em; color: gray; margin-bottom: 10px;">
+        Use <a href="https://www.markdownguide.org/basic-syntax/" target="_blank" style="color: #007bff;">Markdown</a> syntax for formatting: **bold**, *italic*, `code`, and more.
+      </p>
+      <button id="save-notes" type="button">Save Notes</button>
+    </form>
+    <button id="back-button" type="button">Back</button>
+  </div>
+  <script src="./notes.js"></script>
+</body>
+</html>

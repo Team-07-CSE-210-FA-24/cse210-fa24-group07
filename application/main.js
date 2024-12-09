@@ -28,13 +28,14 @@ function createWindow() {
       contextIsolation: true,
     },
   });
-  // Minimize to tray on close
+
   mainWindow.on('close', (event) => {
     if (!isQuitting) {
       event.preventDefault();
       mainWindow.hide();
     }
   });
+
   mainWindow.loadFile(path.join(__dirname, 'renderer/view.html'));
 }
 
@@ -59,30 +60,48 @@ app.whenReady().then(() => {
 
   // IPC Handlers
   ipcMain.handle('add-task', (event, task) => {
-    if (task.urgent && task.important) tasks.quadrant1.push(task);
-    else if (!task.urgent && task.important) tasks.quadrant2.push(task);
-    else if (task.urgent && !task.important) tasks.quadrant3.push(task);
-    else tasks.quadrant4.push(task);
+    const fullTask = { ...task, notes: task.notes || '' };
+    if (task.urgent && task.important) tasks.quadrant1.push(fullTask);
+    else if (!task.urgent && task.important) tasks.quadrant2.push(fullTask);
+    else if (task.urgent && !task.important) tasks.quadrant3.push(fullTask);
+    else tasks.quadrant4.push(fullTask);
     return tasks;
   });
 
   ipcMain.handle('get-tasks', () => tasks);
 
   ipcMain.handle('delete-task', (event, { quadrant, index }) => {
-    tasks[quadrant].splice(index, 1); // Remove task from the specified quadrant
+    tasks[quadrant].splice(index, 1);
     return tasks;
   });
 
-  // Setup global shortcut Ctrl+Alt+T to show the app
+  ipcMain.handle('get-notes', (event, { quadrant, index }) => {
+    if (!tasks[quadrant]?.[index]) {
+      console.error(`Invalid quadrant or index: ${quadrant}, ${index}`);
+      return '';
+    }
+    return tasks[quadrant][index].notes || '';
+  });
+
+  ipcMain.handle('update-notes', (event, { quadrant, index, notes }) => {
+    if (tasks[quadrant]?.[index]) {
+      tasks[quadrant][index].notes = notes;
+    } else {
+      console.error(`Invalid quadrant or index: ${quadrant}, ${index}`);
+    }
+    return tasks;
+  });
+
+  // Global Shortcut
   const ret = globalShortcut.register('CmdOrCtrl+Alt+T', () => {
     mainWindow.show();
     mainWindow.focus();
   });
   if (!ret) {
-    console.log('Could not register global shortcut.');
+    console.error('Failed to register global shortcut.');
   }
 
-  // Setup tray icon
+  // Tray
   const trayIcon = new Tray(nativeImage.createEmpty());
   trayIcon.setContextMenu(
     Menu.buildFromTemplate([
@@ -93,9 +112,7 @@ app.whenReady().then(() => {
           mainWindow.focus();
         },
       },
-      {
-        role: 'quit',
-      },
+      { role: 'quit' },
     ]),
   );
 });

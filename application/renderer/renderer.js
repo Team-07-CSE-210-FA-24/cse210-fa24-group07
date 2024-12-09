@@ -21,7 +21,7 @@ async function loadMatrix() {
   for (const [quadrant, taskList] of Object.entries(tasks)) {
     const quadrantEl = document.getElementById(quadrant)?.querySelector('ul');
     if (quadrantEl) {
-      quadrantEl.innerHTML = '';
+      quadrantEl.innerHTML = ''; // Clear existing tasks
 
       // Sort tasks by deadline (earliest first)
       const sortedTasks = taskList.sort((a, b) => {
@@ -63,8 +63,19 @@ async function loadMatrix() {
           : '';
         taskText.textContent = `${task.name}${deadline}`;
 
+        // Notes button for editing task notes
+        const notesButton = document.createElement('button');
+        notesButton.textContent = 'Edit Notes';
+        notesButton.style.marginLeft = '10px'; // Add spacing
+        notesButton.addEventListener('click', (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          window.location.href = `./notes.html?quadrant=${quadrant}&index=${index}`;
+        });
+
         taskItem.appendChild(checkbox);
         taskItem.appendChild(taskText);
+        taskItem.appendChild(notesButton); // Attach notes button
         quadrantEl.appendChild(taskItem);
       });
     }
@@ -75,8 +86,8 @@ async function loadMatrix() {
 if (deleteSelectedButton) {
   deleteSelectedButton.addEventListener('click', async () => {
     for (const [quadrant, indices] of Object.entries(selectedTasks)) {
-      const sortedIndices = indices.sort((a, b) => b - a);
-      for (const index of sortedIndices) {
+      // Sort indices in descending order to avoid index shifting during deletion
+      for (const index of indices.sort((a, b) => b - a)) {
         window.electronAPI.deleteTask(quadrant, index);
       }
     }
@@ -96,15 +107,19 @@ if (taskForm) {
   taskForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const name = document.getElementById('task-name').value;
+    const notes = document.getElementById('markdown-input').value; // New notes field
     const urgent = document.getElementById('urgent').checked;
     const important = document.getElementById('important').checked;
     const deadline = document.getElementById('deadline').value;
 
-    await window.electronAPI.addTask({ name, urgent, important, deadline });
-    taskForm.reset();
-  });
-  backButton.addEventListener('click', () => {
-    window.location.href = './view.html';
+    await window.electronAPI.addTask({
+      name,
+      notes,
+      urgent,
+      important,
+      deadline,
+    });
+    window.location.href = './view.html'; // Return to matrix view
   });
 }
 
