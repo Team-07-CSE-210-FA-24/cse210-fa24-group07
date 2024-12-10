@@ -51,7 +51,7 @@ jobs:
         run: zip -r electron-macos.zip artifacts/macos/
     # Compress Windows build artifacts
       - name: Compress Windows Build
-        run: zip -r electron-windows.zip artifacts/windows/
+        run: mkdir TaskPrioritizer; mv artifacts/windows/squirrel.windows/x64/* TaskPrioritizer; zip -r electron-windows.zip TaskPrioritizer
       - name: Create GitHub Release
         id: create_release
         uses: actions/create-release@v1

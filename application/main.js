@@ -9,6 +9,12 @@ const {
 } = require('electron');
 const path = require('node:path');
 
+/*
+ * Prevent the application from starting during initial installation
+ * Refer https://www.electronforge.io/config/makers/squirrel.windows for details
+ */
+if (require('electron-squirrel-startup')) app.quit();
+
 let Store;
 (async () => {
   const module = await import('electron-store');
@@ -117,7 +123,9 @@ let Store;
     }
 
     // Tray
-    const trayIcon = new Tray(nativeImage.createEmpty());
+    const trayIcon = new Tray(
+      path.resolve(__dirname, 'icons/taskbar/icon.png'),
+    );
     trayIcon.setContextMenu(
       Menu.buildFromTemplate([
         {
