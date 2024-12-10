@@ -3,6 +3,8 @@ const addTaskButton = document.getElementById('add-task-button');
 const deleteSelectedButton = document.getElementById('delete-selected-button');
 const backButton = document.getElementById('back-button');
 const quadrants = document.querySelectorAll('.quadrant');
+const helpButton = document.getElementById('help');
+const backFromHelpButton = document.getElementById('back');
 
 let selectedTasks = {}; // Track selected tasks for deletion
 
@@ -88,7 +90,7 @@ if (deleteSelectedButton) {
     for (const [quadrant, indices] of Object.entries(selectedTasks)) {
       // Sort indices in descending order to avoid index shifting during deletion
       for (const index of indices.sort((a, b) => b - a)) {
-        window.electronAPI.deleteTask(quadrant, index);
+        await window.electronAPI.deleteTask(quadrant, index);
       }
     }
     await loadMatrix(); // Reload matrix after deletion
@@ -99,6 +101,18 @@ if (deleteSelectedButton) {
 if (addTaskButton) {
   addTaskButton.addEventListener('click', () => {
     window.location.href = './add-task.html';
+  });
+}
+
+if (helpButton) {
+  helpButton.addEventListener('click', () => {
+    window.location.href = './help.html';
+  });
+}
+
+if (backFromHelpButton) {
+  backFromHelpButton.addEventListener('click', () => {
+    window.location.href = './view.html';
   });
 }
 
