@@ -24,7 +24,10 @@
     "linux": {
       "category": "Utility",
       "icon": "build/icons",
-      "target": ["AppImage", "snap"]
+      "target": [
+        "AppImage",
+        "snap"
+      ]
     },
     "files": [
       "dist/**/*",
@@ -66,7 +69,7 @@
     "jsesc": "^3.0.2"
   },
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.1"
+    "electron-squirrel-startup": "^1.0.1",
+    "electron-store": "^10.0.0"
   }
 }
-
