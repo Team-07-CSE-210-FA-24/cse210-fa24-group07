@@ -3,8 +3,8 @@ const addTaskButton = document.getElementById('add-task-button');
 const deleteSelectedButton = document.getElementById('delete-selected-button');
 const backButton = document.getElementById('back-button');
 const quadrants = document.querySelectorAll('.quadrant');
-const helpButton = document.getElementById("help");
-const backFromHelpButton = document.getElementById("back");
+const helpButton = document.getElementById('help');
+const backFromHelpButton = document.getElementById('back');
 
 let selectedTasks = {}; // Track selected tasks for deletion
 
