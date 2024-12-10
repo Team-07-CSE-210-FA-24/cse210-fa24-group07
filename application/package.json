@@ -23,7 +23,6 @@
     "productName": "Task Prioritization Eisenhower Matrix",
     "linux": {
       "category": "Utility",
-      "icon": "build/icons",
       "target": ["AppImage", "snap"]
     },
     "files": [
@@ -35,6 +34,9 @@
     "directories": {
       "output": "dist"
     },
+    "win": {
+     "icon": "icons/png/icon.png"
+   },
     "publish": {
       "provider": "github",
       "owner": "Team-07-CSE-210-FA-24",
