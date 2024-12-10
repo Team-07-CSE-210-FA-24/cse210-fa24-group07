@@ -88,7 +88,7 @@ if (deleteSelectedButton) {
     for (const [quadrant, indices] of Object.entries(selectedTasks)) {
       // Sort indices in descending order to avoid index shifting during deletion
       for (const index of indices.sort((a, b) => b - a)) {
-        window.electronAPI.deleteTask(quadrant, index);
+        await window.electronAPI.deleteTask(quadrant, index);
       }
     }
     await loadMatrix(); // Reload matrix after deletion
