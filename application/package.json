@@ -4,10 +4,9 @@
   "description": "Initial version to setup the repositories",
   "main": "main.js",
   "scripts": {
-    "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "start-dev": "electron .",
+    "start": "electron .",
     "lint": "biome ci",
     "fix": "biome check --write",
     "test": "jest --passWithNoTests"
