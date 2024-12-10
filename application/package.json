@@ -1,5 +1,5 @@
 {
-  "name": "task-prioritization-eisenhower-matrix",
+  "name": "Task Prioritizer",
   "version": "0.0.1",
   "description": "Initial version to setup the repositories",
   "main": "main.js",
