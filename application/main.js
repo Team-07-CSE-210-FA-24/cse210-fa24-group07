@@ -9,7 +9,7 @@ const {
 } = require('electron');
 const path = require('node:path');
 
-/* 
+/*
  * Prevent the application from starting during initial installation 
  * Refer https://www.electronforge.io/config/makers/squirrel.windows for details
  */
