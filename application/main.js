@@ -108,7 +108,11 @@ app.whenReady().then(() => {
   }
 
   // Tray
-  const trayIcon = new Tray(nativeImage.createFromPath(path.resolve(__dirname, 'icons/taskbar/icon.png')));
+  const trayIcon = new Tray(
+    nativeImage.createFromPath(
+      path.resolve(__dirname, 'icons/taskbar/icon.png'),
+    ),
+  );
   trayIcon.setContextMenu(
     Menu.buildFromTemplate([
       {
