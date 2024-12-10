@@ -79,23 +79,7 @@
       margin-left: 10px;
     }
 
-    #delete-selected-button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      background-color: #ff4d4d;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-      display: none; /* Hidden by default */
-    }
-
-    #delete-selected-button:hover {
-      background-color: #d93636;
-    }
-
-    #add-task-button {
+    #back {
       margin-top: 20px;
       padding: 10px 20px;
       background-color: #007bff;
@@ -106,27 +90,7 @@
       font-size: 16px;
     }
 
-    #add-task-button:hover {
-      background-color: #0056b3;
-    }
-
-    .quadrant h3 {
-      margin: 0 0 10px;
-      color: white;
-    }
-
-    #help-button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-
-    #help-button:hover {
+    #back:hover {
       background-color: #0056b3; /* 悬浮时的背景色变化 */
     }
 
@@ -134,27 +98,32 @@
 </head>
 <body>
   <h1>Eisenhower Matrix</h1>
-  <div id="matrix">
-    <div class="quadrant" id="quadrant1">
-      <h3>✅ Do</h3>
-      <ul></ul>
-    </div>
-    <div class="quadrant" id="quadrant2">
-      <h3>📅 Schedule</h3>
-      <ul></ul>
-    </div>
-    <div class="quadrant" id="quadrant3">
-      <h3>📤 Delegate</h3>
-      <ul></ul>
-    </div>
-    <div class="quadrant" id="quadrant4">
-      <h3>❌ Delete</h3>
-      <ul></ul>
-    </div>
-  </div>
-  <button id="delete-selected-button">Delete Selected</button>
-  <button id="add-task-button">Add Task</button>
-  <button id="help-button">Help</button>
+  <p>
+    The Eisenhower Matrix is a time management tool that helps prioritize tasks based on their urgency and importance. It is named after Dwight D. Eisenhower, the 34th President of the United States, who was known for his ability to make tough decisions and prioritize effectively. The matrix helps individuals focus on what truly matters by categorizing tasks into four quadrants.
+    
+    <!-- table默认是没有边框的，border="1"设置可见边框 -->
+    <table border="1" align="center">
+        <!-- 表格标题：align默认是top -->
+        <caption>Different Types of Jobs in Eisenhower Matrix</caption>
+        <tr>
+            <th width="100px"></th>
+            <th width="100px">Urgent</th>
+            <th width="100px">Not Urgent</th>
+        </tr>
+        <tr>
+            <td>Important</td>
+            <td>1. Do First</td>
+            <td>2. Schedule</td>
+        </tr>
+        <tr>
+            <td>Not Important</td>
+            <td>3. Delegate</td>
+            <td>4. Eliminate</td>
+        </tr>
+    </table>
+
+  </p>
+  <button id="back">Back</button>
   <script src="./renderer.js"></script>
 </body>
 </html>
