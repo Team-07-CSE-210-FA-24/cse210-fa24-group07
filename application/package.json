@@ -38,8 +38,8 @@
       "output": "dist"
     },
     "win": {
-     "icon": "icons/png/icon.png"
-   },
+      "icon": "icons/png/icon.png"
+    },
     "publish": {
       "provider": "github",
       "owner": "Team-07-CSE-210-FA-24",
@@ -64,6 +64,7 @@
     "babel-jest": "^29.7.0",
     "cssom": "^0.5.0",
     "electron": "^33.2.0",
+    "electron-store": "^10.0.0",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "jsdoc": "^4.0.4",
