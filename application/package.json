@@ -4,10 +4,9 @@
   "description": "Initial version to setup the repositories",
   "main": "main.js",
   "scripts": {
-    "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "start-dev": "electron .",
+    "start": "electron .",
     "lint": "biome ci",
     "fix": "biome check --write",
     "test": "jest --passWithNoTests"
@@ -23,7 +22,6 @@
     "productName": "Task Prioritization Eisenhower Matrix",
     "linux": {
       "category": "Utility",
-      "icon": "build/icons",
       "target": ["AppImage", "snap"]
     },
     "files": [
@@ -35,6 +33,9 @@
     "directories": {
       "output": "dist"
     },
+    "win": {
+     "icon": "icons/png/icon.png"
+   },
     "publish": {
       "provider": "github",
       "owner": "Team-07-CSE-210-FA-24",
