@@ -51,7 +51,7 @@ jobs:
         run: zip -r electron-macos.zip artifacts/macos/
     # Compress Windows build artifacts
       - name: Compress Windows Build
-        run: mv artifacts/windows/squirrel.windows/x64/* zip_folder; zip -r electron-windows.zip zip_folder
+        run: mkdir zip_folder; mv artifacts/windows/squirrel.windows/x64/* zip_folder; zip -r electron-windows.zip zip_folder
       - name: Create GitHub Release
         id: create_release
         uses: actions/create-release@v1
