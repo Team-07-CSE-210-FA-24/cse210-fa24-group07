@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Eisenhower Matrix</title>
+  <title>DevZen</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -9,10 +9,27 @@
       background-color: #f4f4f4;
       margin: 0;
       padding: 0;
+      position: relative;
     }
 
     h1 {
       margin: 20px 0;
+    }
+
+    /* Info button in top-right corner */
+    #info-button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      font-size: 1.5em;
+      color: #007bff;
+      cursor: pointer;
+    }
+
+    #info-button:hover {
+      color: #0056b3;
     }
 
     #matrix {
@@ -31,29 +48,28 @@
       color: white;
     }
 
-    /* Quadrant Colors Based on the Eisenhower Matrix */
     #quadrant1 {
-      background-color: #4caf50; /* Green */
+      background-color: #4caf50; /* Do */
     }
 
     #quadrant2 {
-      background-color: #ff9800; /* Orange */
+      background-color: #ff9800; /* Schedule */
     }
 
     #quadrant3 {
-      background-color: #2196f3; /* Blue */
+      background-color: #2196f3; /* Delegate */
     }
 
     #quadrant4 {
-      background-color: #6c757d; /* Dark Gray */
+      background-color: #6c757d; /* Tasks to delete */
     }
 
     ul {
       list-style: none;
       padding: 0;
       margin: 0;
-      max-height: 140px; /* Approximate height for 5 tasks */
-      overflow-y: auto; /* Enable scrolling for the quadrant */
+      max-height: 140px;
+      overflow-y: auto;
     }
 
     ul::-webkit-scrollbar {
@@ -79,22 +95,9 @@
       margin-left: 10px;
     }
 
-    #delete-selected-button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      background-color: #ff4d4d;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-      display: none; /* Hidden by default */
-    }
-
-    #delete-selected-button:hover {
-      background-color: #d93636;
-    }
-
+    #delete-selected-button,
+    #mark-completed-button,
+    #view-completed-button,
     #add-task-button {
       margin-top: 20px;
       padding: 10px 20px;
@@ -104,25 +107,41 @@
       border-radius: 5px;
       cursor: pointer;
       font-size: 16px;
+      margin-right: 10px;
+      transition: background-color 0.2s;
+    }
+
+    #delete-selected-button {
+      background-color: #ff4d4d;
+    }
+
+    #delete-selected-button:hover {
+      background-color: #d93636;
+    }
+
+    #mark-completed-button {
+      background-color: #28a745;
+    }
+
+    #mark-completed-button:hover {
+      background-color: #218838;
+    }
+
+    #view-completed-button {
+      background-color: #17a2b8;
+    }
+
+    #view-completed-button:hover {
+      background-color: #138496;
     }
 
     #add-task-button:hover {
       background-color: #0056b3;
     }
 
-    #help {
-      margin-top: 20px;
-      padding: 10px 20px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-
-    #help:hover {
-      background-color: #0056b3; 
+    #delete-selected-button,
+    #mark-completed-button {
+      display: none;
     }
 
     .quadrant h3 {
@@ -130,10 +149,21 @@
       color: white;
       cursor: pointer;
     }
+
+    .buttons-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 30px auto;
+      gap: 20px;
+    }
   </style>
 </head>
 <body>
-  <h1>Eisenhower Matrix</h1>
+  <!-- Info button for Help at top-right -->
+  <button id="info-button">i</button>
+
+  <h1>DevZen</h1>
   <div id="matrix">
     <div class="quadrant" id="quadrant1">
       <h3>✅ Do</h3>
@@ -152,9 +182,15 @@
       <ul></ul>
     </div>
   </div>
+
+  <!-- Centered buttons for main actions -->
+  <div class="buttons-container">
+    <button id="view-completed-button">View Completed Tasks</button>
+    <button id="add-task-button">Add Task</button>
+  </div>
+
   <button id="delete-selected-button">Delete Selected</button>
-  <button id="add-task-button">Add Task</button>
-  <button id="help" style="">Help</button>
+  <button id="mark-completed-button">Mark Completed</button>
   <script src="./renderer.js"></script>
 </body>
 </html>
