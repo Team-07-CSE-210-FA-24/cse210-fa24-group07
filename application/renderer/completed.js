@@ -56,7 +56,6 @@ document.getElementById('back-to-view').addEventListener('click', () => {
       buttonRow.appendChild(deleteButton);
   
       li.appendChild(buttonRow);
-  
       completedList.appendChild(li);
     });
   }
