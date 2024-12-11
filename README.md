@@ -1,8 +1,6 @@
 # Task Prioritizer
 CSE 210 Fall 2024 Project for Team-07.
 - Click [here](https://github.com/Team-07-CSE-210-FA-24/cse210-fa24-group07/releases/) and download the latest version for your system.
-
-Navigate to the application folder - 
 ## Installing dependencies
 Use npm install 
 ## Running the application
