@@ -9,10 +9,6 @@ const {
 } = require('electron');
 const path = require('node:path');
 
-/*
- * Prevent the application from starting during initial installation
- * Refer https://www.electronforge.io/config/makers/squirrel.windows for details
- */
 if (require('electron-squirrel-startup')) app.quit();
 
 let Store;
@@ -26,10 +22,11 @@ let Store;
   let isQuitting = false;
 
   const tasks = store.get('tasks', {
-    quadrant1: [], // Urgent and Important
-    quadrant2: [], // Not Urgent but Important
-    quadrant3: [], // Urgent but Not Important
-    quadrant4: [], // Neither Urgent nor Important
+    quadrant1: [],
+    quadrant2: [],
+    quadrant3: [],
+    quadrant4: [],
+    completed: [],
   });
 
   function saveTasks() {
@@ -76,13 +73,27 @@ let Store;
       isQuitting = true;
     });
 
-    // IPC Handlers
+    function categorizeTask(task) {
+      if (task.urgent && task.important) {
+        return { key: 'quadrant1', category: 'Do' };
+      }
+
+      if (!task.urgent && task.important) {
+        return { key: 'quadrant2', category: 'Schedule' };
+      }
+
+      if (task.urgent && !task.important) {
+        return { key: 'quadrant3', category: 'Delegate' };
+      }
+
+      return { key: 'quadrant4', category: 'Tasks to delete' };
+    }
+
     ipcMain.handle('add-task', (event, task) => {
       const fullTask = { ...task, notes: task.notes || '' };
-      if (task.urgent && task.important) tasks.quadrant1.push(fullTask);
-      else if (!task.urgent && task.important) tasks.quadrant2.push(fullTask);
-      else if (task.urgent && !task.important) tasks.quadrant3.push(fullTask);
-      else tasks.quadrant4.push(fullTask);
+      const { key, category } = categorizeTask(fullTask);
+      fullTask.category = category;
+      tasks[key].push(fullTask);
       saveTasks();
       return tasks;
     });
@@ -113,7 +124,30 @@ let Store;
       return tasks;
     });
 
-    // Global Shortcut
+    ipcMain.handle('complete-task', (event, selectedTasks) => {
+      for (const [quadrant, indices] of Object.entries(selectedTasks)) {
+        indices.sort((a, b) => b - a);
+        for (const index of indices) {
+          const completedTask = tasks[quadrant].splice(index, 1)[0];
+          if (completedTask) {
+            tasks.completed.push(completedTask);
+          }
+        }
+      }
+      saveTasks();
+      return tasks;
+    });
+
+    ipcMain.handle('get-completed-tasks', () => {
+      return tasks.completed || [];
+    });
+
+    ipcMain.handle('delete-completed-task', (event, index) => {
+      tasks.completed.splice(index, 1);
+      saveTasks();
+      return tasks.completed;
+    });
+
     const ret = globalShortcut.register('CmdOrCtrl+Alt+T', () => {
       mainWindow.show();
       mainWindow.focus();
@@ -122,7 +156,7 @@ let Store;
       console.error('Failed to register global shortcut.');
     }
 
-    // Tray
+    // Tray formatted as linter suggests
     const trayIcon = new Tray(
       path.resolve(__dirname, 'icons/taskbar/icon.png'),
     );

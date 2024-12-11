@@ -1,21 +1,148 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Edit Task Notes</title>
+  <title>Task Details</title>
   <link rel="stylesheet" href="stylemain.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+      font-size: 2em;
+      color: #333;
+    }
+
+    .deadline {
+      margin-bottom: 30px;
+      font-size: 1.1em;
+      color: #555;
+    }
+
+    .container {
+      display: inline-block;
+      text-align: left;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      max-width: 600px;
+      width: 100%;
+    }
+
+    .preview,
+    #notes-preview {
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 20px;
+      background: #fafafa;
+      min-height: 200px;
+      margin-bottom: 20px;
+      line-height: 1.5;
+      color: #333;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+      overflow: auto;
+    }
+
+    #markdown-editor {
+      width: 100%;
+      font-family: inherit;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 10px;
+      margin-bottom: 20px;
+      min-height: 200px;
+      box-sizing: border-box;
+    }
+
+    button {
+      margin: 0 5px;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #edit-button,
+    #back-button,
+    #save-notes,
+    #cancel-edit {
+      display: inline-block;
+      margin-top: 10px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #view-mode,
+    #edit-mode {
+      text-align: center;
+    }
+
+    #edit-button,
+    #back-button {
+      margin-top: 0;
+    }
+
+    #task-title {
+      font-size: 1.5em;
+      color: #333;
+      margin-bottom: 5px;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-  <h1>Edit Notes</h1>
+  <div id="task-info">
+    <h1 id="task-title">Task Name</h1>
+    <div class="deadline" id="task-deadline">Deadline: N/A</div>
+  </div>
   <div class="container">
-    <form id="edit-form">
-      <textarea id="markdown-editor" placeholder="Write your notes in Markdown..." rows="10"></textarea>
+    <!-- View Mode -->
+    <div id="view-mode">
+      <div id="notes-preview" class="preview"></div>
+      <button id="edit-button" type="button">Edit</button>
+      <button id="back-button" type="button">Back</button>
+    </div>
+
+    <!-- Edit Mode -->
+    <div id="edit-mode" class="hidden">
+      <textarea
+        id="markdown-editor"
+        placeholder="Write your notes in Markdown..."
+      ></textarea>
       <div id="preview" class="preview"></div>
-      <p style="font-size: 0.9em; color: gray; margin-bottom: 10px;">
-        Use <a href="md-guide.html" target="_blank" style="color: #007bff;">Markdown</a> syntax for formatting: **bold**, *italic*, `code`, and more.
+      <p style="font-size: 0.9em; color: gray; margin-bottom: 10px; text-align:center;">
+        Use
+        <a
+          href="md-guide.html"
+          target="_blank"
+          style="color: #007bff;"
+          >Markdown</a
+        >
+        syntax.
       </p>
-      <button id="save-notes" type="button">Save Notes</button>
-    </form>
-    <button id="back-button" type="button">Back</button>
+      <div style="text-align:center;">
+        <button id="save-notes" type="button">Save Notes</button>
+        <button id="cancel-edit" type="button" style="background-color:#6c757d;"
+          >Cancel</button
+        >
+      </div>
+    </div>
   </div>
   <script src="./notes.js"></script>
 </body>

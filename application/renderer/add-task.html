@@ -36,7 +36,8 @@
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 
-    input[type="text"], input[type="date"] {
+    input[type='text'],
+    input[type='date'] {
       width: 90%;
       padding: 10px;
       font-size: 16px;
@@ -44,7 +45,8 @@
       border-radius: 5px;
     }
 
-    textarea, #preview  {
+    textarea,
+    #preview {
       font-family: Arial, sans-serif;
       width: 90%;
       padding: 10px;
@@ -53,9 +55,10 @@
       border-radius: 5px;
       text-align: left;
     }
+
     code {
-      background-color: #f0f0f0;  
-      color: #333;   
+      background-color: #f0f0f0;
+      color: #333;
       padding: 0.15rem 0.4rem;
       border-radius: 0.3125rem;
       font-size: 0.8rem;
@@ -102,7 +105,12 @@
       <input type="text" id="task-name" placeholder="Task Name" required />
       <p style="font-size: 0.9em; color: gray; margin-bottom: -0.5rem;">
         You can use 
-        <a href="md-guide.html" target="_blank" style="color: #007bff;">Markdown</a>
+        <a 
+           href="md-guide.html" 
+           target="_blank" 
+           style="color: #007bff;"
+           >Markdown</a
+          >
         to format your text below.
       </p>
       <textarea id="markdown-input" placeholder="Task Description" rows="5"></textarea>
