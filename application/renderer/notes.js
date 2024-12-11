@@ -32,10 +32,8 @@ function convertMarkdownToHtml(markdown) {
   result = result.replace(/_(.*?)_/g, '<em>$1</em>');
   result = result.replace(/\~~(.*?)\~~/g, '<s>$1</s>');
   result = result.replace(/`([^`]+)`/g, '<code>$1</code>');
-  result = result.replace(
-    /```([\s\S]*?)```/g,
-    '<pre><code>$1</code></pre>',
-  );
+  // Put code block replacement on one line
+  result = result.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
 
   // Blockquotes
   result = result.replace(/^>\s*(.*)$/gm, '<blockquote>$1</blockquote>');
@@ -47,7 +45,7 @@ function convertMarkdownToHtml(markdown) {
   });
 
   // Unordered lists
-  result = result.replace(/^[-\*\+]\s+(.*)$/gm, '<li>$1</li>');
+  result = result.replace(/^[-*+]\s+(.*)$/gm, '<li>$1</li>');
   result = result.replace(/(<li>.*<\/li>)(?![\r\n]|$)/g, '$1');
   result = result.replace(/(<li>.*<\/li>[\r\n]+)/g, '<ul>$1</ul>');
 
@@ -68,7 +66,7 @@ function convertMarkdownToHtml(markdown) {
   );
 
   // Horizontal rule
-  result = result.replace(/^[-\*]{3,}$/gm, '<hr>');
+  result = result.replace(/^[-*]{3,}$/gm, '<hr>');
 
   // Line breaks
   result = result.replace(/\n/g, '<br>');
@@ -80,7 +78,8 @@ async function loadTaskDetails() {
   const tasks = await window.electronAPI.getTasks();
   let task;
 
-  if (tasks[quadrant] && tasks[quadrant][index]) {
+  // Use optional chaining as suggested by linter
+  if (tasks[quadrant]?.[index]) {
     task = tasks[quadrant][index];
   }
 
@@ -105,7 +104,6 @@ async function loadNotes() {
   taskDeadline.textContent = deadlineStr;
 
   if (isCompleted) {
-    // If the task is completed, no editing allowed
     editButton.style.display = 'none';
   }
 
@@ -114,7 +112,7 @@ async function loadNotes() {
     editModeDiv.classList.add('hidden');
     notesPreviewDiv.innerHTML = convertMarkdownToHtml(notes || '');
   } else {
-    // mode=edit (Only possible if not completed)
+    // mode=edit (Only if not completed)
     if (!isCompleted) {
       viewModeDiv.classList.add('hidden');
       editModeDiv.classList.remove('hidden');
@@ -160,7 +158,6 @@ editButton.addEventListener('click', () => {
 });
 
 backButton.addEventListener('click', () => {
-  // If completed, back to completed list; else back to main
   if (quadrant === 'completed') {
     window.location.href = './completed.html';
   } else {

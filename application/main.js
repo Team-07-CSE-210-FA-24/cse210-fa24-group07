@@ -73,7 +73,6 @@ let Store;
       isQuitting = true;
     });
 
-    // Helper function to determine category and quadrant key
     function categorizeTask(task) {
       if (task.urgent && task.important) {
         return { key: 'quadrant1', category: 'Do' };
@@ -90,7 +89,6 @@ let Store;
       return { key: 'quadrant4', category: 'Tasks to delete' };
     }
 
-    // IPC Handlers
     ipcMain.handle('add-task', (event, task) => {
       const fullTask = { ...task, notes: task.notes || '' };
       const { key, category } = categorizeTask(fullTask);
@@ -132,7 +130,6 @@ let Store;
         for (const index of indices) {
           const completedTask = tasks[quadrant].splice(index, 1)[0];
           if (completedTask) {
-            // completedTask already has category
             tasks.completed.push(completedTask);
           }
         }
@@ -151,7 +148,6 @@ let Store;
       return tasks.completed;
     });
 
-    // Global Shortcut
     const ret = globalShortcut.register('CmdOrCtrl+Alt+T', () => {
       mainWindow.show();
       mainWindow.focus();
@@ -160,8 +156,10 @@ let Store;
       console.error('Failed to register global shortcut.');
     }
 
-    // Tray
-    const trayIcon = new Tray(path.resolve(__dirname, 'icons/taskbar/icon.png'));
+    // Tray formatted as linter suggests
+    const trayIcon = new Tray(
+      path.resolve(__dirname, 'icons/taskbar/icon.png'),
+    );
     trayIcon.setContextMenu(
       Menu.buildFromTemplate([
         {
