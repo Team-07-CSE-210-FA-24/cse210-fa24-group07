@@ -77,13 +77,17 @@ let Store;
     function categorizeTask(task) {
       if (task.urgent && task.important) {
         return { key: 'quadrant1', category: 'Do' };
-      } else if (!task.urgent && task.important) {
-        return { key: 'quadrant2', category: 'Schedule' };
-      } else if (task.urgent && !task.important) {
-        return { key: 'quadrant3', category: 'Delegate' };
-      } else {
-        return { key: 'quadrant4', category: 'Tasks to delete' };
       }
+
+      if (!task.urgent && task.important) {
+        return { key: 'quadrant2', category: 'Schedule' };
+      }
+
+      if (task.urgent && !task.important) {
+        return { key: 'quadrant3', category: 'Delegate' };
+      }
+
+      return { key: 'quadrant4', category: 'Tasks to delete' };
     }
 
     // IPC Handlers
@@ -128,7 +132,7 @@ let Store;
         for (const index of indices) {
           const completedTask = tasks[quadrant].splice(index, 1)[0];
           if (completedTask) {
-            // completedTask already has category set when it was created
+            // completedTask already has category
             tasks.completed.push(completedTask);
           }
         }
@@ -157,9 +161,7 @@ let Store;
     }
 
     // Tray
-    const trayIcon = new Tray(
-      path.resolve(__dirname, 'icons/taskbar/icon.png'),
-    );
+    const trayIcon = new Tray(path.resolve(__dirname, 'icons/taskbar/icon.png'));
     trayIcon.setContextMenu(
       Menu.buildFromTemplate([
         {

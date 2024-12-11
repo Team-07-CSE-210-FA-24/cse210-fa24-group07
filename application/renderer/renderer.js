@@ -5,8 +5,6 @@ const markCompletedButton = document.getElementById('mark-completed-button');
 const viewCompletedButton = document.getElementById('view-completed-button');
 const backButton = document.getElementById('back-button');
 const quadrants = document.querySelectorAll('.quadrant');
-
-// Previously had helpButton, now replaced with infoButton to match the "i" icon in view.html
 const infoButton = document.getElementById('info-button');
 const backFromHelpButton = document.getElementById('back');
 
@@ -14,8 +12,12 @@ let selectedTasks = {};
 
 function updateButtonVisibility() {
   const hasSelectedTasks = Object.keys(selectedTasks).length > 0;
-  deleteSelectedButton.style.display = hasSelectedTasks ? 'inline-block' : 'none';
-  markCompletedButton.style.display = hasSelectedTasks ? 'inline-block' : 'none';
+  deleteSelectedButton.style.display = hasSelectedTasks
+    ? 'inline-block'
+    : 'none';
+  markCompletedButton.style.display = hasSelectedTasks
+    ? 'inline-block'
+    : 'none';
 }
 
 async function loadMatrix() {
@@ -29,7 +31,6 @@ async function loadMatrix() {
     if (quadrantEl) {
       quadrantEl.innerHTML = '';
 
-      // Sort tasks by deadline
       const sortedTasks = taskList.sort((a, b) => {
         if (!a.deadline && !b.deadline) return 0;
         if (!a.deadline) return 1;
@@ -47,7 +48,9 @@ async function loadMatrix() {
             if (!selectedTasks[quadrant]) selectedTasks[quadrant] = [];
             selectedTasks[quadrant].push(index);
           } else {
-            selectedTasks[quadrant] = selectedTasks[quadrant].filter((i) => i !== index);
+            selectedTasks[quadrant] = selectedTasks[quadrant].filter(
+              (i) => i !== index,
+            );
             if (selectedTasks[quadrant].length === 0)
               delete selectedTasks[quadrant];
           }
@@ -56,11 +59,15 @@ async function loadMatrix() {
 
         const taskText = document.createElement('span');
         const deadline = task.deadline
-          ? ` (${(new Date(task.deadline).getMonth() + 1).toString().padStart(2, '0')}/${new Date(task.deadline).getDate().toString().padStart(2, '0')})`
+          ? ` (${(new Date(task.deadline).getMonth() + 1)
+              .toString()
+              .padStart(2, '0')}/${new Date(task.deadline)
+              .getDate()
+              .toString()
+              .padStart(2, '0')})`
           : '';
         taskText.textContent = `${task.name}${deadline}`;
 
-        // View Task button
         const viewTaskButton = document.createElement('button');
         viewTaskButton.textContent = 'View Task';
         viewTaskButton.style.marginLeft = '10px';
@@ -103,14 +110,12 @@ if (addTaskButton) {
   });
 }
 
-// Replaced helpButton with infoButton for help navigation
 if (infoButton) {
   infoButton.addEventListener('click', () => {
     window.location.href = './help.html';
   });
 }
 
-// This presumably handles a back button on the help page
 if (backFromHelpButton) {
   backFromHelpButton.addEventListener('click', () => {
     window.location.href = './view.html';
@@ -139,7 +144,6 @@ if (taskForm) {
       important,
       deadline,
     });
-    // After adding a task, go back to main dashboard
     window.location.href = './view.html';
   });
 }
