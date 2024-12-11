@@ -28,4 +28,4 @@ By default, the generated documentation is saved in a directory named `out`. You
 
 ## Global shortcut
 
-When the app is running, press `Ctrl+Alt+T`(on Windows) or `Command+Alt+T`(on Mac) to show the app .
+When the app is running, press `Ctrl+Alt+T`(on Windows) or `Command+Option+T`(on Mac) to show the app .
