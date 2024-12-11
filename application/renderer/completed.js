@@ -1,3 +1,5 @@
+//biome-ignore
+
 document.getElementById('back-to-view').addEventListener('click', () => {
     window.location.href = './view.html';
   });
