@@ -10,9 +10,11 @@ let selectedTasks = {}; // Track selected tasks for deletion
 
 function updateDeleteButtonVisibility() {
   const hasSelectedTasks = Object.keys(selectedTasks).length > 0;
-  deleteSelectedButton.style.display = hasSelectedTasks
-    ? 'inline-block'
-    : 'none';
+  if (deleteSelectedButton) { // Check if deleteSelectedButton is not null
+    deleteSelectedButton.style.display = hasSelectedTasks
+      ? 'inline-block'
+      : 'none';
+  }
 }
 
 async function loadMatrix() {
@@ -84,6 +86,8 @@ async function loadMatrix() {
   }
 }
 
+module.exports = { loadMatrix };
+
 // Delete selected tasks
 if (deleteSelectedButton) {
   deleteSelectedButton.addEventListener('click', async () => {
@@ -153,5 +157,3 @@ for (const quadrant of quadrants) {
     window.location.href = targetPage;
   });
 }
-
-module.exports = { loadMatrix };
