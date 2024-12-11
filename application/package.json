@@ -9,7 +9,7 @@
     "start": "electron .",
     "lint": "biome ci",
     "fix": "biome check --write",
-    "test": "jest --passWithNoTests"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
