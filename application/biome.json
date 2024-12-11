@@ -15,6 +15,9 @@
     }
   },
   "files": {
-    "ignore": ["package.json","completed.js"]
+    "ignore": [
+      "package.json",
+      "completed.js"
+    ]
   }
-}
+ }
