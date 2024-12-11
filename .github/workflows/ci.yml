@@ -48,7 +48,7 @@ jobs:
           path: artifacts/windows
     # Compress Mac build artifacts
       - name: Compress Mac Build
-        run: zip -r electron-macos.zip artifacts/macos/
+        run: mkdir TaskPrioritizer; mv artifacts/macos/zip/darwin/arm64/* TaskPrioritizer; zip -r electron-macos.zip TaskPrioritizer
     # Compress Windows build artifacts
       - name: Compress Windows Build
         run: mkdir TaskPrioritizer; mv artifacts/windows/squirrel.windows/x64/* TaskPrioritizer; zip -r electron-windows.zip TaskPrioritizer
