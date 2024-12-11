@@ -153,3 +153,5 @@ for (const quadrant of quadrants) {
     window.location.href = targetPage;
   });
 }
+
+module.exports = { loadMatrix };

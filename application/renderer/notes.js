@@ -10,11 +10,17 @@ const backButton = document.getElementById('back-button');
 function convertMarkdownToHtml(markdown) {
   let result = markdown;
 
-  // Convert headings
-  result = result.replace(/^(#{1,6})\s*(.*)$/gm, (match, hashes, title) => {
-    const level = hashes.length;
-    return `<h${level}>${title}</h${level}>`;
+  // Convert multi-line code blocks (triple backticks)
+  result = result.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
+
+  // Convert headings (1-6 levels)
+  result = result.replace(/^#{1,6}\s*(.*)$/gm, (match, title) => {
+    const level = match.split(' ')[0].length; // Count the number of #
+    return `<h${level}>${title.trim()}</h${level}>`;
   });
+
+  // Convert blockquotes
+  result = result.replace(/^>\s*(.*)$/gm, '<blockquote>$1</blockquote>');
 
   // Convert bold text
   result = result.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
@@ -24,50 +30,31 @@ function convertMarkdownToHtml(markdown) {
   result = result.replace(/\*(.*?)\*/g, '<em>$1</em>');
   result = result.replace(/_(.*?)_/g, '<em>$1</em>');
 
-  // Convert strike-through text
-  result = result.replace(/\~~(.*?)\~~/g, '<s>$1</s>');
-
-  // Convert code blocks (inline code)
+  // Convert inline code
   result = result.replace(/`([^`]+)`/g, '<code>$1</code>');
 
-  // Convert multi-line code blocks (triple backticks)
-  result = result.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
-  // Convert blockquotes
-  result = result.replace(/^>\s*(.*)$/gm, '<blockquote>$1</blockquote>');
-
   // Convert task lists (checkboxes)
-  result = result.replace(/^\s*[-]\s*\[\s?x?\s?\]\s+(.*)$/gm, (match, task) => {
-    const checked = match.includes('[x]') ? 'checked="checked"' : '';
-    return `<input type="checkbox" ${checked} disabled> ${task}`;
-  });
+  result = result.replace(/^\s*-\s*$begin:math:display$x$end:math:display$\s+(.*)$/gm, '<input type="checkbox" checked="checked" disabled> $1');
+  result = result.replace(/^\s*-\s*$begin:math:display$\\s?$end:math:display$\s+(.*)$/gm, '<input type="checkbox" disabled> $1');
 
   // Convert unordered lists (-, *, +)
   result = result.replace(/^\s*[-\*\+]\s+(.*)$/gm, '<ul><li>$1</li></ul>');
-  result = result.replace(/<\/ul>\s*<ul>/g, ''); // Collapse nested <ul> tags to one level
+  result = result.replace(/<\/ul>\s*<ul>/g, ''); // Merge consecutive <ul> tags
 
-  // Convert ordered lists (1.)
+  // Convert ordered lists (1., 2., etc.)
   result = result.replace(/^\s*\d+\.\s+(.*)$/gm, '<ol><li>$1</li></ol>');
-  result = result.replace(/<\/ol>\s*<ol>/g, ''); // Collapse nested <ol> tags to one level
+  result = result.replace(/<\/ol>\s*<ol>/g, ''); // Merge consecutive <ol> tags
 
   // Convert images
-  result = result.replace(
-    /!\[([^\]]+)\]\(([^)]+)\)/g,
-    '<img src="$2" alt="$1">',
-  );
+  result = result.replace(/!$begin:math:display$([^$end:math:display$]*)\]$begin:math:text$([^)]+)$end:math:text$/g, '<img src="$2" alt="$1">');
 
   // Convert links
-  result = result.replace(
-    /\[([^\]]+)\]\(([^)]+)\)/g,
-    '<a href="$2" target="_blank">$1</a>',
-  );
+  result = result.replace(/$begin:math:display$([^$end:math:display$]+)\]$begin:math:text$([^)]+)$end:math:text$/g, '<a href="$2" target="_blank">$1</a>');
 
-  // Convert horizontal rule (3 dashes or asterisks)
+  // Convert horizontal rules
   result = result.replace(/^[-\*]{3,}$/gm, '<hr>');
 
-  // Convert line breaks
-  result = result.replace(/\n/g, '<br>');
-
-  return result;
+  return result.trim(); // Clean up extra whitespace
 }
 
 async function loadNotes() {
@@ -102,3 +89,8 @@ backButton.addEventListener('click', () => {
 });
 
 loadNotes();
+
+
+module.exports = {
+  convertMarkdownToHtml,
+};
