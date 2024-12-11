@@ -15,9 +15,6 @@
     }
   },
   "files": {
-    "ignore": [
-      "package.json",
-      "application/src/completed-tasks.js"
-    ]
+    "ignore": ["package.json"]
   }
- }
+}
