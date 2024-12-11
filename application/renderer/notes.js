@@ -32,7 +32,10 @@ function convertMarkdownToHtml(markdown) {
   result = result.replace(/_(.*?)_/g, '<em>$1</em>');
   result = result.replace(/\~~(.*?)\~~/g, '<s>$1</s>');
   result = result.replace(/`([^`]+)`/g, '<code>$1</code>');
-  result = result.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
+  result = result.replace(
+    /```([\s\S]*?)```/g,
+    '<pre><code>$1</code></pre>',
+  );
 
   // Blockquotes
   result = result.replace(/^>\s*(.*)$/gm, '<blockquote>$1</blockquote>');
@@ -53,10 +56,16 @@ function convertMarkdownToHtml(markdown) {
   result = result.replace(/<\/ol>\s*<ol>/g, '');
 
   // Images
-  result = result.replace(/!\[([^\]]+)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" style="max-width:100%; height:auto;">');
+  result = result.replace(
+    /!\[([^\]]+)\]\(([^)]+)\)/g,
+    '<img src="$2" alt="$1" style="max-width:100%; height:auto;">',
+  );
 
   // Links
-  result = result.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
+  result = result.replace(
+    /\[([^\]]+)\]\(([^)]+)\)/g,
+    '<a href="$2" target="_blank">$1</a>',
+  );
 
   // Horizontal rule
   result = result.replace(/^[-\*]{3,}$/gm, '<hr>');
@@ -111,7 +120,7 @@ async function loadNotes() {
       editModeDiv.classList.remove('hidden');
       preview.innerHTML = convertMarkdownToHtml(notes || '');
     } else {
-      // If completed and somehow mode=edit is requested, fallback to view
+      // If completed and mode=edit requested, fallback to view
       mode = 'view';
       viewModeDiv.classList.remove('hidden');
       editModeDiv.classList.add('hidden');
@@ -143,7 +152,6 @@ saveButton.addEventListener('click', async () => {
 
 editButton.addEventListener('click', () => {
   if (!isCompleted) {
-    // Switch to edit mode only if not completed
     mode = 'edit';
     viewModeDiv.classList.add('hidden');
     editModeDiv.classList.remove('hidden');
@@ -152,8 +160,7 @@ editButton.addEventListener('click', () => {
 });
 
 backButton.addEventListener('click', () => {
-  // If this was a completed task, go back to completed list view
-  // Otherwise, go back to main matrix view
+  // If completed, back to completed list; else back to main
   if (quadrant === 'completed') {
     window.location.href = './completed.html';
   } else {

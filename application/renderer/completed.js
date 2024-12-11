@@ -36,12 +36,11 @@ document.getElementById('back-to-view').addEventListener('click', () => {
       const buttonRow = document.createElement('div');
       buttonRow.classList.add('button-row');
   
-      // View Task button - goes to notes.html in read-only completed mode
+      // View Task button - read-only completed mode
       const viewTaskButton = document.createElement('button');
       viewTaskButton.textContent = 'View Task';
       viewTaskButton.addEventListener('click', () => {
         // Navigate to notes.html in view mode, with completed=true
-        // quadrant=completed since the task is in the completed array
         window.location.href = `./notes.html?quadrant=completed&index=${i}&mode=view&completed=true`;
       });
       buttonRow.appendChild(viewTaskButton);
