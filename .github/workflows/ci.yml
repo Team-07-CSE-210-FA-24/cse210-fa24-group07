@@ -48,10 +48,10 @@ jobs:
           path: artifacts/windows
     # Compress Mac build artifacts
       - name: Compress Mac Build
-        run: mkdir TaskPrioritizer; mv artifacts/macos/zip/darwin/arm64/* TaskPrioritizer; zip -r electron-macos.zip TaskPrioritizer
+        run: zip -r electron-macos.zip artifacts/macos/
     # Compress Windows build artifacts
       - name: Compress Windows Build
-        run: rm -rf TaskPrioritizer; mkdir TaskPrioritizer; mv artifacts/windows/squirrel.windows/x64/* TaskPrioritizer; zip -r electron-windows.zip TaskPrioritizer
+        run: mkdir TaskPrioritizer; mv artifacts/windows/squirrel.windows/x64/* TaskPrioritizer; zip -r electron-windows.zip TaskPrioritizer
       - name: Create GitHub Release
         id: create_release
         uses: actions/create-release@v1

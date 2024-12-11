@@ -1,17 +1,18 @@
-# Task Prioritizer
-CSE 210 Fall 2024 Project for Team-07.
-- Click [here](https://github.com/Team-07-CSE-210-FA-24/cse210-fa24-group07/releases/) and download the latest version for your system.
-## Instal dependencies
-npm install 
-## Run the application in development
-npm run start
-## Build the application executable for current platform
+# cse210-fa24-group07
+CSE 210 Fall 2024 Project for Team 07
+
+Navigate to the application folder - 
+## Installing dependencies
+Use npm install 
+## Running the application
+npm run start-dev
+## Building the application executable for current platform
 npm run make
-## Build the application executable for MacOS
+## Building the application executable for MacOS
 npm run make --platform darwin 
-## Build the application executable for Windows
+## Building the application executable for Windows
 npm run make --platform win32
-## Build the application executable for Linux
+## Building the application executable for Linux
 npm run make --platform linux
 ## Using JSDocs for documentation
 The JSDoc command-line tool is available in
