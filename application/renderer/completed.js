@@ -1,7 +1,6 @@
 document.getElementById('back-to-view').addEventListener('click', () => {
     window.location.href = './view.html';
   });
-  
   async function loadCompletedTasks() {
     const completedTasks = await window.electronAPI.getCompletedTasks();
     const completedList = document.getElementById('completed-list');
@@ -59,6 +58,5 @@ document.getElementById('back-to-view').addEventListener('click', () => {
       completedList.appendChild(li);
     });
   }
-  
   loadCompletedTasks();
   
