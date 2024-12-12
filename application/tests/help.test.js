@@ -4,8 +4,10 @@ require('@testing-library/jest-dom');
 
 // Mock for navigation which simulates window.location.href changes
 const originalLocation = window.location;
-delete window.location;
-window.location = { href: '' };
+Object.defineProperty(window, 'location', {
+  writable: true,
+  value: { href: '' }
+});
 
 // Sample test for Help button functionality
 describe('Help Button Functionality', () => {
@@ -31,4 +33,3 @@ describe('Help Button Functionality', () => {
     expect(window.location.href).toBe('./help.html');
   });
 });
-
