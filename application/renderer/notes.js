@@ -25,47 +25,32 @@ function convertMarkdownToHtml(markdown) {
     return `<h${level}>${title}</h${level}>`;
   });
 
-  // Bold/Italic/Strikethrough/Code formatting
+  // Formatting
   result = result.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
   result = result.replace(/__(.*?)__/g, '<strong>$1</strong>');
   result = result.replace(/\*(.*?)\*/g, '<em>$1</em>');
   result = result.replace(/_(.*?)_/g, '<em>$1</em>');
   result = result.replace(/\~~(.*?)\~~/g, '<s>$1</s>');
   result = result.replace(/`([^`]+)`/g, '<code>$1</code>');
-  // Put code block replacement on one line
   result = result.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
-
-  // Blockquotes
   result = result.replace(/^>\s*(.*)$/gm, '<blockquote>$1</blockquote>');
-
-  // Task lists
-  result = result.replace(/^\s*[-]\s*\[\s?x?\s?\]\s+(.*)$/gm, (match, task) => {
-    const checked = match.includes('[x]') ? 'checked="checked"' : '';
-    return `<p><input type="checkbox" ${checked} disabled> ${task}</p>`;
+  result = result.replace(/^\s*[-]\s*\[\s?x?\s?\]\s+(.*)$/gm, (m, t) => {
+    const checked = m.includes('[x]') ? 'checked="checked"' : '';
+    return `<p><input type="checkbox" ${checked} disabled> ${t}</p>`;
   });
 
-  // Unordered lists
+  // Lists
   result = result.replace(/^[-*+]\s+(.*)$/gm, '<li>$1</li>');
-  result = result.replace(/(<li>.*<\/li>)(?![\r\n]|$)/g, '$1');
   result = result.replace(/(<li>.*<\/li>[\r\n]+)/g, '<ul>$1</ul>');
-
-  // Ordered lists
+  result = result.replace(/<\/ul>\s*<ul>/g, '');
   result = result.replace(/^\d+\.\s+(.*)$/gm, '<ol><li>$1</li></ol>');
   result = result.replace(/<\/ol>\s*<ol>/g, '');
 
-  // Images
-  result = result.replace(
-    /!\[([^\]]+)\]\(([^)]+)\)/g,
-    '<img src="$2" alt="$1" style="max-width:100%; height:auto;">',
-  );
+  // Images & Links
+  result = result.replace(/!\[([^\]]+)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" style="max-width:100%; height:auto;">');
+  result = result.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
 
-  // Links
-  result = result.replace(
-    /\[([^\]]+)\]\(([^)]+)\)/g,
-    '<a href="$2" target="_blank">$1</a>',
-  );
-
-  // Horizontal rule
+  // Horizontal rules
   result = result.replace(/^[-*]{3,}$/gm, '<hr>');
 
   // Line breaks
@@ -76,14 +61,7 @@ function convertMarkdownToHtml(markdown) {
 
 async function loadTaskDetails() {
   const tasks = await window.electronAPI.getTasks();
-  let task;
-
-  // Use optional chaining as suggested by linter
-  if (tasks[quadrant]?.[index]) {
-    task = tasks[quadrant][index];
-  }
-
-  return task || {};
+  return tasks[quadrant]?.[index] || {};
 }
 
 async function loadNotes() {
@@ -103,35 +81,22 @@ async function loadNotes() {
   taskTitle.textContent = name;
   taskDeadline.textContent = deadlineStr;
 
+  // If completed, hide edit button so user can't edit.
   if (isCompleted) {
     editButton.style.display = 'none';
   }
 
-  if (mode === 'view') {
-    viewModeDiv.classList.remove('hidden');
-    editModeDiv.classList.add('hidden');
-    notesPreviewDiv.innerHTML = convertMarkdownToHtml(notes || '');
-  } else {
-    // mode=edit (Only if not completed)
-    if (!isCompleted) {
-      viewModeDiv.classList.add('hidden');
-      editModeDiv.classList.remove('hidden');
-      preview.innerHTML = convertMarkdownToHtml(notes || '');
-    } else {
-      // If completed and mode=edit requested, fallback to view
-      mode = 'view';
-      viewModeDiv.classList.remove('hidden');
-      editModeDiv.classList.add('hidden');
-      notesPreviewDiv.innerHTML = convertMarkdownToHtml(notes || '');
-    }
-  }
+  // Start in view mode
+  mode = 'view';
+  viewModeDiv.classList.remove('hidden');
+  editModeDiv.classList.add('hidden');
+  notesPreviewDiv.innerHTML = convertMarkdownToHtml(notes || '');
 }
 
 editor.addEventListener('input', () => {
   const markdownText = editor.value || '';
   try {
-    const htmlOutput = convertMarkdownToHtml(markdownText);
-    preview.innerHTML = htmlOutput;
+    preview.innerHTML = convertMarkdownToHtml(markdownText);
   } catch (error) {
     console.error('Error parsing Markdown:', error);
     preview.innerHTML = '<p style="color: red;">Error rendering preview</p>';
@@ -149,6 +114,7 @@ saveButton.addEventListener('click', async () => {
 });
 
 editButton.addEventListener('click', () => {
+  // Only allow if not completed
   if (!isCompleted) {
     mode = 'edit';
     viewModeDiv.classList.add('hidden');
