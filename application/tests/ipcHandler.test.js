@@ -6,13 +6,13 @@ describe('Adding a task', () => {
   beforeEach(() => {
     // Create a mock DOM environment
     document.body.innerHTML = `
-      <form id="taskForm">
+    <form id="taskForm">
         <input id="task-name" type="text" />
         <textarea id="markdown-input"></textarea>
         <input id="urgent" type="checkbox" />
         <input id="important" type="checkbox" />
         <input id="deadline" type="date" />
-      </form>
+    </form>
     `;
 
     // Get the form
@@ -29,7 +29,7 @@ describe('Adding a task', () => {
     };
   });
 
-  it('should add a task when form is submitted', async () => {
+  it('should add a task', async () => {
     // Setup form values
     document.getElementById('task-name').value = 'Test Task';
     document.getElementById('markdown-input').value = 'Test notes';
@@ -88,13 +88,12 @@ describe('Adding a task', () => {
 
 describe('Deleting a task', () => {
     let deleteSelectedButton;
-    let selectedTasks;
+    let tasks;
   
     beforeEach(() => {
       // Create a mock DOM environment
       document.body.innerHTML = `
-          <button id="delete-selected-button">Delete Selected</button>
-
+        <button id="delete-selected-button">Delete Selected</button>
       `;
   
       // Get the delete button
@@ -111,7 +110,7 @@ describe('Deleting a task', () => {
       global.loadMatrix = jest.fn().mockResolvedValue(true);
   
       // Reset selected tasks
-      selectedTasks = {
+      tasks = {
         'quadrant1': [2, 0, 1],
         'quadrant2': [1, 3],
         'quadrant3': [0]
@@ -122,7 +121,7 @@ describe('Deleting a task', () => {
       // Add event listener matching the original implementation
       if (deleteSelectedButton) {
         deleteSelectedButton.addEventListener('click', async () => {
-          for (const [quadrant, indices] of Object.entries(selectedTasks)) {
+          for (const [quadrant, indices] of Object.entries(tasks)) {
             // Sort indices in descending order to avoid index shifting during deletion
             for (const index of indices.sort((a, b) => b - a)) {
               await window.electronAPI.deleteTask(quadrant, index);
@@ -163,77 +162,49 @@ describe('Deleting a task', () => {
 });
 
 describe('Editing a task', () => {
-    let deleteSelectedButton;
-    let selectedTasks;
+    let quadrant, index, notes;
+    let tasks, expectedTasks;
+    let saveButton;
   
     beforeEach(() => {
       // Create a mock DOM environment
       document.body.innerHTML = `
-          <button id="delete-selected-button">Delete Selected</button>
-
+        <button id="save-notes" type="button">Save Notes</button>
       `;
   
-      // Get the delete button
-      deleteSelectedButton = document.getElementById('delete-selected-button');
+      // Get the save button
+      saveButton = document.getElementById('save-notes');
   
       // Mock global objects
       global.window = {
         electronAPI: {
-          deleteTask: jest.fn().mockResolvedValue(true)
+          updateNotes: jest.fn().mockResolvedValue(true)
         }
       };
   
-      // Mock global functions
-      global.loadMatrix = jest.fn().mockResolvedValue(true);
-  
-      // Reset selected tasks
-      selectedTasks = {
-        'quadrant1': [2, 0, 1],
-        'quadrant2': [1, 3],
-        'quadrant3': [0]
-      };
+      notes = 1;
+      quadrant = 0;
+      index = 0;
     });
   
-    it('should delete tasks in the correct order', async () => {
+    it('should edit the task note', async () => {
       // Add event listener matching the original implementation
-      if (deleteSelectedButton) {
-        deleteSelectedButton.addEventListener('click', async () => {
-          for (const [quadrant, indices] of Object.entries(selectedTasks)) {
-            // Sort indices in descending order to avoid index shifting during deletion
-            for (const index of indices.sort((a, b) => b - a)) {
-              await window.electronAPI.deleteTask(quadrant, index);
-            }
-          }
-          await loadMatrix(); // Reload matrix after deletion
-        });
-      }
+      saveButton.addEventListener('click', async () => {
+        await window.electronAPI.updateNotes({ quadrant, index, notes });
+    });
   
       // Trigger the click event
       const clickEvent = new Event('click');
-      deleteSelectedButton.dispatchEvent(clickEvent);
-  
+      saveButton.dispatchEvent(clickEvent);
       // Wait for async operations
       await new Promise(resolve => setTimeout(resolve, 0));
-  
-      // Verify delete operations
-      expect(window.electronAPI.deleteTask).toHaveBeenCalledTimes(6);
-  
-      // Check deletion order for each quadrant
-      const expectedCalls = [
-        ['quadrant1', 2],
-        ['quadrant1', 1],
-        ['quadrant1', 0],
-        ['quadrant2', 3],
-        ['quadrant2', 1],
-        ['quadrant3', 0]
-      ];
-  
-      expectedCalls.forEach((call, index) => {
-        expect(window.electronAPI.deleteTask.mock.calls[index]).toEqual(call);
+
+      expect(window.electronAPI.updateNotes).toHaveBeenCalledWith({
+        quadrant: 0,
+        index: 0,
+        notes: 1
       });
-  
-      // Verify matrix reload
-      expect(loadMatrix).toHaveBeenCalledTimes(1);
+
     });
   
 });
