@@ -6,7 +6,7 @@ require('@testing-library/jest-dom');
 const originalLocation = window.location;
 Object.defineProperty(window, 'location', {
   writable: true,
-  value: { href: '' }
+  value: { href: '' },
 });
 
 // Sample test for Help button functionality
