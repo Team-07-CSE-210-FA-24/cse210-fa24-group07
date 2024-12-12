@@ -1,3 +1,35 @@
+<!--
+  HTML structure for the "Task Details" page in the DevZen application.
+
+  This page allows users to view and edit task notes using Markdown. It provides two modes:
+  view mode for displaying task details and notes, and edit mode for modifying notes.
+
+  Key elements:
+  - Navbar: Displays the application branding ("DevZen").
+  - Task Information:
+    - Displays the task title (id="task-title").
+    - Shows the deadline (id="task-deadline"), defaulting to "N/A" if not set.
+  - View Mode:
+    - A preview area (id="notes-preview") to display notes in rendered HTML format.
+    - "Edit" button (id="edit-button") to switch to edit mode.
+    - "Back" button (id="back-button") to navigate to the previous page.
+  - Edit Mode:
+    - Hidden by default (`class="hidden"`), becomes visible after clicking "Edit."
+    - A Markdown editor (id="markdown-editor") for writing or updating notes.
+    - A live preview area (id="preview") showing the rendered Markdown.
+    - "Save Notes" button (id="save-notes") to save the updated notes.
+    - "Cancel" button (id="cancel-edit") to return to view mode without saving.
+
+  Includes:
+  - Inline CSS to style the hidden class and ensure responsive design.
+  - External CSS (`stylemain.css`) for consistent styling across pages.
+  - Link to a Markdown guide (`md-guide.html`) for users unfamiliar with Markdown syntax.
+  - External JavaScript (`notes.js`) to handle interactivity, including toggling modes and saving notes.
+
+  This page provides an intuitive interface for managing task details and notes,
+  enhancing user productivity by allowing seamless note viewing and editing.
+-->
+
 <!DOCTYPE html>
 <html>
 <head>

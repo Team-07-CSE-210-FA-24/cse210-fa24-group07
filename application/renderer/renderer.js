@@ -1,3 +1,47 @@
+/**
+ * JavaScript functionality for the main task management interface of the DevZen application.
+ * 
+ * This script manages the display and interactivity of the task matrix, including task addition, deletion,
+ * marking tasks as completed, viewing completed tasks, and navigating to other parts of the application.
+ * 
+ * Key functionalities:
+ * - Task management:
+ *   - Dynamically loads tasks into their respective quadrants using `loadMatrix()`.
+ *   - Sorts tasks by deadline for better prioritization.
+ *   - Allows selection of tasks for deletion or marking as completed.
+ *   - Updates the visibility of action buttons based on selected tasks.
+ * - Event handling:
+ *   - `deleteSelectedButton`: Deletes selected tasks from the matrix.
+ *   - `markCompletedButton`: Marks selected tasks as completed and moves them to the completed list.
+ *   - `addTaskButton`: Navigates to the task addition page.
+ *   - `viewCompletedButton`: Navigates to the completed tasks page.
+ *   - `infoButton`: Navigates to the help page.
+ *   - `backFromHelpButton`: Returns to the main view page from the help page.
+ *   - `quadrants`: Navigates to detailed sections for individual quadrants when clicked.
+ * - Task form submission:
+ *   - Captures user input (task name, notes, urgency, importance, and deadline).
+ *   - Adds a new task via the Electron API and reloads the matrix.
+ * - Integration:
+ *   - Uses Electron API methods (`getTasks`, `deleteTask`, `completeTask`, `addTask`) for data persistence and interactivity.
+ *   - Dynamically updates the DOM to reflect task changes without requiring a page refresh.
+ * 
+ * Associated HTML elements:
+ * - Buttons:
+ *   - `addTaskButton` (id="add-task-button"): Adds new tasks.
+ *   - `deleteSelectedButton` (id="delete-selected-button"): Deletes selected tasks.
+ *   - `markCompletedButton` (id="mark-completed-button"): Marks selected tasks as completed.
+ *   - `viewCompletedButton` (id="view-completed-button"): Navigates to the completed tasks page.
+ *   - `infoButton` (id="info-button"): Opens the help page.
+ *   - `backFromHelpButton` (id="back"): Navigates back from the help page.
+ * - Task form:
+ *   - Captures user input for creating a new task (task name, notes, urgency, importance, deadline).
+ * - Task matrix:
+ *   - `quadrants` (class="quadrant"): Represents the four quadrants of the task matrix.
+ * 
+ * This script enhances user interaction with the task management interface, ensuring seamless navigation,
+ * task handling, and real-time updates for better productivity and organization.
+ */
+
 const taskForm = document.getElementById('task-form');
 const addTaskButton = document.getElementById('add-task-button');
 const deleteSelectedButton = document.getElementById('delete-selected-button');

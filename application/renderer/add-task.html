@@ -1,3 +1,30 @@
+<!--
+  HTML structure for the "Add Task" page in the DevZen application.
+
+  This page provides a user interface for creating and submitting tasks.
+  Users can input task details, mark their urgency and importance, and set deadlines.
+  Additionally, Markdown support is provided for formatting the task description.
+
+  Key elements:
+  - Navbar: Displays the application branding ("DevZen").
+  - Task form:
+    - "Task Name" field for the task title (required).
+    - "Task Description" field with Markdown formatting guidance and preview functionality.
+    - Checkboxes to mark the task as "Urgent" or "Important".
+    - "Deadline" field for setting the task's due date (required).
+    - "Add Task" button to submit the form.
+  - Action buttons:
+    - "Back" button to navigate back to the previous page.
+
+  Includes:
+  - Inline styles for aligning elements and providing a clean layout.
+  - External CSS stylesheet (`stylemain.css`) for consistent styling.
+  - JavaScript files (`renderer.js` and `add-task.js`) to handle interactivity and backend communication.
+
+  This page is part of the task management feature and integrates with the Electron app's IPC functionality
+  through scripts to send task data to the main process.
+-->
+
 <!DOCTYPE html>
 <html>
 <head>

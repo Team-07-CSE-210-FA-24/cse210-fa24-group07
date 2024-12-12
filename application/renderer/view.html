@@ -1,3 +1,41 @@
+<!--
+  HTML structure for the "View" page in the DevZen application.
+
+  This page serves as the main interface for managing tasks using the Eisenhower Matrix. 
+  It displays tasks divided into four quadrants, allows navigation to add or manage tasks, 
+  and provides options to view completed tasks or access the help page.
+
+  Key sections:
+  - Navbar:
+    - Displays the application branding ("DevZen").
+    - Includes an information icon (ℹ️) that redirects to the help page.
+    - "View Completed" button (id="view-completed-button") for navigating to completed tasks.
+  - Page Header:
+    - Main title ("DevZen") and a brief description of the Eisenhower Matrix.
+  - Task Matrix:
+    - Divided into four quadrants:
+      - Quadrant 1: "✅ Do" (Urgent and Important tasks, green background).
+      - Quadrant 2: "📅 Schedule" (Not Urgent but Important tasks, orange background).
+      - Quadrant 3: "📤 Delegate" (Urgent but Not Important tasks, blue background).
+      - Quadrant 4: "❌ Tasks to Delete" (Not Urgent and Not Important tasks, gray background).
+    - Each quadrant contains a scrollable list of tasks.
+  - Action Buttons:
+    - "Add Task" button (id="add-task-button"): Navigates to the task addition page.
+    - "Delete Selected" button (id="delete-selected-button"): Deletes selected tasks (hidden by default).
+    - "Mark Completed" button (id="mark-completed-button"): Marks selected tasks as completed (hidden by default).
+  - Styling:
+    - Modern design with a responsive layout, vibrant colors for quadrants, and hover effects for buttons.
+    - Consistent typography and spacing for readability.
+
+  Includes:
+  - Inline styles for specific layout elements.
+  - External CSS (`stylemain.css`) for global styling consistency.
+  - JavaScript (`renderer.js`) for interactivity, such as task management and navigation.
+
+  This page provides an intuitive and visually appealing interface for organizing tasks 
+  based on their urgency and importance, enhancing productivity and task prioritization.
+-->
+
 <!DOCTYPE html>
 <html>
 <head>

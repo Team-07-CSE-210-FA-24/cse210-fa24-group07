@@ -1,3 +1,48 @@
+/*
+  CSS styling for the DevZen application.
+
+  This stylesheet defines the visual design and layout for all pages of the application,
+  ensuring a cohesive and user-friendly experience.
+
+  Key sections:
+  - General styling:
+    - Base styling for the body, fonts, and colors.
+    - Consistent design for headings, text, and links.
+  - Buttons:
+    - Styling for primary, secondary, and specialized buttons (e.g., delete, back).
+    - Smooth hover transitions for interactive feedback.
+  - Containers and Cards:
+    - Centralized and styled containers for tasks and content.
+    - Box shadow and border radius for modern card-like appearance.
+  - Scrollable lists:
+    - Custom scrollbar styling for task lists.
+  - Inputs and textareas:
+    - Form controls for text input, dates, and Markdown editing.
+    - Consistent padding, border, and font settings.
+  - Task previews:
+    - Styled sections for rendered Markdown previews and notes.
+    - Clean design with padding and background color for clarity.
+  - Quadrants:
+    - Distinctive styling for task quadrants in the matrix.
+    - Highlighted sections with bold text and rounded borders.
+  - Help and completed tasks pages:
+    - Specific styles for headers, categories, and buttons.
+    - Emphasis on readability and accessibility.
+  - Blockquotes and code snippets:
+    - Highlighted blockquotes with left border and italicized text.
+    - Inline code with background color, padding, and rounded corners.
+  - Tables:
+    - Collapsible and styled tables with header and cell designs.
+  - Navbar:
+    - Gradient background and bold branding for consistent navigation.
+  - Utility classes:
+    - `.hidden` for toggling visibility.
+    - `.btn-sm` for smaller button variants.
+
+  This stylesheet ensures a polished and visually appealing interface across the entire
+  application, enhancing user engagement and ease of use.
+*/
+
 body {
   font-family: "Arial", sans-serif;
   margin: 0;
