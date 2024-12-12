@@ -11,8 +11,8 @@ let selectedTasks = {}; // Track selected tasks for deletion
 function updateDeleteButtonVisibility() {
   const hasSelectedTasks = Object.keys(selectedTasks).length > 0;
   if (deleteSelectedButton) { 
-    // Check if deleteSelectedButton is not null
-    deleteSelectedButton.style.display = hasSelectedTasks
+      // Check if deleteSelectedButton is not null
+      deleteSelectedButton.style.display = hasSelectedTasks
       ? 'inline-block'
       : 'none';
   }
