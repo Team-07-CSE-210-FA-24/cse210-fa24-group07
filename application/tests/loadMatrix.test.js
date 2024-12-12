@@ -18,11 +18,11 @@ describe('loadMatrix Functionality', () => {
     window.electronAPI = {
       getTasks: jest.fn().mockResolvedValue({
         quadrant1: [
-          { 
-            name: 'Task 1', 
-            deadline: new Date().toISOString(), 
-            important: true, 
-            urgent: true 
+          {
+            name: 'Task 1',
+            deadline: new Date().toISOString(),
+            important: true,
+            urgent: true
           }
         ],
         quadrant2: [],
