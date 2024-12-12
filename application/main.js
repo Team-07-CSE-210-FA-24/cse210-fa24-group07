@@ -1,3 +1,30 @@
+/**
+ * Main entry point for the Electron application.
+ *
+ * This script handles the initialization of the Electron app, the creation of the main browser window,
+ * task management, IPC (Inter-Process Communication) handling, and tray functionality. The application
+ * is designed to categorize, add, delete, and update tasks, as well as allow users to manage tasks
+ * through IPC messages.
+ *
+ * Key functionalities:
+ * - Electron app initialization and lifecycle handling (e.g., window creation, app quitting).
+ * - Task management with categories (quadrants) based on task urgency and importance.
+ * - Task persistence using `electron-store`.
+ * - IPC handling for adding, deleting, updating tasks, and managing completed tasks.
+ * - Global shortcut for showing the main window.
+ * - Tray menu functionality for showing the main window or quitting the app.
+ *
+ * The app supports categorizing tasks into four quadrants based on the Eisenhower matrix:
+ * - Quadrant 1 (Do): Urgent and important tasks.
+ * - Quadrant 2 (Schedule): Important but not urgent tasks.
+ * - Quadrant 3 (Delegate): Urgent but not important tasks.
+ * - Quadrant 4 (Tasks to delete): Neither urgent nor important tasks.
+ *
+ * The app stores tasks in a persistent store using `electron-store`, allowing tasks to be saved
+ * across application restarts. The tray menu offers convenient access to show or quit the app, and
+ * the global shortcut provides an easy way to focus the main window.
+ */
+
 const {
   app,
   BrowserWindow,

@@ -1,3 +1,40 @@
+/**
+ * JavaScript functionality for the "Add Task" page in the DevZen application.
+ *
+ * This script provides Markdown-to-HTML conversion and real-time preview functionality
+ * for the task description input. It also includes navigation logic for the "Back" button.
+ *
+ * Key functions:
+ * - `convertMarkdownToHtml(markdown)`: Converts a Markdown-formatted string into HTML
+ *   using regex-based replacements to support various Markdown features, such as:
+ *   - Headings (#, ##, etc.)
+ *   - Bold and italic text
+ *   - Strikethrough (~~text~~)
+ *   - Inline and block code (`code` or ```code```)
+ *   - Blockquotes (>)
+ *   - Task lists (e.g., - [ ] Task)
+ *   - Ordered and unordered lists
+ *   - Images (![alt text](URL))
+ *   - Links ([text](URL))
+ *   - Horizontal rules (--- or ***)
+ *   - Line breaks
+ *
+ * - Event listener for the "markdown-input" textarea:
+ *   - Updates the preview section in real-time with the HTML version of the inputted Markdown.
+ *   - Displays or hides the preview based on whether content is present in the textarea.
+ *
+ * - Event listener for the "Back" button:
+ *   - Redirects the user to the "view.html" page when clicked.
+ *
+ * Associated HTML elements:
+ * - `textarea` (id="markdown-input"): Input field for task description in Markdown format.
+ * - `previewDiv` (id="preview"): Section where the converted HTML preview is displayed.
+ * - `backButton` (id="back-button"): Button to navigate back to the previous page.
+ *
+ * This script enhances user interaction on the "Add Task" page by allowing users to
+ * see a live preview of their Markdown-formatted task description and navigate seamlessly.
+ */
+
 function convertMarkdownToHtml(markdown) {
   let result = markdown;
   // Convert headings
