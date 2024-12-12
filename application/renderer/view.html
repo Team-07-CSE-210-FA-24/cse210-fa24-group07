@@ -2,66 +2,102 @@
 <html>
 <head>
   <title>DevZen</title>
+  <link rel="stylesheet" href="stylemain.css">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      background-color: #f4f4f4;
+    html, body {
       margin: 0;
       padding: 0;
-      position: relative;
+      overflow-x: hidden; /* Prevent horizontal scroll */
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+      text-align: center;
     }
 
-    h1 {
-      margin: 20px 0;
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(to right, #007bff, #0056b3);
+      color: #fff;
+      padding: 10px;
+      box-sizing: border-box;
+      font-size: 1.2em;
+      font-weight: bold;
     }
 
-    /* Info button in top-right corner */
-    #info-button {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background: none;
+    .brand-container {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .brand {
+      color: #fff;
+      margin-right: 8px;
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+
+    .info-icon {
+      font-size: 0.7em;
+      vertical-align: super;
+      cursor: pointer;
+      color: #fff;
+    }
+    .info-icon:hover {
+      text-decoration: underline;
+    }
+
+    #view-completed-button {
+      background-color: #17a2b8;
+      color: #fff;
+      border-radius: 5px;
+      font-size: 14px;
+      padding: 6px 10px;
       border: none;
-      font-size: 1.5em;
-      color: #007bff;
       cursor: pointer;
     }
 
-    #info-button:hover {
-      color: #0056b3;
+    #view-completed-button:hover {
+      background-color: #138496;
+    }
+
+    h1 {
+      margin: 20px 0 10px;
+      font-size: 2em;
+      color: #333;
+    }
+
+    p {
+      color: #555;
+      margin: 0 auto 20px;
+      font-size: 1em;
+      max-width: 300px;
     }
 
     #matrix {
+      width: 80%;
+      margin: auto;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin: 20px auto;
-      width: 80%;
+      gap: 20px;
+      box-sizing: border-box;
     }
 
     .quadrant {
       border: 2px solid black;
-      padding: 10px;
+      padding: 20px;
       border-radius: 5px;
       font-weight: bold;
       color: white;
+      position: relative;
+      box-sizing: border-box;
     }
 
-    #quadrant1 {
-      background-color: #4caf50; /* Do */
-    }
-
-    #quadrant2 {
-      background-color: #ff9800; /* Schedule */
-    }
-
-    #quadrant3 {
-      background-color: #2196f3; /* Delegate */
-    }
-
-    #quadrant4 {
-      background-color: #6c757d; /* Tasks to delete */
+    .quadrant h3 {
+      margin: 0 0 10px;
+      color: white;
+      cursor: pointer;
     }
 
     ul {
@@ -72,47 +108,38 @@
       overflow-y: auto;
     }
 
-    ul::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    ul::-webkit-scrollbar-thumb {
-      background-color: #888;
-      border-radius: 4px;
-    }
-
-    ul::-webkit-scrollbar-thumb:hover {
-      background-color: #555;
-    }
-
-    li {
-      margin: 5px 0;
+    .buttons-container {
+      margin: 30px auto;
       display: flex;
-      align-items: center;
+      justify-content: center; 
     }
 
-    li span {
-      margin-left: 10px;
+    #add-task-button {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    #add-task-button:hover {
+      background-color: #0056b3;
     }
 
     #delete-selected-button,
-    #mark-completed-button,
-    #view-completed-button,
-    #add-task-button {
-      margin-top: 20px;
-      padding: 10px 20px;
+    #mark-completed-button {
       background-color: #007bff;
       color: white;
       border: none;
       border-radius: 5px;
       cursor: pointer;
       font-size: 16px;
-      margin-right: 10px;
-      transition: background-color 0.2s;
-    }
-
-    #delete-selected-button {
-      background-color: #ff4d4d;
+      padding: 10px 20px;
+      margin: 5px;
+      transition: background-color 0.3s ease;
+      display: none; /* Hidden by default as per previous logic */
     }
 
     #delete-selected-button:hover {
@@ -126,71 +153,51 @@
     #mark-completed-button:hover {
       background-color: #218838;
     }
-
-    #view-completed-button {
-      background-color: #17a2b8;
-    }
-
-    #view-completed-button:hover {
-      background-color: #138496;
-    }
-
-    #add-task-button:hover {
-      background-color: #0056b3;
-    }
-
-    #delete-selected-button,
-    #mark-completed-button {
-      display: none;
-    }
-
-    .quadrant h3 {
-      margin: 0 0 10px;
-      color: white;
-      cursor: pointer;
-    }
-
-    .buttons-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 30px auto;
-      gap: 20px;
-    }
   </style>
 </head>
 <body>
-  <!-- Info button for Help at top-right -->
-  <button id="info-button">i</button>
+  <div class="navbar">
+    <div class="brand-container">
+      <span class="brand">DevZen</span>
+      <span class="info-icon" id="info-icon">ℹ️</span>
+    </div>
+    <button id="view-completed-button">View Completed</button>
+  </div>
 
   <h1>DevZen</h1>
+  <p>Manage your tasks with the Eisenhower Matrix</p>
+
   <div id="matrix">
-    <div class="quadrant" id="quadrant1">
+    <div class="quadrant" id="quadrant1" style="background-color:#4caf50;">
       <h3>✅ Do</h3>
       <ul></ul>
     </div>
-    <div class="quadrant" id="quadrant2">
+    <div class="quadrant" id="quadrant2" style="background-color:#ff9800;">
       <h3>📅 Schedule</h3>
       <ul></ul>
     </div>
-    <div class="quadrant" id="quadrant3">
+    <div class="quadrant" id="quadrant3" style="background-color:#2196f3;">
       <h3>📤 Delegate</h3>
       <ul></ul>
     </div>
-    <div class="quadrant" id="quadrant4">
+    <div class="quadrant" id="quadrant4" style="background-color:#6c757d;">
       <h3>❌ Tasks to Delete</h3>
       <ul></ul>
     </div>
   </div>
 
-  <!-- Centered buttons for main actions -->
   <div class="buttons-container">
-    <button id="view-completed-button">View Completed Tasks</button>
     <button id="add-task-button">Add Task</button>
   </div>
 
   <button id="delete-selected-button">Delete Selected</button>
   <button id="mark-completed-button">Mark Completed</button>
+
   <script src="./renderer.js"></script>
+  <script>
+    document.getElementById('info-icon').addEventListener('click', () => {
+      window.location.href = './help.html';
+    });
+  </script>
 </body>
 </html>

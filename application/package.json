@@ -72,6 +72,7 @@
     "jsesc": "^3.0.2"
   },
   "dependencies": {
+    "biome": "^0.2.2",
     "electron-squirrel-startup": "^1.0.1",
     "electron-store": "^10.0.0"
   }

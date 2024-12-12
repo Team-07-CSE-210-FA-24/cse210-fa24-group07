@@ -3,10 +3,9 @@ const addTaskButton = document.getElementById('add-task-button');
 const deleteSelectedButton = document.getElementById('delete-selected-button');
 const markCompletedButton = document.getElementById('mark-completed-button');
 const viewCompletedButton = document.getElementById('view-completed-button');
-const backButton = document.getElementById('back-button');
+const backFromHelpButton = document.getElementById('back');
 const quadrants = document.querySelectorAll('.quadrant');
 const infoButton = document.getElementById('info-button');
-const backFromHelpButton = document.getElementById('back');
 
 let selectedTasks = {};
 
@@ -59,17 +58,13 @@ async function loadMatrix() {
 
         const taskText = document.createElement('span');
         const deadline = task.deadline
-          ? ` (${(new Date(task.deadline).getMonth() + 1)
-              .toString()
-              .padStart(2, '0')}/${new Date(task.deadline)
-              .getDate()
-              .toString()
-              .padStart(2, '0')})`
+          ? ` (${(new Date(task.deadline).getMonth() + 1).toString().padStart(2, '0')}/${new Date(task.deadline).getDate().toString().padStart(2, '0')})`
           : '';
         taskText.textContent = `${task.name}${deadline}`;
 
         const viewTaskButton = document.createElement('button');
         viewTaskButton.textContent = 'View Task';
+        viewTaskButton.classList.add('btn-sm'); // Smaller button
         viewTaskButton.style.marginLeft = '10px';
         viewTaskButton.addEventListener('click', (event) => {
           event.preventDefault();

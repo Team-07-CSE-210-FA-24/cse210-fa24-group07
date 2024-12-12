@@ -1,61 +1,58 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Arial", sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f7f9fc; /* 使用更清新颜色 */
+  background-color: #f4f4f4;
   color: #333;
-  display: flex; /* 保留 flex 布局 */
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  flex-direction: column;
-  text-align: center; /* 添加文本居中 */
+  text-align: center;
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 80vh;
+/* Headers and Text */
+h1,
+h2,
+h3 {
+  color: #333;
+  font-weight: normal;
+  margin: 20px 0;
 }
 
 h1 {
   font-size: 2em;
-  color: #0056b3;
 }
 
-form {
-  background: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  border: 2px solid #007bff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  max-width: 400px;
-  width: 100%;
+h2 {
+  font-size: 1.5em;
+  margin-top: 30px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 5px;
 }
 
-input[type="text"] {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 1em;
+h3 {
+  font-size: 1.2em;
+  margin-top: 20px;
 }
 
-input[type="checkbox"] {
-  margin-right: 10px;
+/* Links */
+a {
+  color: #007bff;
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
 }
 
+a:hover {
+  text-decoration: underline;
+}
+
+/* Buttons */
 button {
-  background-color: #007bff;
-  color: white;
   padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 1em;
+  font-size: 16px;
+  margin-right: 10px;
   transition: background-color 0.3s ease;
 }
 
@@ -63,40 +60,240 @@ button:hover {
   background-color: #0056b3;
 }
 
-#back-button {
-  margin-top: 20px;
-  padding: 10px 20px;
+button.delete-btn {
+  background-color: #ff4d4d;
+}
+
+button.delete-btn:hover {
+  background-color: #d93636;
+}
+
+#back-button,
+#back,
+#back-to-view,
+#cancel-edit {
   background-color: #6c757d;
 }
 
-#back-button:hover {
+#back-button:hover,
+#back:hover,
+#back-to-view:hover,
+#cancel-edit:hover {
   background-color: #495057;
 }
 
-#view-tasks {
-  margin-top: 10px;
+#view-completed-button {
+  background-color: #17a2b8;
+}
+
+#view-completed-button:hover {
+  background-color: #138496;
+}
+
+#mark-completed-button {
   background-color: #28a745;
 }
 
-#view-tasks:hover {
+#mark-completed-button:hover {
   background-color: #218838;
 }
 
-/* Markdown 编辑器样式 */
-#markdown-editor {
-  width: 95%; /* 结合两种布局风格 */
-  margin-bottom: 20px;
-  font-family: monospace;
-  font-size: 1em;
-  border: 1px solid #ccc;
+/* Smaller button variant */
+.btn-sm {
+  padding: 5px 10px;
+  font-size: 14px;
+  margin-right: 5px;
+}
+
+/* Containers and Cards */
+.container {
+  display: inline-block;
+  text-align: left;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  max-width: 800px;
+  width: 100%;
+  margin: 20px auto;
+}
+
+/* Scrollable Lists */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+ul::-webkit-scrollbar {
+  width: 8px;
+}
+ul::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 4px;
+}
+ul::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+li {
+  margin: 5px 0;
+  display: flex;
+  align-items: center;
+}
+
+/* Inputs and Textareas */
+input[type="text"],
+input[type="date"],
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
   border-radius: 5px;
+  font-size: 1em;
+  box-sizing: border-box;
+  font-family: "Arial", sans-serif;
+}
+
+input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+/* Preview for Markdown */
+.preview,
+#notes-preview {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 20px;
+  background: #fafafa;
+  min-height: 200px;
+  margin-bottom: 20px;
+  line-height: 1.5;
+  color: #333;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+  overflow: auto;
+}
+
+/* Quadrants */
+.quadrant {
+  border: 2px solid black;
+  padding: 20px;
+  border-radius: 5px;
+  font-weight: bold;
+  color: white;
+  position: relative;
+}
+
+.quadrant h3 {
+  margin: 0 0 10px;
+  color: white;
+  cursor: pointer;
+}
+
+/* Buttons Container */
+.buttons-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px auto;
+  gap: 20px;
+}
+
+/* For help and completed pages */
+.task-header {
+  font-weight: bold;
+  margin-bottom: 5px;
+  font-size: 1.2em;
+}
+
+.task-category {
+  margin-bottom: 5px;
+  font-style: italic;
+  color: #555;
+}
+
+.button-row {
+  margin-top: 10px;
+}
+
+/* Header icon (info-button) */
+#info-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  color: #007bff;
+  cursor: pointer;
+}
+#info-button:hover {
+  color: #0056b3;
+}
+
+/* Blockquotes, code, etc. */
+blockquote {
+  border-left: 4px solid #007bff;
+  padding-left: 10px;
+  margin: 10px 0;
+  font-style: italic;
+  background: #f9f9f9;
+  color: #333;
+}
+
+code {
+  background-color: #f0f0f0;
+  color: #333;
+  padding: 0.1rem 0.3rem;
+  border-radius: 0.25rem;
+  font-size: 0.9rem;
+}
+
+/* Table Styling */
+table {
+  border-collapse: collapse;
+  margin: 20px 0;
+  width: 100%;
+  text-align: center;
+}
+table,
+th,
+td {
+  border: 1px solid #ccc;
+}
+th {
+  background-color: #007bff;
+  color: #fff;
+  font-weight: normal;
+  padding: 10px;
+}
+td {
   padding: 10px;
 }
 
-#preview {
-  padding: 20px;
-  background: #f9f9f9;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  margin-bottom: 20px;
+/* Hidden class */
+.hidden {
+  display: none !important;
+}
+
+/* Navbar / Branding (For main pages) */
+.navbar {
+  position: relative;
+  width: 100%;
+  padding: 10px 20px;
+  background: linear-gradient(to right, #007bff, #0056b3);
+  color: #fff;
+  text-align: left;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.navbar span.brand {
+  color: #fff;
+}
+
+/* Additional styling for completed tasks page back button container */
+.action-buttons {
+  margin-top: 30px;
+  text-align: center;
 }

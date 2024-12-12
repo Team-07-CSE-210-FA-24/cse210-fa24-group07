@@ -1,125 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Add Task</title>
+  <title>Add Task - DevZen</title>
+  <link rel="stylesheet" href="stylemain.css">
   <style>
-    body {
-      font-family: Arial, sans-serif;
+    .action-buttons {
       text-align: center;
-      background-color: #f4f4f4;
-      margin: 0;
-      padding: 0;
-    }
-
-    h1 {
-      margin: 20px 0;
-    }
-
-    .container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-    }
-
-    #task-form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 15px;
-      width: 50%;
-      background-color: white;
-      padding: 20px;
-      border: 2px solid #007bff;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    input[type='text'],
-    input[type='date'] {
-      width: 90%;
-      padding: 10px;
-      font-size: 16px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-    }
-
-    textarea,
-    #preview {
-      font-family: Arial, sans-serif;
-      width: 90%;
-      padding: 10px;
-      font-size: 16px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      text-align: left;
-    }
-
-    code {
-      background-color: #f0f0f0;
-      color: #333;
-      padding: 0.15rem 0.4rem;
-      border-radius: 0.3125rem;
-      font-size: 0.8rem;
-    }
-
-    label {
-      font-size: 16px;
-      margin-right: 10px;
-    }
-
-    #task-form label input {
-      margin-right: 5px;
-    }
-
-    button {
-      padding: 10px 20px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-
-    button:hover {
-      background-color: #0056b3;
-    }
-
-    #back-button {
       margin-top: 20px;
-      padding: 10px 20px;
-      background-color: #6c757d;
-    }
-
-    #back-button:hover {
-      background-color: #495057;
     }
   </style>
 </head>
 <body>
+  <div class="navbar"><span class="brand">DevZen</span></div>
   <h1>Add Task</h1>
-  <div class="container">
+  <div class="container" style="max-width:400px; text-align:center;">
     <form id="task-form">
       <input type="text" id="task-name" placeholder="Task Name" required />
       <p style="font-size: 0.9em; color: gray; margin-bottom: -0.5rem;">
         You can use 
-        <a 
-           href="md-guide.html" 
-           target="_blank" 
-           style="color: #007bff;"
-           >Markdown</a
-          >
+        <a href="md-guide.html" target="_blank">Markdown</a>
         to format your text below.
       </p>
       <textarea id="markdown-input" placeholder="Task Description" rows="5"></textarea>
-      <div id="preview" class="preview"></div>
-      <div>
+      <div id="preview" class="preview" style="display:none;"></div>
+      <div style="margin:10px 0;">
         <label>
           <input type="checkbox" id="urgent" /> Urgent
         </label>
-        <label>
+        <label style="margin-left:20px;">
           <input type="checkbox" id="important" /> Important
         </label>
       </div>
@@ -129,7 +37,9 @@
       </div>
       <button type="submit">Add Task</button>
     </form>
-    <button id="back-button">Back</button>
+    <div class="action-buttons">
+      <button id="back-button">Back</button>
+    </div>
   </div>
   <script src="./renderer.js"></script>
   <script src="add-task.js"></script>
