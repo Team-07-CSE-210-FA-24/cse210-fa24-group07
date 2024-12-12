@@ -11,8 +11,12 @@ let selectedTasks = {};
 
 function updateButtonVisibility() {
   const hasSelectedTasks = Object.keys(selectedTasks).length > 0;
-  deleteSelectedButton.style.display = hasSelectedTasks ? 'inline-block' : 'none';
-  markCompletedButton.style.display = hasSelectedTasks ? 'inline-block' : 'none';
+  deleteSelectedButton.style.display = hasSelectedTasks
+    ? 'inline-block'
+    : 'none';
+  markCompletedButton.style.display = hasSelectedTasks
+    ? 'inline-block'
+    : 'none';
 }
 
 async function loadMatrix() {
@@ -43,7 +47,9 @@ async function loadMatrix() {
             if (!selectedTasks[quadrant]) selectedTasks[quadrant] = [];
             selectedTasks[quadrant].push(index);
           } else {
-            selectedTasks[quadrant] = selectedTasks[quadrant].filter((i) => i !== index);
+            selectedTasks[quadrant] = selectedTasks[quadrant].filter(
+              (i) => i !== index,
+            );
             if (selectedTasks[quadrant].length === 0)
               delete selectedTasks[quadrant];
           }
@@ -126,7 +132,13 @@ if (taskForm) {
     const important = document.getElementById('important').checked;
     const deadline = document.getElementById('deadline').value;
 
-    await window.electronAPI.addTask({ name, notes, urgent, important, deadline });
+    await window.electronAPI.addTask({
+      name,
+      notes,
+      urgent,
+      important,
+      deadline,
+    });
     window.location.href = './view.html';
   });
 }

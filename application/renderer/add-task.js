@@ -41,10 +41,16 @@ function convertMarkdownToHtml(markdown) {
   result = result.replace(/<\/ol>\s*<ol>/g, '');
 
   // Images
-  result = result.replace(/!\[([^\]]+)\]\(([^)]+)\)/g, '<img src="$2" alt="$1">');
+  result = result.replace(
+    /!\[([^\]]+)\]\(([^)]+)\)/g,
+    '<img src="$2" alt="$1">',
+  );
 
   // Links
-  result = result.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
+  result = result.replace(
+    /\[([^\]]+)\]\(([^)]+)\)/g,
+    '<a href="$2" target="_blank">$1</a>',
+  );
 
   // Horizontal rule
   result = result.replace(/^[-*]{3,}$/gm, '<hr>');
