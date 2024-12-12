@@ -22,7 +22,7 @@ describe('loadMatrix Functionality', () => {
             name: 'Task 1',
             deadline: new Date().toISOString(),
             important: true,
-            urgent: true
+            urgent: true,
           }
         ],
         quadrant2: [],
@@ -37,13 +37,10 @@ describe('loadMatrix Functionality', () => {
 
   test('loadMatrix loads tasks into correct quadrants', async () => {
     await loadMatrix();
-  
     // Wait for the asynchronous DOM updates
     const taskElement = await screen.findByText(/Task 1/);
-
     // Now check the specific content within the DOM
     const taskTextContent = taskElement.textContent;
     expect(taskTextContent).toContain('Task 1');
   });
-  
 });
