@@ -23,7 +23,7 @@ describe('loadMatrix Functionality', () => {
             deadline: new Date().toISOString(),
             important: true,
             urgent: true,
-          }
+          },
         ],
         quadrant2: [],
         quadrant3: [],
