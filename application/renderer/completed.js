@@ -1,31 +1,31 @@
 /**
  * JavaScript functionality for the "Completed Tasks" page in the DevZen application.
- * 
- * This script dynamically loads and displays the user's completed tasks and provides 
- * interactivity for viewing or deleting tasks. It also includes navigation to return 
+ *
+ * This script dynamically loads and displays the user's completed tasks and provides
+ * interactivity for viewing or deleting tasks. It also includes navigation to return
  * to the dashboard.
- * 
+ *
  * Key functionalities:
- * - `loadCompletedTasks()`: Fetches the list of completed tasks using the Electron API and 
+ * - `loadCompletedTasks()`: Fetches the list of completed tasks using the Electron API and
  *   dynamically populates the task list (`completed-list`) with task details and action buttons.
  *   - Displays each task's name and deadline (if available).
  *   - Shows the task's category, if applicable.
  *   - Provides a "View Task" button to navigate to the task's details page.
  *   - Provides a "Delete" button to remove the task from the completed list.
  *   - Reloads the task list after deletion to reflect changes.
- * 
+ *
  * - Event listener for the "Back to Dashboard" button:
  *   - Redirects the user to the main dashboard page (`view.html`) when clicked.
- * 
+ *
  * Associated HTML elements:
  * - `completed-list` (id): Container for dynamically generated task list items.
  * - `back-to-view` (id): Button for navigation back to the dashboard.
- * 
+ *
  * Integrates with the Electron IPC API for:
  * - Fetching completed tasks (`getCompletedTasks`).
  * - Deleting a specific completed task (`deleteCompletedTask`).
- * 
- * This script ensures smooth interactivity and seamless management of completed tasks, 
+ *
+ * This script ensures smooth interactivity and seamless management of completed tasks,
  * enhancing user experience on the "Completed Tasks" page.
  */
 

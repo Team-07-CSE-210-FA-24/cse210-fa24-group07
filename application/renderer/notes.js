@@ -1,10 +1,10 @@
 /**
  * JavaScript functionality for the "Task Details" page in the DevZen application.
- * 
+ *
  * This script manages the display and editing of task notes, allowing users to view or update
  * task details and notes in either view or edit mode. It integrates with the Electron API for
  * fetching and saving task data and notes.
- * 
+ *
  * Key functionalities:
  * - `convertMarkdownToHtml(markdown)`: Converts Markdown-formatted text to HTML, supporting:
  *   - Headings, bold, italic, strikethrough, and inline code.
@@ -20,7 +20,7 @@
  *   - `editButton` (`click`): Switches to edit mode, allowing note editing (disabled for completed tasks).
  *   - `backButton` (`click`): Navigates back to the appropriate page (view or completed tasks).
  *   - `cancelEditButton` (`click`): Cancels editing and switches back to view mode without saving.
- * 
+ *
  * Associated HTML elements:
  * - `viewModeDiv` (id="view-mode"): Displays task details and notes in view mode.
  * - `editModeDiv` (id="edit-mode"): Allows editing of notes in Markdown format.
@@ -28,10 +28,10 @@
  * - `preview` (id="preview"): Displays the live Markdown-to-HTML preview during editing.
  * - `notesPreviewDiv` (id="notes-preview"): Displays the rendered HTML version of notes in view mode.
  * - Buttons (`saveButton`, `editButton`, `backButton`, `cancelEditButton`) for interactivity.
- * 
+ *
  * Integration:
  * - Electron API for fetching (`getNotes`, `getTasks`) and updating (`updateNotes`) task data.
- * 
+ *
  * This script enhances task management by enabling seamless note viewing and editing
  * with live Markdown rendering, ensuring a smooth user experience.
  */
