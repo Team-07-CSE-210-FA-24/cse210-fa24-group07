@@ -378,6 +378,188 @@
     
 
     
+    <h4 class="name" id="~event:add-task">add-task</h4>
+    
+
+    
+
+
+
+<div class="description">
+    IPC Handler for adding a new task
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>event</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Electron.IpcMainEvent</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The IPC event</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>task</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Task</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The task to be added</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="main.js.html">main.js</a>, <a href="main.js.html#line155">line 155</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Updated tasks after adding the new task
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">TaskStore</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
     <h4 class="name" id="~event:complete-task">complete-task</h4>
     
 
@@ -551,7 +733,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="main.js.html">main.js</a>, <a href="main.js.html#line223">line 223</a>
+        <a href="main.js.html">main.js</a>, <a href="main.js.html#line230">line 230</a>
     </li></ul></dd>
     
 
@@ -733,7 +915,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="main.js.html">main.js</a>, <a href="main.js.html#line254">line 254</a>
+        <a href="main.js.html">main.js</a>, <a href="main.js.html#line261">line 261</a>
     </li></ul></dd>
     
 
@@ -987,7 +1169,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="main.js.html">main.js</a>, <a href="main.js.html#line171">line 171</a>
+        <a href="main.js.html">main.js</a>, <a href="main.js.html#line178">line 178</a>
     </li></ul></dd>
     
 
@@ -1097,7 +1279,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="main.js.html">main.js</a>, <a href="main.js.html#line245">line 245</a>
+        <a href="main.js.html">main.js</a>, <a href="main.js.html#line252">line 252</a>
     </li></ul></dd>
     
 
@@ -1351,7 +1533,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="main.js.html">main.js</a>, <a href="main.js.html#line186">line 186</a>
+        <a href="main.js.html">main.js</a>, <a href="main.js.html#line193">line 193</a>
     </li></ul></dd>
     
 
@@ -1461,7 +1643,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="main.js.html">main.js</a>, <a href="main.js.html#line164">line 164</a>
+        <a href="main.js.html">main.js</a>, <a href="main.js.html#line171">line 171</a>
     </li></ul></dd>
     
 
@@ -1738,7 +1920,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="main.js.html">main.js</a>, <a href="main.js.html#line203">line 203</a>
+        <a href="main.js.html">main.js</a>, <a href="main.js.html#line210">line 210</a>
     </li></ul></dd>
     
 
@@ -1802,13 +1984,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-MainElectronApp.html">MainElectronApp</a></li></ul><h3>Events</h3><ul><li><a href="module-MainElectronApp.html#~event:complete-task">complete-task</a></li><li><a href="module-MainElectronApp.html#~event:delete-completed-task">delete-completed-task</a></li><li><a href="module-MainElectronApp.html#~event:delete-task">delete-task</a></li><li><a href="module-MainElectronApp.html#~event:get-completed-tasks">get-completed-tasks</a></li><li><a href="module-MainElectronApp.html#~event:get-notes">get-notes</a></li><li><a href="module-MainElectronApp.html#~event:get-tasks">get-tasks</a></li><li><a href="module-MainElectronApp.html#~event:update-notes">update-notes</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-MainElectronApp.html">MainElectronApp</a></li><li><a href="module-electronAPI.html">electronAPI</a></li></ul><h3>Events</h3><ul><li><a href="module-MainElectronApp.html#~event:add-task">add-task</a></li><li><a href="module-MainElectronApp.html#~event:complete-task">complete-task</a></li><li><a href="module-MainElectronApp.html#~event:delete-completed-task">delete-completed-task</a></li><li><a href="module-MainElectronApp.html#~event:delete-task">delete-task</a></li><li><a href="module-MainElectronApp.html#~event:get-completed-tasks">get-completed-tasks</a></li><li><a href="module-MainElectronApp.html#~event:get-notes">get-notes</a></li><li><a href="module-MainElectronApp.html#~event:get-tasks">get-tasks</a></li><li><a href="module-MainElectronApp.html#~event:update-notes">update-notes</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Fri Dec 13 2024 11:23:49 GMT-0800 (Pacific Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Fri Dec 13 2024 11:32:29 GMT-0800 (Pacific Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
