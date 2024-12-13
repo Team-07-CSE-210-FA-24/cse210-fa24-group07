@@ -1,21 +1,76 @@
+<!--
+  HTML structure for the "Task Details" page in the DevZen application.
+
+  This page allows users to view and edit task notes using Markdown. It provides two modes:
+  view mode for displaying task details and notes, and edit mode for modifying notes.
+
+  Key elements:
+  - Navbar: Displays the application branding ("DevZen").
+  - Task Information:
+    - Displays the task title (id="task-title").
+    - Shows the deadline (id="task-deadline"), defaulting to "N/A" if not set.
+  - View Mode:
+    - A preview area (id="notes-preview") to display notes in rendered HTML format.
+    - "Edit" button (id="edit-button") to switch to edit mode.
+    - "Back" button (id="back-button") to navigate to the previous page.
+  - Edit Mode:
+    - Hidden by default (`class="hidden"`), becomes visible after clicking "Edit."
+    - A Markdown editor (id="markdown-editor") for writing or updating notes.
+    - A live preview area (id="preview") showing the rendered Markdown.
+    - "Save Notes" button (id="save-notes") to save the updated notes.
+    - "Cancel" button (id="cancel-edit") to return to view mode without saving.
+
+  Includes:
+  - Inline CSS to style the hidden class and ensure responsive design.
+  - External CSS (`stylemain.css`) for consistent styling across pages.
+  - Link to a Markdown guide (`md-guide.html`) for users unfamiliar with Markdown syntax.
+  - External JavaScript (`notes.js`) to handle interactivity, including toggling modes and saving notes.
+
+  This page provides an intuitive interface for managing task details and notes,
+  enhancing user productivity by allowing seamless note viewing and editing.
+-->
+
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Edit Task Notes</title>
+  <title>Task Details - DevZen</title>
   <link rel="stylesheet" href="stylemain.css">
+  <style>
+    /* Ensure hidden class is actually hiding */
+    .hidden {
+      display: none !important;
+    }
+  </style>
 </head>
 <body>
-  <h1>Edit Notes</h1>
-  <div class="container">
-    <form id="edit-form">
-      <textarea id="markdown-editor" placeholder="Write your notes in Markdown..." rows="10"></textarea>
+  <div class="navbar"><span class="brand">DevZen</span></div>
+  <div id="task-info" style="margin-top:20px;">
+    <h1 id="task-title">Task Name</h1>
+    <div class="deadline" id="task-deadline">Deadline: N/A</div>
+  </div>
+  <div class="container" style="max-width:600px;">
+    <!-- View Mode: shows preview only -->
+    <div id="view-mode">
+      <div id="notes-preview" class="preview"></div>
+      <button id="edit-button" type="button">Edit</button>
+      <button id="back-button" type="button">Back</button>
+    </div>
+
+    <!-- Edit Mode: hidden by default, textarea and save/cancel buttons appear only after clicking Edit -->
+    <div id="edit-mode" class="hidden">
+      <textarea
+        id="markdown-editor"
+        placeholder="Write your notes in Markdown..."
+      ></textarea>
       <div id="preview" class="preview"></div>
-      <p style="font-size: 0.9em; color: gray; margin-bottom: 10px;">
-        Use <a href="https://www.markdownguide.org/basic-syntax/" target="_blank" style="color: #007bff;">Markdown</a> syntax for formatting: **bold**, *italic*, `code`, and more.
+      <p style="font-size: 0.9em; color: gray; margin-bottom: 10px; text-align:center;">
+        Use <a href="md-guide.html" target="_blank">Markdown</a> syntax.
       </p>
-      <button id="save-notes" type="button">Save Notes</button>
-    </form>
-    <button id="back-button" type="button">Back</button>
+      <div style="text-align:center;">
+        <button id="save-notes" type="button">Save Notes</button>
+        <button id="cancel-edit" type="button">Cancel</button>
+      </div>
+    </div>
   </div>
   <script src="./notes.js"></script>
 </body>

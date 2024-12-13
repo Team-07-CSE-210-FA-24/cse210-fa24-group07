@@ -1,115 +1,60 @@
+<!--
+  HTML structure for the "Add Task" page in the DevZen application.
+
+  This page provides a user interface for creating and submitting tasks.
+  Users can input task details, mark their urgency and importance, and set deadlines.
+  Additionally, Markdown support is provided for formatting the task description.
+
+  Key elements:
+  - Navbar: Displays the application branding ("DevZen").
+  - Task form:
+    - "Task Name" field for the task title (required).
+    - "Task Description" field with Markdown formatting guidance and preview functionality.
+    - Checkboxes to mark the task as "Urgent" or "Important".
+    - "Deadline" field for setting the task's due date (required).
+    - "Add Task" button to submit the form.
+  - Action buttons:
+    - "Back" button to navigate back to the previous page.
+
+  Includes:
+  - Inline styles for aligning elements and providing a clean layout.
+  - External CSS stylesheet (`stylemain.css`) for consistent styling.
+  - JavaScript files (`renderer.js` and `add-task.js`) to handle interactivity and backend communication.
+
+  This page is part of the task management feature and integrates with the Electron app's IPC functionality
+  through scripts to send task data to the main process.
+-->
+
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Add Task</title>
+  <title>Add Task - DevZen</title>
+  <link rel="stylesheet" href="stylemain.css">
   <style>
-    body {
-      font-family: Arial, sans-serif;
+    .action-buttons {
       text-align: center;
-      background-color: #f4f4f4;
-      margin: 0;
-      padding: 0;
-    }
-
-    h1 {
-      margin: 20px 0;
-    }
-
-    .container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-    }
-
-    #task-form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 15px;
-      width: 50%;
-      background-color: white;
-      padding: 20px;
-      border: 2px solid #007bff;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    input[type="text"], input[type="date"] {
-      width: 90%;
-      padding: 10px;
-      font-size: 16px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-    }
-
-    textarea, #preview  {
-      font-family: Arial, sans-serif;
-      width: 90%;
-      padding: 10px;
-      font-size: 16px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      text-align: left;
-    }
-    code {
-      background-color: #f0f0f0;  
-      color: #333;   
-      padding: 0.15rem 0.4rem;
-      border-radius: 0.3125rem;
-      font-size: 0.8rem;
-    }
-
-    label {
-      font-size: 16px;
-      margin-right: 10px;
-    }
-
-    #task-form label input {
-      margin-right: 5px;
-    }
-
-    button {
-      padding: 10px 20px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-
-    button:hover {
-      background-color: #0056b3;
-    }
-
-    #back-button {
       margin-top: 20px;
-      padding: 10px 20px;
-      background-color: #6c757d;
-    }
-
-    #back-button:hover {
-      background-color: #495057;
     }
   </style>
 </head>
 <body>
+  <div class="navbar"><span class="brand">DevZen</span></div>
   <h1>Add Task</h1>
-  <div class="container">
+  <div class="container" style="max-width:400px; text-align:center;">
     <form id="task-form">
       <input type="text" id="task-name" placeholder="Task Name" required />
-      <p style="font-size: 15px; color: gray;">
-        You can use <a href="https://www.markdownguide.org/basic-syntax/" target="_blank" style="color: #007bff;">Markdown</a> to format your text below.
+      <p style="font-size: 0.9em; color: gray; margin-bottom: -0.5rem;">
+        You can use 
+        <a href="md-guide.html" target="_blank">Markdown</a>
+        to format your text below.
       </p>
       <textarea id="markdown-input" placeholder="Task Description" rows="5"></textarea>
-      <div id="preview" class="preview"></div>
-      <div>
+      <div id="preview" class="preview" style="display:none;"></div>
+      <div style="margin:10px 0;">
         <label>
           <input type="checkbox" id="urgent" /> Urgent
         </label>
-        <label>
+        <label style="margin-left:20px;">
           <input type="checkbox" id="important" /> Important
         </label>
       </div>
@@ -119,7 +64,9 @@
       </div>
       <button type="submit">Add Task</button>
     </form>
-    <button id="back-button">Back</button>
+    <div class="action-buttons">
+      <button id="back-button">Back</button>
+    </div>
   </div>
   <script src="./renderer.js"></script>
   <script src="add-task.js"></script>

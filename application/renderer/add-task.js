@@ -1,3 +1,40 @@
+/**
+ * JavaScript functionality for the "Add Task" page in the DevZen application.
+ *
+ * This script provides Markdown-to-HTML conversion and real-time preview functionality
+ * for the task description input. It also includes navigation logic for the "Back" button.
+ *
+ * Key functions:
+ * - `convertMarkdownToHtml(markdown)`: Converts a Markdown-formatted string into HTML
+ *   using regex-based replacements to support various Markdown features, such as:
+ *   - Headings (#, ##, etc.)
+ *   - Bold and italic text
+ *   - Strikethrough (~~text~~)
+ *   - Inline and block code (`code` or ```code```)
+ *   - Blockquotes (>)
+ *   - Task lists (e.g., - [ ] Task)
+ *   - Ordered and unordered lists
+ *   - Images (![alt text](URL))
+ *   - Links ([text](URL))
+ *   - Horizontal rules (--- or ***)
+ *   - Line breaks
+ *
+ * - Event listener for the "markdown-input" textarea:
+ *   - Updates the preview section in real-time with the HTML version of the inputted Markdown.
+ *   - Displays or hides the preview based on whether content is present in the textarea.
+ *
+ * - Event listener for the "Back" button:
+ *   - Redirects the user to the "view.html" page when clicked.
+ *
+ * Associated HTML elements:
+ * - `textarea` (id="markdown-input"): Input field for task description in Markdown format.
+ * - `previewDiv` (id="preview"): Section where the converted HTML preview is displayed.
+ * - `backButton` (id="back-button"): Button to navigate back to the previous page.
+ *
+ * This script enhances user interaction on the "Add Task" page by allowing users to
+ * see a live preview of their Markdown-formatted task description and navigate seamlessly.
+ */
+
 function convertMarkdownToHtml(markdown) {
   let result = markdown;
   // Convert headings
@@ -6,106 +43,73 @@ function convertMarkdownToHtml(markdown) {
     return `<h${level}>${title}</h${level}>`;
   });
 
-  // Convert bold text
+  // Bold
   result = result.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
   result = result.replace(/__(.*?)__/g, '<strong>$1</strong>');
 
-  // Convert italic text
+  // Italic
   result = result.replace(/\*(.*?)\*/g, '<em>$1</em>');
   result = result.replace(/_(.*?)_/g, '<em>$1</em>');
 
-  // Convert strike-through text
+  // Strikethrough
   result = result.replace(/\~~(.*?)\~~/g, '<s>$1</s>');
 
-  // Convert code blocks (inline code)
+  // Inline code
   result = result.replace(/`([^`]+)`/g, '<code>$1</code>');
 
-  // Convert multi-line code blocks (triple backticks)
+  // Code blocks
   result = result.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
 
-  // Convert blockquotes
+  // Blockquotes
   result = result.replace(/^>\s*(.*)$/gm, '<blockquote>$1</blockquote>');
 
-  // Convert task lists (checkboxes)
+  // Task lists
   result = result.replace(/^\s*[-]\s*\[\s?x?\s?\]\s+(.*)$/gm, (match, task) => {
     const checked = match.includes('[x]') ? 'checked="checked"' : '';
     return `<input type="checkbox" ${checked} disabled> ${task}`;
   });
 
-  // Convert unordered lists (-, *, +)
-  result = result.replace(/^\s*[-\*\+]\s+(.*)$/gm, '<ul><li>$1</li></ul>');
-  result = result.replace(/<\/ul>\s*<ul>/g, ''); // Collapse nested <ul> tags to one level
+  // Unordered lists
+  result = result.replace(/^\s*[-*+]\s+(.*)$/gm, '<ul><li>$1</li></ul>');
+  result = result.replace(/<\/ul>\s*<ul>/g, '');
 
-  // Convert ordered lists (1.)
-  result = result.replace(/^\s*\d+\.\s+(.*)$/gm, '<ol><li>$1</li></ol>');
-  result = result.replace(/<\/ol>\s*<ol>/g, ''); // Collapse nested <ol> tags to one level
+  // Ordered lists
+  result = result.replace(/^\d+\.\s+(.*)$/gm, '<ol><li>$1</li></ol>');
+  result = result.replace(/<\/ol>\s*<ol>/g, '');
 
-  // Convert images
+  // Images
   result = result.replace(
     /!\[([^\]]+)\]\(([^)]+)\)/g,
     '<img src="$2" alt="$1">',
   );
 
-  // Convert links
+  // Links
   result = result.replace(
     /\[([^\]]+)\]\(([^)]+)\)/g,
     '<a href="$2" target="_blank">$1</a>',
   );
 
-  // Convert horizontal rule (3 dashes or asterisks)
-  result = result.replace(/^[-\*]{3,}$/gm, '<hr>');
+  // Horizontal rule
+  result = result.replace(/^[-*]{3,}$/gm, '<hr>');
 
-  // Convert line breaks
+  // Line breaks
   result = result.replace(/\n/g, '<br>');
 
   return result;
 }
 
-// Function to update the preview div with converted Markdown
-function updatePreview() {
-  const markdownText = textarea.value;
-  const htmlText = convertMarkdownToHtml(markdownText);
-  previewDiv.innerHTML = htmlText; // Display the converted HTML in the preview div
-}
-
-// Get reference to the textarea and previewDiv element
 const textarea = document.getElementById('markdown-input');
 const previewDiv = document.getElementById('preview');
+const backButton = document.getElementById('back-button');
 
-// Stores what user has written so far
-let userInput = '';
-
-// Initial visibility
-textarea.style.display = 'block';
-previewDiv.style.display = 'none';
-
-// When user clicks on textarea
-textarea.addEventListener('focus', () => {
-  textarea.style.display = 'block'; // Show textarea
-  previewDiv.style.display = 'none'; // Hide previewDiv
-  textarea.value = userInput;
-});
-
-// When user clicks outside textarea
-textarea.addEventListener('blur', () => {
-  if (textarea.value.trim() === '') {
-    userInput = '';
-    textarea.style.display = 'block'; // Keep showing textarea
-    previewDiv.style.display = 'none'; // Keep hiding preview
-    return;
+textarea.addEventListener('input', () => {
+  const markdownText = textarea.value.trim();
+  if (markdownText) {
+    previewDiv.style.display = 'block';
+    previewDiv.innerHTML = convertMarkdownToHtml(markdownText);
+  } else {
+    previewDiv.style.display = 'none';
   }
-  userInput = textarea.value;
-
-  updatePreview(); // Convert the raw Markdown text to HTML
-  textarea.style.display = 'none'; // Hide textarea
-  previewDiv.style.display = 'block'; // Show previewDiv
-});
-
-//  When user clicks on previewDiv
-previewDiv.addEventListener('click', () => {
-  textarea.style.display = 'block'; // Show textarea
-  previewDiv.style.display = 'none'; // Hide previewDiv
-  textarea.focus();
 });
 
 backButton.addEventListener('click', () => {

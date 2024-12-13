@@ -1,82 +1,125 @@
+<!--
+  HTML structure for the "Help" page in the DevZen application.
+
+  This page provides detailed guidance and information about using the Eisenhower Matrix 
+  methodology within the application. It also explains features, benefits, and hotkeys for 
+  maximizing productivity and efficient task management.
+
+  Key sections:
+  - Page Title: "DevZen - Help" displayed prominently at the top.
+  - Introduction to the Eisenhower Matrix:
+    - Brief explanation of the method and its inspiration.
+    - A motivational quote from Dwight D. Eisenhower.
+  - Quadrants Description:
+    - Detailed explanation of the four task quadrants (Do First, Plan, Delegate, Eliminate).
+    - Actionable tips and examples for each quadrant.
+  - Visual Representation:
+    - A table showing the 2x2 grid structure of the Eisenhower Matrix for better understanding.
+  - Benefits:
+    - Key advantages of using the methodology, such as stress reduction and focus on long-term goals.
+  - Tips for Effective Use:
+    - Practical advice for categorizing and prioritizing tasks effectively.
+  - Hotkeys:
+    - Quick shortcuts for launching the application on Mac and Windows platforms.
+  - Features:
+    - Overview of core application functionalities like adding tasks, editing notes, and deleting tasks.
+  - "Back" Button:
+    - Navigation button at the bottom to return to the previous page.
+
+  Includes:
+  - Inline CSS for responsive and visually appealing design.
+  - External JavaScript file (`renderer.js`) for interactivity.
+  - Structured and styled elements such as lists, blockquotes, and tables for enhanced readability.
+
+  This page serves as a comprehensive guide for users to understand and leverage DevZen's 
+  task management capabilities effectively.
+-->
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Eisenhower Matrix</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DevZen - Help</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      text-align: center;
       background-color: #f4f4f4;
       margin: 0;
-      padding: 0;
+      padding: 20px;
+      text-align: center;
     }
 
     h1 {
       margin: 20px 0;
+      font-size: 2em;
+      color: #333;
     }
 
-    #matrix {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin: 20px auto;
-      width: 80%;
+    .container {
+      display: inline-block;
+      text-align: left;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+      max-width: 800px;
+      width: 100%;
+      margin-top: 20px;
     }
 
-    .quadrant {
-      border: 2px solid black;
-      padding: 10px;
-      border-radius: 5px;
-      font-weight: bold;
-      color: white;
+    h2 {
+      font-size: 1.5em;
+      margin-top: 30px;
+      color: #333;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 5px;
     }
 
-    /* Quadrant Colors Based on the Eisenhower Matrix */
-    #quadrant1 {
-      background-color: #4caf50; /* Green */
+    h3 {
+      font-size: 1.2em;
+      margin-top: 20px;
+      color: #333;
     }
 
-    #quadrant2 {
-      background-color: #ff9800; /* Orange */
-    }
-
-    #quadrant3 {
-      background-color: #2196f3; /* Blue */
-    }
-
-    #quadrant4 {
-      background-color: #6c757d; /* Dark Gray */
+    p, ul, li, blockquote, table, thead, tbody, tr, td, th {
+      font-size: 1em;
+      line-height: 1.5;
+      color: #555;
     }
 
     ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      max-height: 140px; /* Approximate height for 5 tasks */
-      overflow-y: auto; /* Enable scrolling for the quadrant */
+      list-style-type: disc;
+      margin-left: 20px;
     }
 
-    ul::-webkit-scrollbar {
-      width: 8px;
+    blockquote {
+      border-left: 4px solid #007bff;
+      padding-left: 10px;
+      margin: 10px 0;
+      font-style: italic;
+      color: #333;
+      background: #f9f9f9;
     }
 
-    ul::-webkit-scrollbar-thumb {
-      background-color: #888;
-      border-radius: 4px;
+    table {
+      border-collapse: collapse;
+      margin: 20px 0;
+      width: 100%;
     }
 
-    ul::-webkit-scrollbar-thumb:hover {
-      background-color: #555;
+    table, th, td {
+      border: 1px solid #ccc;
     }
 
-    li {
-      margin: 5px 0;
-      display: flex;
-      align-items: center;
+    th, td {
+      padding: 10px;
+      text-align: center;
     }
 
-    li span {
-      margin-left: 10px;
+    th {
+      background-color: #007bff;
+      color: #fff;
     }
 
     #back {
@@ -88,39 +131,152 @@
       border-radius: 5px;
       cursor: pointer;
       font-size: 16px;
+      display: block;
+      margin: 30px auto 0;
     }
 
     #back:hover {
-      background-color: #0056b3; /* 悬浮时的背景色变化 */
+      background-color: #0056b3;
     }
 
+    strong {
+      color: #333;
+    }
+
+    code {
+      background-color: #f0f0f0;
+      color: #333;
+      padding: 0.1rem 0.3rem;
+      border-radius: 0.25rem;
+      font-size: 0.9rem;
+    }
+
+    a {
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .hotkeys, .features {
+      margin-top: 10px;
+      background: #f9f9f9;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+    }
+
+    .hotkeys ul, .features ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    .hotkeys li, .features li {
+      margin-bottom: 10px;
+    }
   </style>
 </head>
 <body>
-  <h1>Eisenhower Matrix</h1>
-  <p>
-    The Eisenhower Matrix is a time management tool that helps prioritize tasks based on their urgency and importance. It is named after Dwight D. Eisenhower, the 34th President of the United States, who was known for his ability to make tough decisions and prioritize effectively. The matrix helps individuals focus on what truly matters by categorizing tasks into four quadrants.
-    <table border="1" align="center">
-        <caption>Different Types of Jobs in Eisenhower Matrix</caption>
+  <h1>DevZen - Help</h1>
+  <div class="container">
+    <p>The <strong>Eisenhower Matrix</strong>, also known as the <strong>Urgent-Important Matrix</strong>, is a time management tool designed to help prioritize tasks based on their urgency and importance. This method was inspired by Dwight D. Eisenhower, who famously said:</p>
+    <blockquote>
+      "What is important is seldom urgent, and what is urgent is seldom important."
+    </blockquote>
+
+    <h2>How It Works</h2>
+    <p>The matrix divides tasks into four quadrants:</p>
+
+    <h3>1. Urgent and Important (Do First)</h3>
+    <ul>
+      <li>Critical tasks requiring immediate attention.</li>
+      <li><strong>Examples:</strong> Deadlines, emergencies, pressing issues.</li>
+      <li><strong>Action:</strong> Complete these tasks as soon as possible.</li>
+    </ul>
+
+    <h3>2. Not Urgent but Important (Plan)</h3>
+    <ul>
+      <li>Essential for long-term success, but not immediate.</li>
+      <li><strong>Examples:</strong> Strategic planning, skill-building, exercise.</li>
+      <li><strong>Action:</strong> Schedule these tasks to ensure they're done.</li>
+    </ul>
+
+    <h3>3. Urgent but Not Important (Delegate)</h3>
+    <ul>
+      <li>Demand immediate attention but don't contribute significantly to goals.</li>
+      <li><strong>Examples:</strong> Interruptions, minor requests, certain meetings.</li>
+      <li><strong>Action:</strong> Delegate these tasks to someone else if possible.</li>
+    </ul>
+
+    <h3>4. Not Urgent and Not Important (Eliminate)</h3>
+    <ul>
+      <li>Distractions that don't add value.</li>
+      <li><strong>Examples:</strong> Excessive social media, trivial activities.</li>
+      <li><strong>Action:</strong> Minimize or eliminate these tasks.</li>
+    </ul>
+
+    <h2>Visual Representation</h2>
+    <p>The matrix is structured as a 2x2 grid:</p>
+    <table>
+      <thead>
         <tr>
-            <th width="100px"></th>
-            <th width="100px">Urgent</th>
-            <th width="100px">Not Urgent</th>
+          <th></th>
+          <th>Urgent</th>
+          <th>Not Urgent</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Important</strong></td>
+          <td>Do First (Quadrant 1)</td>
+          <td>Plan (Quadrant 2)</td>
         </tr>
         <tr>
-            <td>Important</td>
-            <td>1. Do First</td>
-            <td>2. Schedule</td>
+          <td><strong>Not Important</strong></td>
+          <td>Delegate (Quadrant 3)</td>
+          <td>Eliminate (Quadrant 4)</td>
         </tr>
-        <tr>
-            <td>Not Important</td>
-            <td>3. Delegate</td>
-            <td>4. Eliminate</td>
-        </tr>
+      </tbody>
     </table>
 
-  </p>
-  <button id="back">Back</button>
+    <h2>Benefits</h2>
+    <ul>
+      <li>Helps prioritize tasks effectively.</li>
+      <li>Reduces stress by focusing on what truly matters.</li>
+      <li>Encourages long-term planning.</li>
+      <li>Eliminates unnecessary tasks.</li>
+    </ul>
+
+    <h2>Tips for Effective Use</h2>
+    <ul>
+      <li>Regularly review tasks to ensure correct categorization.</li>
+      <li>Focus on <strong>Quadrant 2</strong> tasks to prevent crises.</li>
+      <li>Delegate (Quadrant 3) and say no to (Quadrant 4) tasks.</li>
+    </ul>
+
+    <h2>Hot Keys</h2>
+    <div class="hotkeys">
+      <ul>
+        <li><strong>Mac:</strong> Press <code>Command + Option + T</code> to show the app</li>
+        <li><strong>Windows:</strong> Press <code>Ctrl + Alt + T</code> to show the app</li>
+      </ul>
+    </div>
+
+    <h2>Features</h2>
+    <div class="features">
+      <ul>
+        <li><strong>Add Task:</strong> Click "Add Task" on the main page. Enter the task name, description (optionally using markdown), select urgent/important if applicable, set a deadline, and click "Add Task" to save. Click "Back" to return to the main page.</li>
+        <li><strong>Edit Notes:</strong> Click "View Task" then "Edit" to write notes in markdown. The preview updates automatically. Click the provided Markdown guide link for help. After editing, click "Save Notes" to save and then "Back" to return.</li>
+        <li><strong>Delete Task:</strong> Check the box next to any task(s) you wish to remove, then click "Delete Selected". Once deleted, these tasks cannot be recovered.</li>
+      </ul>
+    </div>
+
+    <p>The Eisenhower Matrix (DevZen) helps individuals and teams achieve better productivity and time management.</p>
+    <button id="back">Back</button>
+  </div>
+
   <script src="./renderer.js"></script>
 </body>
 </html>
