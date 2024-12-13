@@ -46,8 +46,7 @@
  * @module rendererModule
  * @description Main JavaScript module for DevZen task management interface
  * @requires electron
- * 
- * Manages task matrix interactions, including task loading, selection, deletion, 
+ * Manages task matrix interactions, including task loading, selection, deletion,
  * completion, and navigation between different views of the application.
  */
 
@@ -65,7 +64,7 @@ let selectedTasks = {};
 /**
  * Updates the visibility of action buttons based on selected tasks
  * @function updateButtonVisibility
- * @description Toggles the display of delete and mark completed buttons 
+ * @description Toggles the display of delete and mark completed buttons
  * depending on whether any tasks are selected
  * @private
  */
@@ -153,7 +152,7 @@ if (deleteSelectedButton) {
   /**
    * Event handler for deleting selected tasks
    * @function handleDeleteSelectedTasks
-   * @description Removes selected tasks from their respective quadrants 
+   * @description Removes selected tasks from their respective quadrants
    * and updates the matrix view
    * @listens click
    */
