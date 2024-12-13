@@ -31,7 +31,6 @@
  * @requires electron
  * @requires path
  * @requires electron-store
- * 
  * This module initializes an Electron application for task management using the Eisenhower Matrix.
  * It provides functionality for creating, categorizing, storing, and managing tasks across four quadrants.
  */
