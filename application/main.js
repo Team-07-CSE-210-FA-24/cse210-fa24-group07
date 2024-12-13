@@ -59,16 +59,15 @@ let Store;
   let mainWindow;
   let isQuitting = false;
 
-/**
- * Represents the task storage and management system
- * @typedef {Object} tasks
- * @property {Task[]} quadrant1 - Urgent and important tasks (Do)
- * @property {Task[]} quadrant2 - Important but not urgent tasks (Schedule)
- * @property {Task[]} quadrant3 - Urgent but not important tasks (Delegate)
- * @property {Task[]} quadrant4 - Neither urgent nor important tasks
- * @property {Task[]} completed - Completed tasks
- */
-
+  /**
+   * Represents the task storage and management system
+   * @typedef {Object} tasks
+   * @property {Task[]} quadrant1 - Urgent and important tasks (Do)
+   * @property {Task[]} quadrant2 - Important but not urgent tasks (Schedule)
+   * @property {Task[]} quadrant3 - Urgent but not important tasks (Delegate)
+   * @property {Task[]} quadrant4 - Neither urgent nor important tasks
+   * @property {Task[]} completed - Completed tasks
+   */
   const tasks = store.get('tasks', {
     quadrant1: [],
     quadrant2: [],
@@ -77,12 +76,12 @@ let Store;
     completed: [],
   });
 
-/**
- * Saves current tasks to persistent storage
- * @function saveTasks
- * @description Uses electron-store to persist tasks across application restarts
- * @private
- */
+  /**
+   * Saves current tasks to persistent storage
+   * @function saveTasks
+   * @description Uses electron-store to persist tasks across application restarts
+   * @private
+   */
   function saveTasks() {
     store.set('tasks', tasks);
   }
