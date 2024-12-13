@@ -1,31 +1,73 @@
-# Task Prioritizer
-CSE 210 Fall 2024 Project for Team-07.
-- Click [here](https://github.com/Team-07-CSE-210-FA-24/cse210-fa24-group07/releases/) and download the latest version for your system.
-## Instal dependencies
+# DevZen
+
+DevZen is a developer productivity tool designed to streamline task management using the Eisenhower matrix. With a sleek desktop app, DevZen allows you to effectively prioritize, manage, and complete tasks with ease. Boost your productivity and stay organized with features tailored for developers.
+
+---
+
+## Features
+
+### ✨ Task Management Made Simple
+- **Edit Tasks:** Modify your tasks quickly and easily to adapt to changing priorities.
+- **Markdown Notes:** Add detailed notes using Markdown syntax to enrich your tasks.
+- **View Completed Tasks:** Keep track of your achievements with a dedicated view for completed tasks.
+- **Set Deadlines:** Stay on top of your schedule by assigning deadlines to tasks.
+- **Hotkey Access:** Instantly open DevZen with a customizable global shortcut.
+
+### 🔨 Built for Developers
+- **Cross-Platform Compatibility:** DevZen runs seamlessly on Windows, MacOS, and Linux.
+- **Eisenhower Matrix:** Organize tasks into quadrants based on urgency and importance for smarter prioritization.
+- **Customizable Views:** Tailor your interface to suit your workflow.
+
+---
+
+## Installation and Setup
+
+### Install Dependencies
+```bash
 npm install 
-## Run the application in development
+```
+
+### Run the Application in Development Mode
+```bash
 npm run start
-## Build the application executable for current platform
+```
+
+### Build the Application Executable
+#### For Current Platform
+```bash
 npm run make
-## Build the application executable for MacOS
-npm run make --platform darwin 
-## Build the application executable for Windows
+```
+#### For MacOS
+```bash
+npm run make --platform darwin
+```
+#### For Windows
+```bash
 npm run make --platform win32
-## Build the application executable for Linux
-npm run make --platform linux
-## Using JSDocs for documentation
-The JSDoc command-line tool is available in
-`./node_modules/.bin`. To generate documentation for the file
-`yourJavaScriptFile.js`:
+```
 
-    ./node_modules/.bin/jsdoc yourJavaScriptFile.js
+---
 
-If you installed JSDoc globally, run the `jsdoc` command:
+## Global Shortcut
 
-    jsdoc yourJavaScriptFile.js
+When the app is running, you can quickly open it using:
 
-By default, the generated documentation is saved in a directory named `out`. You can use the `--destination` (`-d`) option to specify another directory.
+- **Windows:** `Ctrl + Alt + T`
+- **MacOS:** `Command + Option + T`
 
-## Global shortcut
+These hotkeys are customizable from the app settings.
 
-When the app is running, press `Ctrl+Alt+T`(on Windows) or `Command+Option+T`(on Mac) to show the app .
+---
+
+## Eisenhower Matrix View
+
+A preview of the app’s Eisenhower matrix will be shown here. *(Placeholder for screenshot)*
+
+---
+
+## License
+DevZen is developed as part of the **CSE 210 Fall 2024 Project for Team-07**.
+
+---
+
+Download and supercharge your productivity today!
