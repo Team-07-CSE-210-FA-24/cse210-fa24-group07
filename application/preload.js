@@ -23,7 +23,6 @@
  * @module electronAPI
  * @description Secure bridge between renderer and main processes in Electron application
  * @requires electron
- * 
  * Exposes a limited set of IPC methods to the renderer process via contextBridge,
  * ensuring secure and controlled communication between frontend and backend.
  */
