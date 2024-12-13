@@ -90,6 +90,11 @@ These hotkeys are customizable from the app settings.
 
 ---
 
+## Documentation
+Documentation can be found in the [`application/documentation`](https://github.com/Team-07-CSE-210-FA-24/cse210-fa24-group07/tree/main/application/documentation) directory.
+
+---
+
 ## Project Board
 
 [View Project Board](https://github.com/orgs/Team-07-CSE-210-FA-24/projects/2) - Track our development progress and upcoming features on the project board.
